@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
-import RegisterForm from '@/components/auth/RegisterForm.vue'
+import LearnersignupForm from '@/components/auth/LearnersignupForm.vue'
 import { useDisplay } from 'vuetify'
 
 const { mobile } = useDisplay()
@@ -22,7 +22,7 @@ const { mobile } = useDisplay()
 
               <v-divider class="my-3"></v-divider>
               <h5 class="text-center">
-                Already have an acoount? <RouterLink class="text-primary" to="/">Login</RouterLink>
+                Already have an account? <RouterLink class="text-primary" to="/">Login</RouterLink>
               </h5>
             </v-card-text>
           </v-card>
