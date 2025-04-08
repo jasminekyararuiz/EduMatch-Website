@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/auth/LoginView.vue'
 import ChoicesView from '@/views/auth/ChoicesView.vue'
-import LearnersignupView from '@/views/auth/LearnersignupView.vue'
 import LearnersignupForm from '@/components/auth/LearnersignupForm.vue'
 import RegistrationView from '@/views/auth/RegistrationView.vue'
 

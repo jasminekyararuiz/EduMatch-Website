@@ -66,7 +66,7 @@ const { mobile } = useDisplay()
             <v-divider class="mx-4 mb-1"></v-divider>
 
             <v-card-actions class="d-flex justify-center">
-              <RouterLink to="/learnersignup" class="text-decoration-none">
+              <RouterLink to="/registration" class="text-decoration-none">
                 <v-btn class="bg-primary" text="Tutor Sign Up" border @click="reserve"></v-btn>
               </RouterLink>
             </v-card-actions>
