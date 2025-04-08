@@ -13,9 +13,9 @@ const router = createRouter({
     {
       path: '/register',
       name: 'registration',
-      component: RegisterView 
+      component: RegisterView
     }
-    
+
   ],
 })
 
