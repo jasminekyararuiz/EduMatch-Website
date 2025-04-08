@@ -15,9 +15,6 @@
       </v-col>
     </v-row>
 
-
-    
-
     <v-btn class="bg-primary" rounded="xl" type="submit" block>Log In</v-btn>
   </v-form>
 </template>
