@@ -1,6 +1,5 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
-import LearnersignupForm from '@/components/auth/LearnersignupForm.vue'
 import { useDisplay } from 'vuetify'
 
 const { mobile } = useDisplay()
