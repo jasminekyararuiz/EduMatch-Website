@@ -9,7 +9,7 @@ function onClick() {
 </script>
 
 <template>
-<<<<<<< HEAD
+
   <v-responsive>
     <v-app :theme="theme">
       <v-app-bar class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
@@ -28,12 +28,15 @@ function onClick() {
 
         <v-btn></v-btn>
         <v-spacer></v-spacer>
-=======
+      </v-app-bar>
+    </v-app>
+  </v-responsive>
+
     <v-app :theme="theme">
       <!-- Top Navigation -->
  <v-app-bar class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
 
-  <v-row align="center" no-gutters class="w-100">
+  <v-row align ="center" no-gutters class="w-100">
     <!-- Logo and Brand -->
     <v-col cols="8" class="d-flex align-center">
       <v-img
@@ -57,7 +60,6 @@ function onClick() {
 
 
     <RouterLink to="/">
->>>>>>> 31ec340bba7cfeb3ef0bdc3cfc63d4ad82bd4192
         <v-btn
         rounded="xl"
         variant="elevated"
@@ -65,7 +67,7 @@ function onClick() {
         color="indigo-darken-4"
         class="text-white"
       ><b>Log In</b></v-btn> </RouterLink>
-      <RouterLink to="/registration"> 
+      <RouterLink to="/registration">
       <v-btn
         rounded="xl"
         variant="elevated"
@@ -86,7 +88,7 @@ function onClick() {
 </v-app-bar>
 
 
-  
+
       <!-- Hero Section -->
       <v-main>
         <v-container fluid class="pa-0">
@@ -125,7 +127,7 @@ function onClick() {
     </v-container>
   </v-img>
 
-  
+
           <!-- Why Choose Us -->
           <v-container fluid class="mt-5">
             <v-sheet
@@ -157,12 +159,12 @@ function onClick() {
           </v-container>
         </v-container>
       </v-main>
-      
+
     </v-app>
   </template>
-  
 
-  
+
+
   <style scoped>
   .text-white {
     color: white !important;
