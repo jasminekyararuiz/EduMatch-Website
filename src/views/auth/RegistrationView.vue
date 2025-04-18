@@ -8,7 +8,7 @@ const { mobile } = useDisplay()
 <template>
   <AppLayout>
     <template #content>
-      <v-row>
+      <v-row class="bg-blue-lighten-5">
         <v-col cols="12" md="6" class="mx-auto">
           <v-card class="mx-auto">
             <v-card-title>
@@ -29,20 +29,27 @@ const { mobile } = useDisplay()
                 <v-text-field label="Email" variant="outlined"></v-text-field>
                 <v-text-field label="Password" type="password" variant="outlined"></v-text-field>
 
-                <v-text-field label="Re-enter Password" class="text-end" type="password" variant="outlined">
-
+                <v-text-field
+                  label="Re-enter Password"
+                  class="text-end"
+                  type="password"
+                  variant="outlined"
+                >
                 </v-text-field>
 
-                <v-select clearable label="Role" :items="['Learner', 'Tutor']" variant="outlined"></v-select>
+                <v-select
+                  clearable
+                  label="Role"
+                  :items="['Learner', 'Tutor']"
+                  variant="outlined"
+                ></v-select>
 
                 <v-btn class="bg-primary" rounded="xl" type="submit" block>Sign Up</v-btn>
               </v-form>
 
               <v-divider class="my-3"></v-divider>
               <h5 class="text-center">
-
                 Already have an account? <RouterLink class="text-primary" to="/">Login</RouterLink>
-
               </h5>
             </v-card-text>
           </v-card>
