@@ -29,10 +29,12 @@ const { mobile } = useDisplay()
                 </v-row>
                 <v-text-field label="Email" variant="outlined"></v-text-field>
                 <v-text-field label="Password" type="password" variant="outlined"></v-text-field>
-                <v-text-field label="Re-enter Password" type="password" variant="outlined"></v-text-field>
 
-                <v-select clearable label="Role" :items="['Learner', 'Tutor']"
-                variant="outlined" ></v-select>
+                <v-text-field label="Re-enter Password" class="text-end" type="password" variant="outlined">
+
+                </v-text-field>
+
+                <v-select clearable label="Role" :items="['Learner', 'Tutor']" variant="outlined"></v-select>
 
                 <v-btn class="bg-primary" rounded="xl" type="submit" block>Sign Up</v-btn>
               </v-form>
