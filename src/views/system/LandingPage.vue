@@ -44,7 +44,7 @@ function onClick() {
         color="indigo-darken-4"
         class="text-white"
       ><b>Log In</b></v-btn> </RouterLink>
-      <RouterLink to="/registration"> 
+      <RouterLink to="/registration">
       <v-btn
         rounded="xl"
         variant="elevated"
@@ -65,7 +65,7 @@ function onClick() {
 </v-app-bar>
 
 
-  
+
       <!-- Hero Section -->
       <v-main>
         <v-container fluid class="pa-0">
@@ -104,7 +104,7 @@ function onClick() {
     </v-container>
   </v-img>
 
-  
+
           <!-- Why Choose Us -->
           <v-container fluid class="mt-5">
             <v-sheet
@@ -136,12 +136,12 @@ function onClick() {
           </v-container>
         </v-container>
       </v-main>
-      
+
     </v-app>
   </template>
-  
 
-  
+
+
   <style scoped>
   .text-white {
     color: white !important;

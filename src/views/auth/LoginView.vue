@@ -8,11 +8,20 @@ const { mobile } = useDisplay()
 
 <template>
   <AppLayout>
-    <template #content>
-      <v-row>
-        <v-col cols="12" md="6" class="mx-auto">
-          <v-card class="mx-auto">
-            <v-card-title>
+    <template #content >
+
+       <v-row  class="bg-blue-lighten-5 " >
+        <v-col cols="8" class="text-center d-none d-md-flex rounded-xl">
+          <v-img class="mx-auto py-5 mb-3" src="/public/EduMatch-LogIn.jpg" width="10%">
+
+          </v-img>
+
+
+        </v-col>
+        <br>
+        <v-col cols="4" class="mx-auto py-5 " > <br>
+          <v-card class="mx-auto rounded-lg" >
+            <v-card-title class="py-4 ">
               <v-img class="mx-auto" src="/public/Edumatch_logo.png" width="25%"> </v-img>
               <h3 class="text-center"><b>EduMatch</b></h3>
             </v-card-title>
@@ -26,10 +35,17 @@ const { mobile } = useDisplay()
                 <RouterLink class="text-primary" to="/registration">Click here to register </RouterLink>
               </h5>
             </v-card-text>
-
           </v-card>
+
         </v-col>
       </v-row>
+
     </template>
+
   </AppLayout>
 </template>
+
+<style scoped>
+
+
+</style>
