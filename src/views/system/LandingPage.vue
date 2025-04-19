@@ -9,31 +9,26 @@ function onClick() {
 </script>
 <template>
   <v-responsive>
- 
+
     <v-app :theme="theme">
       <v-app-bar class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
         <v-row>
-    <v-col>
-        <v-img src="/public/Edumatch_logo.png" width="30%"> </v-img>
-    </v-col>
-    <v-col>
-        <v-btn class="bg-success text-center" rounded="xl" size="x-medium">Log In</v-btn>
-      </v-col>
-      <v-col>
-        <v-btn class="bg-success text-center" rounded="xl" size="x-medium">Sign Up</v-btn>
-      </v-col>
-   </v-row>
+          <v-col>
+            <v-img src="/public/Edumatch_logo.png" width="30%"> </v-img>
+          </v-col>
+          <v-col>
+            <v-btn class="bg-success text-center" rounded="xl" size="x-medium">Log In</v-btn>
+          </v-col>
+          <v-col>
+            <v-btn class="bg-success text-center" rounded="xl" size="x-medium">Sign Up</v-btn>
+          </v-col>
+        </v-row>
         <v-spacer></v-spacer>
-        
-       <v-btn     
-        ></v-btn>
+
+        <v-btn></v-btn>
         <v-spacer></v-spacer>
-        <v-btn
-          :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          variant="elevated"
-          slim
-          @click="onClick"
-        ></v-btn>
+        <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" variant="elevated" slim
+          @click="onClick"></v-btn>
       </v-app-bar>
 
       <v-main>
