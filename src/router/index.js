@@ -11,18 +11,20 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: LoginView
+      component: LoginView,
     },
     {
       path: '/registration',
       name: 'registrationsignup',
-      component: RegistrationView
+      component: RegistrationView,
     },
     {
       path: '/landingpage',
       name: 'landingpage',
-      component: LandingPage
+      component: LandingPage,
     },
+<<<<<<< HEAD
+=======
     {
       path: '/howitworks',
       name: 'howitworks',
@@ -35,6 +37,7 @@ const router = createRouter({
     },
 
 
+>>>>>>> 31ec340bba7cfeb3ef0bdc3cfc63d4ad82bd4192
   ],
 })
 
