@@ -40,7 +40,6 @@ const router = createRouter({
       path: '/findtutor',
       name: 'findtutor',
       component: FindTutorView
-
     },
   ],
 })
