@@ -11,7 +11,7 @@ function onClick() {
 <template>
     <v-app :theme="theme">
       <!-- Top Navigation -->
- <v-app-bar class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
+ <v-app-bar class="px-3" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-2'">
 
   <v-row align="center" no-gutters class="w-100">
     <!-- Logo and Brand -->
@@ -22,13 +22,13 @@ function onClick() {
         max-width="60"
         class="mr-2"
       ></v-img>
-      <span class="text-h6 font-weight-bold">
-        <b>Edu</b><span class="text-primary"><b>Match</b></span>
+      <span class="text-h6 font-weight-bold edu">
+      <span class="text-blue-lighten-5"><b>Edu</b></span>
+      <span class="text-blue-lighten-3"><b>Match</b></span>
       </span>
     </v-col>
 
     <!-- Center Nav Buttons -->
-
 
     <!-- Auth Buttons and Theme Toggle -->
     <v-col cols="4" class="d-flex justify-end align-center">
@@ -41,7 +41,7 @@ function onClick() {
         rounded="xl"
         variant="elevated"
         density="comfortable"
-        color="indigo-darken-4"
+        color="cyan-darken-3"
         class="text-white"
       ><b>Log In</b></v-btn> </RouterLink>
       <RouterLink to="/registration">
@@ -49,7 +49,7 @@ function onClick() {
         rounded="xl"
         variant="elevated"
         density="comfortable"
-        color="indigo-darken-4"
+        color="cyan-darken-3"
         class="text-white ml-2"
       ><b>Sign Up</b></v-btn>
     </RouterLink>
@@ -112,6 +112,7 @@ function onClick() {
     elevation="2"
     class="rounded-lg pa-8">
               <h1 class="text-center mb-5"><b>Why choose EduMatch?</b></h1>
+   
               <v-row justify="center" class="choose gap-4">
                 <v-col cols="12" sm="4">
                   <v-card class="text-center pa-4" elevation="4">
@@ -192,6 +193,10 @@ function onClick() {
 
 .choose p{
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.edu {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
   </style>
