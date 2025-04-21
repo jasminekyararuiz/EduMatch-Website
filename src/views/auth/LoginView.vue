@@ -1,35 +1,49 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
 import LoginForm from '@/components/auth/LoginForm.vue'
-import { useDisplay } from 'vuetify'
+import { useDisplay, useTheme } from 'vuetify'
+import { computed } from 'vue'
 
 const { mobile } = useDisplay()
+const theme = useTheme()
+const isDark = computed(() => theme.global.name.value === 'dark')
 </script>
 
 <template>
   <AppLayout>
     <template #content>
-      <v-row>
-        <v-col cols="12" md="6" class="mx-auto">
-          <v-card class="mx-auto">
-            <v-card-title>
-              <v-img class="mx-auto" src="/public/Edumatch_logo.png" width="25%"> </v-img>
-              <h3 class="text-center"><b>EduMatch</b></h3>
+      <v-row :class="isDark ? 'bg-grey-darken-5 text-white' : 'bg-blue-lighten-5 text-black'" class="fill-height">
+
+        <v-col cols="8" class="text-center d-none d-md-flex rounded-xl">
+          <v-img class="mx-auto py-2 mb-3" src="/public/EduMatch-LogIn.jpg" width="10%" />
+        </v-col>
+
+        <v-col cols="4" class="mx-auto py-5">
+          <v-card elevation="10" class="mx-auto" color="blue-lighten-5">
+            <v-card-title class="py-4">
+              <v-img class="mx-auto" src="/public/Edumatch_logo.png" width="25%" />
+              <h3 class="text-center edu"><b>EduMatch</b></h3>
             </v-card-title>
 
-            <v-card-text class="bg-surface-light pt-4">
-              <LoginForm></LoginForm>
+            <v-card-text :class="isDark ? 'bg-grey-darken-4 text-white' : 'bg-surface-light text-black'">
+              <LoginForm />
 
-              <v-divider class="my-3"></v-divider>
+              <v-divider class="my-3" />
+
               <h5 class="text-center">
                 Don't have account?
-                <RouterLink class="text-primary" to="/registration">Click here to register </RouterLink>
+                <RouterLink class="text-primary" to="/registration">Click here to register</RouterLink>
               </h5>
             </v-card-text>
-
           </v-card>
         </v-col>
       </v-row>
     </template>
   </AppLayout>
 </template>
+
+<style scoped>
+.edu {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+</style>

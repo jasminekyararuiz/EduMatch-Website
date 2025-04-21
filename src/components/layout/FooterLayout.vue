@@ -10,19 +10,6 @@ function onClick() {
 <template>
   <v-responsive>
     <v-app :theme="theme">
-  <v-app-bar
-    class="px-3"
-    color="transparent"
-    flat
-  >
-    <v-spacer></v-spacer>
-    <v-btn
-      :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-      variant="text"
-      @click="onClick"
-    ></v-btn>
-  </v-app-bar>
-
   <v-main>
     <v-container class="py-5 mb-3">
       <slot name="content"> </slot>
