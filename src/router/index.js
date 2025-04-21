@@ -7,10 +7,11 @@ import HowItWorks from '@/views/system/HowItWorks.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+
     {
       path: '/',
       name: 'home',
-      component: LoginView,
+      component:LandingPage,
     },
     {
       path: '/registration',
@@ -18,20 +19,15 @@ const router = createRouter({
       component: RegistrationView,
     },
     {
-      path: '/landingpage',
-      name: 'landingpage',
-      component: LandingPage,
+      path: '/login',
+      name: 'login',
+      component: LoginView,
     },
-<<<<<<< HEAD
-=======
     {
-      path: '/howitworks',
-      name: 'howitworks',
-      component: HowItWorks
+         path: '/howitworks',
+         name: 'howitworks',
+       component: HowItWorks
     },
-
-
->>>>>>> 31ec340bba7cfeb3ef0bdc3cfc63d4ad82bd4192
   ],
 })
 

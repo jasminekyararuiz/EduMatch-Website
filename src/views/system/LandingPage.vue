@@ -59,7 +59,7 @@ function onClick() {
         <v-btn variant="text" class="text-body-2 ml-4">About Us</v-btn>
 
 
-    <RouterLink to="/">
+    <RouterLink to="/login">
         <v-btn
         rounded="xl"
         variant="elevated"
