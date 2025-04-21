@@ -57,4 +57,9 @@ const submitForm = () => {
       <v-btn class="bg-primary" rounded="xl" type="submit" block>Log In</v-btn>
     </v-form>
 
+<<<<<<< HEAD
+=======
+    <v-btn class="bg-primary" rounded="xl" type="submit" block> <b>Log In</b></v-btn>
+  </v-form>
+>>>>>>> 6ead8cf71b88bf36b5b05ed5ccef4f5de930bcd1
 </template>

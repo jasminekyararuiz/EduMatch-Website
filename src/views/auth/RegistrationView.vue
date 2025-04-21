@@ -34,10 +34,21 @@ const signInWithTelegram = () => {
 </script>
 
 <template>
+
  <AppLayout>
     <template #content>
 
-  <v-app>
+      <v-row :color="theme === 'light' ? 'blue-lighten-5' : 'blue-lighten-5'" :class="theme === 'light' ? 'text-black' : 'text-white'">
+        <v-col cols="12" md="6" class="mx-auto">
+          <v-card elevation="10" class="mx-auto" color="blue-lighten-5">
+            <v-card-title>
+              <v-img class="mx-auto" src="/public/Edumatch_logo.png" width="25%"> </v-img>
+              <h3 class="text-center edu"><b>EduMatch</b></h3>
+            </v-card-title>
+            </v-card>
+            </v-col>
+
+           <v-app>
     <v-main class="bg-cover " :style="{ backgroundImage: 'url(/ccis.jpg)' }">
       <v-container class="mx-auto d-flex align-center justify-center fill-height">
 
@@ -56,6 +67,7 @@ const signInWithTelegram = () => {
                   ></v-img>
                 </div>
                 <v-form>
+                </v-form>
             <v-row>
                <v-col >
                 <v-text-field
@@ -83,6 +95,7 @@ const signInWithTelegram = () => {
               required
             ></v-text-field>
 
+<<<<<<< HEAD
             <v-text-field
               v-model="password"
               label="Password"
@@ -90,6 +103,10 @@ const signInWithTelegram = () => {
               prepend-inner-icon="mdi-lock"
               required
             ></v-text-field>
+=======
+                <v-btn class="bg-primary" rounded="xl" type="submit" block><b>Sign Up</b></v-btn>
+              </v-form>
+>>>>>>> 6ead8cf71b88bf36b5b05ed5ccef4f5de930bcd1
 
             <v-text-field
               v-model="confirmPassword"
@@ -141,11 +158,18 @@ const signInWithTelegram = () => {
       </template>
       </AppLayout>
 </template>
-<style>
+<style scoped>
 .bg-cover {
   background-size: cover;
   background-position: center;
 }
 
 
+
+
+
+.edu {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
 </style>
+
