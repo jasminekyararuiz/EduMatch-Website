@@ -23,8 +23,6 @@ const router = createRouter({
       name: 'landingpage',
       component: LandingPage,
     },
-<<<<<<< HEAD
-=======
     {
       path: '/howitworks',
       name: 'howitworks',
@@ -36,8 +34,6 @@ const router = createRouter({
       component: FindTutorView
     },
 
-
->>>>>>> 31ec340bba7cfeb3ef0bdc3cfc63d4ad82bd4192
   ],
 })
 

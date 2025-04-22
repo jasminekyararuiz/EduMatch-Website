@@ -41,20 +41,22 @@ const steps = [
     <v-app :theme="theme">
       <!-- NAVBAR -->
       <v-app-bar class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
-        <v-row>
-          <v-col>
-            <v-img src="/public/Edumatch_logo.png" width="30%" />
+        <v-row align="center" no-gutters class="w-100">
+          <v-col cols="8" class="d-flex align-center">
+            <v-img src="/public/Edumatch_logo.png" max-width="60" class="mr-2" />
+            <span class="text-h6 font-weight-bold">
+              <b>Edu</b><span class="text-primary"><b>Match</b></span>
+            </span>
           </v-col>
-          <v-col>
-            <v-btn class="bg-success text-center" rounded="xl" size="x-medium">Log In</v-btn>
-          </v-col>
-          <v-col>
-            <v-btn class="bg-success text-center" rounded="xl" size="x-medium">Sign Up</v-btn>
+          <v-col cols="4" class="d-flex justify-end align-center">
+            <v-text-field dense hide-details rounded="xl" variant="solo" density="compact" placeholder="Search"
+              prepend-inner-icon="mdi-magnify" style="max-width: 220px;" />
+            <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
+            <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
+            <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
+            <v-avatar size="30"><v-img src="public/heeseung.jpg" /></v-avatar>
           </v-col>
         </v-row>
-        <v-spacer></v-spacer>
-        <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" variant="elevated" slim
-          @click="onClick"></v-btn>
       </v-app-bar>
 
       <!-- MAIN CONTENT -->
