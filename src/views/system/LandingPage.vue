@@ -7,6 +7,9 @@ const theme = ref('light')
 function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
+const show = ref(false)
+const isshow = ref(false)
+const showis = ref(false)
 
 const steps = [
   {
@@ -174,7 +177,7 @@ const steps = [
             <!-- TITLE + DESCRIPTION -->
             <v-row justify="center">
               <v-col cols="12" class="text-center">
-                <h2 class="text-h4 font-weight-bold mb-4">How It Works</h2>
+                <h2 class="text-h4 font-weight-bold mb-4"> <b> How It Works</b></h2>
                 <p class="text-subtitle-2 font-weight-medium mb-3">
                   EduMatch simplifies the journey of finding the right learning path. <br>
                   Whether you're a student seeking guidance or a teacher ready
@@ -229,38 +232,199 @@ const steps = [
 </v-container>
           
 <v-container fluid class="mt-5">
-            <v-sheet
-            :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'"
+  <!-- WHO WE ARE -->
+  <v-parallax
+  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'"
     elevation="2"
-    class="rounded-lg pa-8">
-              <h1 class="text-center mb-5"> <b>Get To Know More About </b>
-                <span class="text-h4 font-weight-bold edu">
-      <span class="text-blue-lighten-2"><b>Edu</b></span>
-      <span class="text-blue-darken-4"><b>Match</b></span>
-      </span>
-              </h1>
-              <v-row justify="center" class="choose gap-4">
-                <v-col cols="12" sm="4">
-                  <v-card class="text-center pa-4" elevation="4">
-                    <v-icon color="indigo" size="48">mdi-book-open-variant</v-icon>
-                    <p class="text-h6 font-weight-medium mt-2"> <b>Expert Tutors</b> </p>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-card class="text-center pa-4" elevation="4">
-                    <v-icon color="indigo" size="48">mdi-cash-multiple</v-icon>
-                    <p class="text-h6 font-weight-medium mt-2"> <b> Affordable Rates</b></p>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-card class="text-center pa-4" elevation="4">
-                    <v-icon color="indigo" size="48">mdi-handshake</v-icon>
-                    <p class="text-h6 font-weight-medium mt-2"> <b>Interactive Sessions</b></p>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-sheet>
-          </v-container>
+    class="mb-5"
+  height="250px"
+   gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+  src="/public/adelle.jpg" alt="Jasmine Kyara Ruiz">
+    <v-container class="fill-height">
+      <v-row
+        class="justify-center align-center flex-column-reverse flex-md-row"
+      >
+        <v-col cols="12" md="6">
+          <h1 class="text-h2 text-center"> <b> About Edumatch</b></h1>
+          <span class="mb-8 font-weight-thin">
+
+Edumatch is a web-based platform that connects learners with verified tutors based on subject, availability, and location. It offers session bookings, real-time messaging, secure payments, and progress tracking—making learning flexible, accessible, and convenient. Learners can browse tutor profiles, view qualifications, and book sessions that fit their goals, while tutors can share their knowledge, earn income, and support others' academic growth. EduMatch brings organized, personalized learning to everyone.</span>
+        </v-col>
+
+      </v-row>
+    </v-container>
+  </v-parallax>
+
+  <!-- OUR MISSION AND VISION -->
+  <v-row class="mb-8" dense>
+    <v-col cols="12" md="6">
+      <v-card class="pa-4" :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-3'" elevation="3">
+        <h2 class="text-h5 font-weight-bold mb-2">Our Mission</h2>
+        <p>
+          To connect learners and tutors through a secure, flexible, and user-friendly web platform that supports personalized learning, promotes growth, and makes education accessible to all.
+        </p>
+      </v-card>
+    </v-col>
+    <v-col cols="12" md="6">
+      <v-card class="pa-4" :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-3'" elevation="3">
+        <h2 class="text-h5 font-weight-bold mb-2">Our Vision</h2>
+        <p>
+          To become a trusted learning hub where individuals can easily share knowledge, develop skills, and build meaningful educational connections anytime, anywhere.
+        </p>
+      </v-card>
+    </v-col>
+  </v-row>
+
+
+  <!-- MEET THE TEAM -->
+  <v-sheet
+    :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-2'"
+    elevation="2"
+    class="rounded-lg pa-8 mb-8"
+  >
+    <h1 class="text-center text-h4 mb-5 team">Meet Our Team</h1>
+    <v-row>
+      <v-col cols="12" sm="4">
+        <v-card
+    class="mx-auto"
+    max-width="350"
+  >
+    <v-img
+      height="197px"
+      src="/public/jasmine.jpg" alt="Jasmine Kyara Ruiz"
+  
+    ></v-img>
+
+    <v-card-title>
+      <b>Jasmine Kyara Ruiz</b>
+    </v-card-title>
+
+    <v-card-subtitle>
+      Frontend Developer
+    </v-card-subtitle>
+
+    <v-card-actions>
+      <v-btn
+        color="indigo-darken-3"
+        text="Read More"
+        @click="show = !show"
+      ></v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="show = !show"
+      ></v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <div v-show="show">
+        <v-divider></v-divider>
+
+        <v-card-text>
+          
+          As a frontend developer, I focus on making EduMatch simple, smooth, and easy to use. I enjoy bringing our designs to life and making sure every tap, swipe, and scroll works naturally. My goal is to create an interface that’s intuitive, responsive, and helps users accomplish their tasks with ease.
+        </v-card-text>
+      </div>
+    </v-expand-transition>
+  </v-card>
+      </v-col>
+      <v-col cols="12" sm="4">
+        <v-card
+    class="mx-auto"
+    max-width="400"
+  >
+    <v-img
+      height="197px"
+      src="/public/kathryn.jpg" alt="Cristina Berwan"
+      cover
+    ></v-img>
+
+    <v-card-title>
+      <b>Cristina Berwan</b>
+    </v-card-title>
+
+    <v-card-subtitle>
+      System Analyst
+    </v-card-subtitle>
+
+    <v-card-actions>
+      <v-btn
+      color="indigo-darken-3"
+        text="Read More"
+        @click="isshow = !isshow"
+      ></v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        :icon="isshow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="isshow = !isshow"
+      ></v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <div v-show="isshow">
+        <v-divider></v-divider>
+
+        <v-card-text>
+          As the system analyst, I gather the needs of our users and turn them into clear, workable plans for the team. I make sure EduMatch is not just well-built, but also useful and aligned with what tutors and learners actually need. I love connecting ideas and making sure everything fits together.
+        </v-card-text>
+      </div>
+    </v-expand-transition>
+  </v-card>
+      </v-col>
+      <v-col cols="12" sm="4">
+        <v-card
+    class="mx-auto"
+    max-width="400"
+  >
+    <v-img
+      height="197px"
+      src="/public/kai.jpg" alt="Leanheit May Miñoza"
+      cover
+    ></v-img>
+
+    <v-card-title>
+      <b>Leanheit May Miñoza</b>
+    </v-card-title>
+
+    <v-card-subtitle>
+      Frontend Developer
+    </v-card-subtitle>
+
+    <v-card-actions>
+      <v-btn
+      color="indigo-darken-3"
+        text="Read More"
+        @click="showis = !showis"
+      ></v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        :icon="showis ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="showis = !showis"
+      ></v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <div v-show="showis">
+        <v-divider></v-divider>
+
+        <v-card-text>
+      I help build the user interface of EduMatch, ensuring it’s both functional and visually appealing. I focus on how each element looks and works together to create a smooth experience. This allows learners and tutors to focus on what truly matters—learning and teaching.
+        </v-card-text>
+      </div>
+    </v-expand-transition>
+  </v-card>
+      </v-col>
+    </v-row>
+  </v-sheet>
+</v-container>
+
+
 
         </v-container>
       </v-main>
@@ -424,6 +588,10 @@ const steps = [
 
 .edu {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.team {
+  font-weight:bolder;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
   </style>
