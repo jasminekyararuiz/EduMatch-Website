@@ -151,19 +151,19 @@ const steps = [
               </h1>
               <v-row justify="center" class="choose gap-4">
                 <v-col cols="12" sm="4">
-                  <v-card class="text-center pa-4" elevation="4">
+                  <v-card class="text-center pa-4 hover-card" elevation="4">
                     <v-icon color="indigo" size="48">mdi-book-open-variant</v-icon>
                     <p class="text-h6 font-weight-medium mt-2"> <b>Expert Tutors</b> </p>
                   </v-card>
                 </v-col>
                 <v-col cols="12" sm="4">
-                  <v-card class="text-center pa-4" elevation="4">
+                  <v-card class="text-center pa-4 hover-card" elevation="4">
                     <v-icon color="indigo" size="48">mdi-cash-multiple</v-icon>
                     <p class="text-h6 font-weight-medium mt-2"> <b> Affordable Rates</b></p>
                   </v-card>
                 </v-col>
                 <v-col cols="12" sm="4">
-                  <v-card class="text-center pa-4" elevation="4">
+                  <v-card class="text-center pa-4 hover-card" elevation="4">
                     <v-icon color="indigo" size="48">mdi-handshake</v-icon>
                     <p class="text-h6 font-weight-medium mt-2"> <b>Interactive Sessions</b></p>
                   </v-card>
@@ -234,55 +234,73 @@ const steps = [
 <v-container fluid class="mt-5">
   <!-- WHO WE ARE -->
   <v-parallax
-  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'"
+    :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'"
     elevation="2"
-    class="mb-5"
-  height="250px"
-   gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
-  src="/public/adelle.jpg" alt="Jasmine Kyara Ruiz">
+    height="300px"
+    gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+    src="/public/bg_about.jpg"
+    alt="Background of About Section"
+  >
     <v-container class="fill-height">
-      <v-row
-        class="justify-center align-center flex-column-reverse flex-md-row"
-      >
+      <v-row class="justify-center align-center flex-column-reverse flex-md-row">
         <v-col cols="12" md="6">
-          <h1 class="text-h2 text-center"> <b> About Edumatch</b></h1>
-          <span class="mb-8 font-weight-thin">
-
-Edumatch is a web-based platform that connects learners with verified tutors based on subject, availability, and location. It offers session bookings, real-time messaging, secure payments, and progress tracking—making learning flexible, accessible, and convenient. Learners can browse tutor profiles, view qualifications, and book sessions that fit their goals, while tutors can share their knowledge, earn income, and support others' academic growth. EduMatch brings organized, personalized learning to everyone.</span>
+          <h1 class="text-h4 text-center font-weight-bold">
+            <strong> About <span class="text-h4 font-weight-bold edu">
+      <span class="text-blue-lighten-2"><b>Edu</b></span>
+      <span class="text-blue-darken-4"><b>Match</b></span>
+      </span> </strong>
+          </h1>
+          <p class="mb-5 font-weight-thin justified-text">
+            Edumatch is a web-based platform that connects learners with verified tutors
+            based on subject, availability, and location. It offers session bookings,
+            real-time messaging, secure payments, and progress tracking—making learning
+            flexible, accessible, and convenient. Learners can browse tutor profiles,
+            view qualifications, and book sessions that fit their goals, while tutors
+            can share their knowledge, earn income, and support others' academic growth.
+            EduMatch brings organized, personalized learning to everyone.
+          </p>
         </v-col>
-
       </v-row>
     </v-container>
   </v-parallax>
 
-  <!-- OUR MISSION AND VISION -->
-  <v-row class="mb-8" dense>
-    <v-col cols="12" md="6">
-      <v-card class="pa-4" :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-3'" elevation="3">
-        <h2 class="text-h5 font-weight-bold mb-2">Our Mission</h2>
-        <p>
-          To connect learners and tutors through a secure, flexible, and user-friendly web platform that supports personalized learning, promotes growth, and makes education accessible to all.
-        </p>
-      </v-card>
-    </v-col>
-    <v-col cols="12" md="6">
-      <v-card class="pa-4" :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-3'" elevation="3">
-        <h2 class="text-h5 font-weight-bold mb-2">Our Vision</h2>
-        <p>
-          To become a trusted learning hub where individuals can easily share knowledge, develop skills, and build meaningful educational connections anytime, anywhere.
-        </p>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-container class="py-5">
+    <v-row justify="center" class="text-center" >
+      <!-- MISSION -->
+      <v-col cols="12" sm="6">
+        <v-card class="rounded-lg mission-card pa-4 hover-card" :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'" elevation="5">
+          <div class="icon-wrapper red lighten-2">
+            <v-icon color="cyan-lighten-1" size="36">mdi-rocket-launch</v-icon>
+          </div>
+          <h3 class="text-info font-weight-bold text-h6 mt-4">MISSION</h3>
+          <p class="mt-2">
+            To connect learners and tutors through a secure, flexible, and user-friendly web platform that supports personalized learning, promotes growth, and makes education accessible to all.
+          </p>
+        </v-card>
+      </v-col>
+
+      <!-- VISION -->
+      <v-col cols="12" sm="6">
+        <v-card class="rounded-lg vision-card pa-4 hover-card" :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'" elevation="5">
+          <div class="icon-wrapper light-blue lighten-1">
+            <v-icon color="cyan-lighten-1" size="36">mdi-eye</v-icon>
+          </div>
+          <h3 class="text-light-blue-darken-2 font-weight-bold text-h6 mt-4">VISION</h3>
+          <p class="mt-2">
+            To become a trusted learning hub where individuals can easily share knowledge, develop skills, and build meaningful educational connections anytime, anywhere.
+          </p>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 
 
   <!-- MEET THE TEAM -->
   <v-sheet
     :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-2'"
-    elevation="2"
     class="rounded-lg pa-8 mb-8"
   >
-    <h1 class="text-center text-h4 mb-5 team">Meet Our Team</h1>
+    <h1 class="text-center text-h4 mb-5 team"> <b> Meet Our Team</b></h1>
     <v-row>
       <v-col cols="12" sm="4">
         <v-card
@@ -322,7 +340,7 @@ Edumatch is a web-based platform that connects learners with verified tutors bas
       <div v-show="show">
         <v-divider></v-divider>
 
-        <v-card-text>
+        <v-card-text class="justified-text">
           
           As a frontend developer, I focus on making EduMatch simple, smooth, and easy to use. I enjoy bringing our designs to life and making sure every tap, swipe, and scroll works naturally. My goal is to create an interface that’s intuitive, responsive, and helps users accomplish their tasks with ease.
         </v-card-text>
@@ -368,7 +386,7 @@ Edumatch is a web-based platform that connects learners with verified tutors bas
       <div v-show="isshow">
         <v-divider></v-divider>
 
-        <v-card-text>
+        <v-card-text class="justified-text">
           As the system analyst, I gather the needs of our users and turn them into clear, workable plans for the team. I make sure EduMatch is not just well-built, but also useful and aligned with what tutors and learners actually need. I love connecting ideas and making sure everything fits together.
         </v-card-text>
       </div>
@@ -413,7 +431,7 @@ Edumatch is a web-based platform that connects learners with verified tutors bas
       <div v-show="showis">
         <v-divider></v-divider>
 
-        <v-card-text>
+        <v-card-text class="justified-text">
       I help build the user interface of EduMatch, ensuring it’s both functional and visually appealing. I focus on how each element looks and works together to create a smooth experience. This allows learners and tutors to focus on what truly matters—learning and teaching.
         </v-card-text>
       </div>
@@ -592,6 +610,35 @@ Edumatch is a web-based platform that connects learners with verified tutors bas
 .team {
   font-weight:bolder;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: -40px;
+}
+.mission-card, .vision-card {
+  position: relative;
+  padding-top: 60px !important;
+  margin-top: 40px;
+}
+.justified-text {
+  text-align:justify
+}
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+}
+.hover-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+
 }
 
   </style>
