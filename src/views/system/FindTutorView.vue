@@ -137,15 +137,15 @@ const sortedTutors = computed(() => {
   <v-responsive>
     <v-app :theme="theme">
       <!-- NAVBAR -->
-      <v-app-bar class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
+      <v-app-bar class="px-3" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-2'">
         <v-row align="center" no-gutters class="w-100">
           <v-col cols="8" class="d-flex align-center">
             <v-img src="/public/Edumatch_logo.png" max-width="60" class="mr-2" />
             <span class="text-h6 font-weight-bold">
-              <b>Edu</b><span class="text-primary"><b>Match</b></span>
+              <b>Edu</b><span class="text-cyan-darken-1"><b>Match</b></span>
             </span>
           </v-col>
-          <v-col cols="4" class="d-flex justify-end align-center">
+          <v-col cols="4" class="d-flex justify-end align-center" >
             <v-text-field dense hide-details rounded="xl" variant="solo" density="compact" placeholder="Search"
               prepend-inner-icon="mdi-magnify" style="max-width: 220px;" />
             <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
@@ -158,7 +158,8 @@ const sortedTutors = computed(() => {
 
       <!-- MAIN -->
       <v-main>
-          <v-container fluid class="mt-0 pt-0 gradient-card">
+        
+          <v-container fluid class="mt-0 pt-0 py-10 gradient-card">
             <div style="display: flex; align-items: flex-start; gap: 16px; height: calc(100vh - 100px);">
               <!-- FILTER SIDEBAR -->
               <v-col cols="12" md="3">
@@ -212,14 +213,14 @@ const sortedTutors = computed(() => {
               </v-col>
 
               <!-- TUTOR RESULTS WRAPPED INSIDE A CARD -->
-              <v-col cols="12" md="9" style="overflow-y: auto; max-height: calc(100vh - 100px);">
+              <v-col cols="12" md="9" style="overflow-y: auto; max-height: calc(100vh - 20px);">
                 <!-- Outer card wrapper with bg -->
                 <v-card class="pa-4 mt-3" elevation="2" rounded="lg" style="background-color: #f5f5f5;">
 
                   <!-- Toggle button card with bg -->
-                  <v-card class="mb-4 pa-3" elevation="1" rounded="lg" style="background-color: #ffffff;">
-                    <v-btn-toggle v-model="activeTab" rounded group>
-                      <v-btn value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
+                  <v-card class="mb-4 " elevation="1" rounded="lg" style="background-color: #ffffff;" >
+                    <v-btn-toggle v-model="activeTab" rounded group >
+                      <v-btn  value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
                       <v-btn value="recent" :class="{ 'active-tab': activeTab === 'recent' }">Most Recent</v-btn>
                       <v-btn value="popular" :class="{ 'active-tab': activeTab === 'popular' }">Popular Tutor</v-btn>
                     </v-btn-toggle>
@@ -328,7 +329,7 @@ const sortedTutors = computed(() => {
               <v-col cols="12" sm="4" class="mb-4">
                 <h5 class="text-body-2 font-weight-medium mb-2"><b>Cristina Berwan</b></h5>
                 <div class="d-flex align-center mb-1 text-caption">
-                  <v-icon color="blue" size="18" class="me-2">mdi-facebook</v-icon> cristina
+                  <v-icon color="blue" size="18" class="me-2">mdi-facebook</v-icon> Cristina Berwan
                 </div>
                 <div class="d-flex align-center mb-1 text-caption">
                   <v-icon color="blue" size="18" class="me-2">mdi-instagram</v-icon> @shas.shee
@@ -380,7 +381,8 @@ const sortedTutors = computed(() => {
 }
 
 .gradient-card {
-  background: linear-gradient(135deg, #0129879d, #dfe7fd, #5B74B4);
+  background: linear-gradient(135deg, #ffffff, #dfe7fd, #fff7f7);
   color: white;
+  height: 900px;
 }
 </style>

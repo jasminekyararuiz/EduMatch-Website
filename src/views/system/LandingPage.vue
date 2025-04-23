@@ -55,7 +55,7 @@ const steps = [
           ></v-img>
           <span class="text-h6 font-weight-bold edu">
             <span class="text-blue-lighten-5"><b>Edu</b></span>
-            <span class="text-blue-lighten-3"><b>Match</b></span>
+            <span class="text-teal-lighten-2"><b>Match</b></span>
           </span>
         </v-col>
 
@@ -319,13 +319,14 @@ const steps = [
               </v-col>
             </v-row>
           </v-container>
-
+        </v-container>
+      </v-container>
           <!-- MEET THE TEAM -->
           <v-sheet
             :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-2'"
-            class="rounded-lg pa-8 mb-8"
+            class="pa-8 mb-8"
           >
-            <h1 class="text-center text-h4 mb-5 team"><b> Meet Our Team</b></h1>
+            <h1 class="text-center text-h4  mt-5 mb-5 team"><b> Meet Our Team</b></h1>
             <v-row>
               <v-col cols="12" sm="4">
                 <v-card class="mx-auto" max-width="350">
@@ -453,23 +454,22 @@ const steps = [
               </v-col>
             </v-row>
           </v-sheet>
-        </v-container>
-      </v-container>
+ 
     </v-main>
 
     <v-footer
       :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'"
       :class="theme === 'light' ? 'text-black' : 'text-white'"
     >
-      <v-container fluid>
+      <v-container fluid >
         <v-row align="center" justify="space-between">
           <!-- Left side: Logo and Tagline -->
           <v-col cols="12" md="4" class="d-flex flex-column align-center">
             <v-img class="mx-auto mb-2 mt-5 px-5" src="/public/Edumatch_logo.png" width="30%">
             </v-img>
             <span class="text-h3 font-weight-bold footer">
-              <span class="text-blue-lighten-2"><b>Edu</b></span>
-              <span class="text-blue-darken-4"><b>Match</b></span>
+              <span class="text-blue-lighten-1"><b>Edu</b></span>
+              <span class="text-indigo-darken-4"><b>Match</b></span>
             </span>
             <p class="text-subtitle-2 text-grey-darken-1"><i>Turn Knowledge Into Opportunity</i></p>
           </v-col>
