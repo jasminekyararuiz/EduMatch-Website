@@ -173,37 +173,19 @@ const retakePhoto = () => {
                   <v-text-field label="Subject to Teach" variant="outlined" dense />
 
                   <v-row>
-                    <v-col
-                      ><v-select label="Month" :items="months" variant="outlined" dense
-                    /></v-col>
+                    <v-col><v-select label="Month" :items="months" variant="outlined" dense /></v-col>
                     <v-col><v-select label="Day" :items="days" variant="outlined" dense /></v-col>
                     <v-col><v-select label="Year" :items="years" variant="outlined" dense /></v-col>
                   </v-row>
 
                   <v-row>
-                    <v-col
-                      ><v-text-field label="hours" type="number" variant="outlined" dense
-                    /></v-col>
-                    <v-col
-                      ><v-text-field label="minutes" type="number" variant="outlined" dense
-                    /></v-col>
-                    <v-col
-                      ><v-text-field label="seconds" type="number" variant="outlined" dense
-                    /></v-col>
+                    <v-col><v-text-field label="hours" type="number" variant="outlined" dense /></v-col>
+                    <v-col><v-text-field label="minutes" type="number" variant="outlined" dense /></v-col>
+                    <v-col><v-text-field label="seconds" type="number" variant="outlined" dense /></v-col>
                   </v-row>
 
-                  <v-select
-                    label="Time of Day"
-                    :items="['Morning', 'Afternoon', 'Evening']"
-                    variant="outlined"
-                    dense
-                  />
-                  <v-select
-                    label="Teaching Mode"
-                    :items="['Online', 'Face-to-face']"
-                    variant="outlined"
-                    dense
-                  />
+                  <v-select label="Time of Day" :items="['Morning', 'Afternoon', 'Evening']" variant="outlined" dense />
+                  <v-select label="Teaching Mode" :items="['Online', 'Face-to-face']" variant="outlined" dense />
 
                   <v-row>
                     <v-col>
@@ -360,12 +342,8 @@ const retakePhoto = () => {
                   <!-- Portfolio Upload -->
                   <v-card class="pa-3 mt-4"  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'">
                     <div class="text-subtitle-2 font-weight-bold">Portfolio</div>
-                    <v-file-input
-                      label="Upload Portfolio"
-                      show-size
-                      variant="solo-inverted"
-                      prepend-icon="mdi-upload"
-                    />
+                    <v-file-input label="Upload Portfolio" show-size variant="solo-inverted"
+                      prepend-icon="mdi-upload" />
                     <p class="text-caption mt-1">
                       Supports: pdf, jpg, docx, pptx<br />
                       Maximum file size: 20 mb
@@ -490,6 +468,7 @@ const retakePhoto = () => {
 .v-application {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .selfie-video {
   width: 100%;
   max-height: 300px;
@@ -512,6 +491,7 @@ const retakePhoto = () => {
 .gradient-dark {
   background: linear-gradient(to bottom, #1f1f1f, #2b2b2b);
 }
+
 .filter-sidebar {
   position: sticky;
   background-color: #172e46;
