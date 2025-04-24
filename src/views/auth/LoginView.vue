@@ -6,7 +6,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 import { useDisplay, useTheme } from 'vuetify'
 import { computed } from 'vue'
 
-const { Ismobile } = useDisplay()
+const { ismobile } = useDisplay()
 const theme = useTheme()
 const isDark = computed(() => theme.global.name.value === 'dark')
 
