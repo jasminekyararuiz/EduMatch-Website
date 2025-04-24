@@ -7,6 +7,7 @@ const isPasswordVisible = ref(false)
 const formDataDefault = {
   email: '',
   password: '',
+  role: '',
 }
 
 const formData = ref({
@@ -50,9 +51,11 @@ const onFormSubmit = () => {
     <v-row>
       <v-col class="text-center">
         <v-select
+        v-model="formData.role"
           clearable
           label="Role"
           :items="['Learner', 'Tutor']"
+           :rules="[roleValidator]"
           variant="underlined"
           width="40%"
         ></v-select>

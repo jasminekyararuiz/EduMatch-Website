@@ -2,9 +2,9 @@
 import AppLayout from '@/components/layout/AppLayout.vue'
 import RegistrationForm from '@/components/auth/RegistrationForm.vue'
 import { useDisplay } from 'vuetify'
-
 const { mobile } = useDisplay()
 </script>
+
 
 <template>
   
@@ -32,10 +32,16 @@ const { mobile } = useDisplay()
       </v-row>
     </template>
   </AppLayout>
+
+
 </template>
+
+
+
 
 <style scoped>
 .edu {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
+
 </style>
