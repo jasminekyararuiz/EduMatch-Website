@@ -29,20 +29,6 @@ function onClick() {
     </v-container>
   </v-main>
 
-      <v-main>
-        <v-container fluid class="fill-height d-flex align-center justify-center" >
-          <slot name="content"> </slot>
-        </v-container>
-      </v-main>
-
-
-      <v-footer  class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
-        <v-layout class="overflow-visible" style="height: 56px;">
-
-        </v-layout>
-        <span class="mx-auto">2025 - EduMatch</span>
-      </v-footer>
-
       <v-footer :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'" :class="theme === 'light' ? 'text-black' : 'text-white'">
 
   <v-container fluid>

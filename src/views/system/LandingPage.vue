@@ -65,7 +65,7 @@ const steps = [
           <v-btn variant="text" class="text-body-2 ml-4">How it works</v-btn>
           <v-btn variant="text" class="text-body-2 ml-4">About Us</v-btn>
 
-          <RouterLink to="/login">
+          <RouterLink to="/">
             <v-btn
               rounded="xl"
               variant="elevated"
@@ -453,7 +453,7 @@ const steps = [
               </v-col>
             </v-row>
           </v-sheet>
-
+ 
     </v-main>
 
     <v-footer

@@ -1,60 +1,67 @@
 <script setup>
+import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
 
-const email = ref('')
-const password = ref('')
-const showPassword = ref(false)
-const formRef = ref(null)
-
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
+const refVForm = ref()
+const isPasswordVisible = ref(false)
+const formDataDefault = {
+  email: '',
+  password: '',
+  role: '',
 }
 
-const submitForm = () => {
-  if (formRef.value?.validate()) {
-    console.log('Email:', email.value)
-    console.log('Password:', password.value)
-    // do something with the form
-  }
+const formData = ref({
+  ...formDataDefault
+})
+
+const onLogin = () => {
+alert (formData.value.password) 
+
+} 
+
+const onFormSubmit = () => {
+  refVForm.value?.validate().then(({ valid }) => {
+    if (valid)
+    onLogin()
+  })
 }
 </script>
 
-
 <template>
+  <v-form ref="refVForm" @submit.preven="onFormSubmit">
+    <v-text-field
+      v-model="formData.email"
+      prepend-inner-icon="mdi-email"
+      label="Email"
+      variant="outlined"
+      :rules="[requiredValidator, emailValidator]"
+    ></v-text-field>
 
-    <v-form @submit.prevent="submitForm" ref="formRef" >
-      <v-text-field
-        v-model="email"
-        type="email"
-        label="Email"
-        append-inner-icon="mdi-account"
-        outlined
-        dense
-        required
-      ></v-text-field>
+    <v-text-field
+      v-model="formData.password"
+      prepend-inner-icon="mdi-lock"
+      label="Password"
+      variant="outlined"
+      :type="isPasswordVisible ? 'text' : 'password'"
+      :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+      @click:append-inner="isPasswordVisible = !isPasswordVisible"
+      :rule="[requireValidator]"
+    ></v-text-field>
 
-      <v-text-field
-        v-model="password"
-        :type="showPassword ? 'text' : 'password'"
-        label="Password"
-        :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        @click:append-inner="togglePasswordVisibility"
-        outlined
-        dense
-        required
-      ></v-text-field>
+    <v-row>
+      <v-col class="text-center">
+        <v-select
+        v-model="formData.role"
+          clearable
+          label="Role"
+          :items="['Learner', 'Tutor']"
+           :rules="[roleValidator]"
+          variant="underlined"
+          width="40%"
+        ></v-select>
+      </v-col>
+    </v-row>
 
-      <v-select
-                :items="['Learner', 'Tutor']"
-                  label="Role"
-                  class="role-select"
-                  required
-                  variant="underlined"
-                  width="60%">
-
-      </v-select>
-
-      <v-btn class="bg-primary" rounded="xl" type="submit" block>Log In</v-btn>
-    </v-form>
-
+    <v-btn class="bg-primary" rounded="xl" type="submit" block> <b>Log In</b></v-btn>
+  </v-form>
 </template>
