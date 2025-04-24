@@ -46,12 +46,7 @@ const steps = [
       <v-row align="center" no-gutters class="w-100">
         <!-- Logo and Brand -->
         <v-col cols="8" class="d-flex align-center">
-          <v-img
-            src="/public/Edumatch_logo.png"
-            alt="EduMatch Logo"
-            max-width="60"
-            class="mr-2"
-          ></v-img>
+          <v-img src="/public/Edumatch_logo.png" alt="EduMatch Logo" max-width="60" class="mr-2"></v-img>
           <span class="text-h6 font-weight-bold edu">
             <span class="text-blue-lighten-5"><b>Edu</b></span>
             <span class="text-teal-lighten-2"><b>Match</b></span>
@@ -66,32 +61,16 @@ const steps = [
           <v-btn variant="text" class="text-body-2 ml-4">About Us</v-btn>
 
           <RouterLink to="/">
-            <v-btn
-              rounded="xl"
-              variant="elevated"
-              density="comfortable"
-              color="cyan-darken-3"
-              class="text-white"
-              ><b>Log In</b></v-btn
-            >
+            <v-btn rounded="xl" variant="elevated" density="comfortable" color="cyan-darken-3" class="text-white"><b>Log
+                In</b></v-btn>
           </RouterLink>
           <RouterLink to="/registration">
-            <v-btn
-              rounded="xl"
-              variant="elevated"
-              density="comfortable"
-              color="cyan-darken-3"
-              class="text-white ml-2"
-              ><b>Sign Up</b></v-btn
-            >
+            <v-btn rounded="xl" variant="elevated" density="comfortable" color="cyan-darken-3"
+              class="text-white ml-2"><b>Sign Up</b></v-btn>
           </RouterLink>
           <v-spacer></v-spacer>
-          <v-btn
-            :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-            variant="solo"
-            slim
-            @click="onClick"
-          ></v-btn>
+          <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" variant="solo" slim
+            @click="onClick"></v-btn>
         </v-col>
       </v-row>
     </v-app-bar>
@@ -127,11 +106,8 @@ const steps = [
 
         <!-- Why Choose Us -->
         <v-container fluid class="mt-5">
-          <v-sheet
-            :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'"
-            elevation="2"
-            class="rounded-lg pa-8"
-          >
+          <v-sheet :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'" elevation="2"
+            class="rounded-lg pa-8">
             <h1 class="text-center mb-5">
               <b>Why choose </b>
               <span class="text-h4 font-weight-bold edu">
@@ -165,6 +141,7 @@ const steps = [
         <v-container fluid class="pa-0 mb-5">
           <div :style="{ backgroundColor: theme === 'light' ? '#E3F2FD' : '#1E1E1E' }">
             <v-container class="py-12">
+
               <!-- TITLE + DESCRIPTION -->
               <v-row justify="center">
                 <v-col cols="12" class="text-center">
@@ -179,26 +156,16 @@ const steps = [
 
               <!-- First Row: Steps 1–3 -->
               <v-row class="mt-8" justify="center" align="stretch">
-                <v-col
-                  v-for="(step, index) in steps.slice(0, 3)"
-                  :key="index"
-                  cols="12"
-                  sm="4"
-                  md="3"
-                  class="d-flex"
-                >
+                <v-col v-for="(step, index) in steps.slice(0, 3)" :key="index" cols="12" sm="4" md="3" class="d-flex">
                   <v-card class="pa-6 text-center" elevation="2">
                     <!-- Number Box -->
-                    <div
-                      class="mx-auto mb-5 text-h6 font-weight-bold d-flex align-center justify-center"
-                      :style="{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '8px',
-                        backgroundColor: theme === 'light' ? '#1976d2' : '#90caf9',
-                        color: theme === 'light' ? '#fff' : '#000',
-                      }"
-                    >
+                    <div class="mx-auto mb-5 text-h6 font-weight-bold d-flex align-center justify-center" :style="{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '8px',
+                      backgroundColor: theme === 'light' ? '#1976d2' : '#90caf9',
+                      color: theme === 'light' ? '#fff' : '#000',
+                    }">
                       {{ index + 1 }}
                     </div>
                     <!-- Title & Description -->
@@ -210,26 +177,16 @@ const steps = [
 
               <!-- Second Row: Steps 4–5 -->
               <v-row justify="center" align="stretch">
-                <v-col
-                  v-for="(step, index) in steps.slice(3)"
-                  :key="index + 3"
-                  cols="12"
-                  sm="4"
-                  md="3"
-                  class="d-flex"
-                >
+                <v-col v-for="(step, index) in steps.slice(3)" :key="index + 3" cols="12" sm="4" md="3" class="d-flex">
                   <v-card class="pa-6 text-center" elevation="2">
                     <!-- Number Box -->
-                    <div
-                      class="mx-auto mb-5 text-h6 font-weight-bold d-flex align-center justify-center"
-                      :style="{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '8px',
-                        backgroundColor: theme === 'light' ? '#1976d2' : '#90caf9',
-                        color: theme === 'light' ? '#fff' : '#000',
-                      }"
-                    >
+                    <div class="mx-auto mb-5 text-h6 font-weight-bold d-flex align-center justify-center" :style="{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '8px',
+                      backgroundColor: theme === 'light' ? '#1976d2' : '#90caf9',
+                      color: theme === 'light' ? '#fff' : '#000',
+                    }">
                       {{ index + 4 }}
                     </div>
                     <!-- Title & Description -->
@@ -244,14 +201,9 @@ const steps = [
 
         <v-container fluid class="mt-5">
           <!-- WHO WE ARE -->
-          <v-parallax
-            :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'"
-            elevation="2"
-            height="300px"
-            gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
-            src="/public/bg_about.jpg"
-            alt="Background of About Section"
-          >
+          <v-parallax :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'" elevation="2" height="300px"
+            gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)" src="/public/bg_about.jpg"
+            alt="Background of About Section">
             <v-container class="fill-height">
               <v-row class="justify-center align-center flex-column-reverse flex-md-row">
                 <v-col cols="12" md="6">
@@ -282,11 +234,8 @@ const steps = [
             <v-row justify="center" class="text-center">
               <!-- MISSION -->
               <v-col cols="12" sm="6">
-                <v-card
-                  class="rounded-lg mission-card pa-4 hover-card"
-                  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'"
-                  elevation="5"
-                >
+                <v-card class="rounded-lg mission-card pa-4 hover-card"
+                  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'" elevation="5">
                   <div class="icon-wrapper red lighten-2">
                     <v-icon color="cyan-lighten-1" size="36">mdi-rocket-launch</v-icon>
                   </div>
@@ -301,11 +250,8 @@ const steps = [
 
               <!-- VISION -->
               <v-col cols="12" sm="6">
-                <v-card
-                  class="rounded-lg vision-card pa-4 hover-card"
-                  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'"
-                  elevation="5"
-                >
+                <v-card class="rounded-lg vision-card pa-4 hover-card"
+                  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'" elevation="5">
                   <div class="icon-wrapper light-blue lighten-1">
                     <v-icon color="cyan-lighten-1" size="36">mdi-eye</v-icon>
                   </div>
@@ -320,147 +266,116 @@ const steps = [
           </v-container>
         </v-container>
       </v-container>
-          <!-- MEET THE TEAM -->
-          <v-sheet
-            :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-2'"
-            class="pa-8 mb-8"
-          >
-            <h1 class="text-center text-h4  mt-5 mb-5 team"><b> Meet Our Team</b></h1>
-            <v-row>
-              <v-col cols="12" sm="4">
-                <v-card class="mx-auto" max-width="350">
-                  <v-img height="197px" src="/public/jasmine.jpg" alt="Jasmine Kyara Ruiz"></v-img>
+      <!-- MEET THE TEAM -->
+      <v-sheet :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-2'" class="pa-8 mb-8">
+        <h1 class="text-center text-h4  mt-5 mb-5 team"><b> Meet Our Team</b></h1>
+        <v-row>
+          <v-col cols="12" sm="4">
+            <v-card class="mx-auto" max-width="350">
+              <v-img height="197px" src="/public/jasmine.jpg" alt="Jasmine Kyara Ruiz"></v-img>
 
-                  <v-card-title>
-                    <b>Jasmine Kyara Ruiz</b>
-                  </v-card-title>
+              <v-card-title>
+                <b>Jasmine Kyara Ruiz</b>
+              </v-card-title>
 
-                  <v-card-subtitle> Frontend Developer </v-card-subtitle>
+              <v-card-subtitle> Frontend Developer </v-card-subtitle>
 
-                  <v-card-actions>
-                    <v-btn color="indigo-darken-3" text="Read More" @click="show = !show"></v-btn>
+              <v-card-actions>
+                <v-btn color="indigo-darken-3" text="Read More" @click="show = !show"></v-btn>
 
-                    <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
 
-                    <v-btn
-                      :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                      @click="show = !show"
-                    ></v-btn>
-                  </v-card-actions>
+                <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
+              </v-card-actions>
 
-                  <v-expand-transition>
-                    <div v-show="show">
-                      <v-divider></v-divider>
+              <v-expand-transition>
+                <div v-show="show">
+                  <v-divider></v-divider>
 
-                      <v-card-text class="justified-text">
-                        As a frontend developer, I focus on making EduMatch simple, smooth, and easy
-                        to use. I enjoy bringing our designs to life and making sure every tap,
-                        swipe, and scroll works naturally. My goal is to create an interface that’s
-                        intuitive, responsive, and helps users accomplish their tasks with ease.
-                      </v-card-text>
-                    </div>
-                  </v-expand-transition>
-                </v-card>
-              </v-col>
-              <v-col cols="12" sm="4">
-                <v-card class="mx-auto" max-width="400">
-                  <v-img
-                    height="197px"
-                    src="/public/kathryn.jpg"
-                    alt="Cristina Berwan"
-                    cover
-                  ></v-img>
+                  <v-card-text class="justified-text">
+                    As a frontend developer, I focus on making EduMatch simple, smooth, and easy
+                    to use. I enjoy bringing our designs to life and making sure every tap,
+                    swipe, and scroll works naturally. My goal is to create an interface that’s
+                    intuitive, responsive, and helps users accomplish their tasks with ease.
+                  </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card>
+          </v-col>
+          <v-col cols="12" sm="4">
+            <v-card class="mx-auto" max-width="400">
+              <v-img height="197px" src="/public/kathryn.jpg" alt="Cristina Berwan" cover></v-img>
 
-                  <v-card-title>
-                    <b>Cristina Berwan</b>
-                  </v-card-title>
+              <v-card-title>
+                <b>Cristina Berwan</b>
+              </v-card-title>
 
-                  <v-card-subtitle> System Analyst </v-card-subtitle>
+              <v-card-subtitle> System Analyst </v-card-subtitle>
 
-                  <v-card-actions>
-                    <v-btn
-                      color="indigo-darken-3"
-                      text="Read More"
-                      @click="isshow = !isshow"
-                    ></v-btn>
+              <v-card-actions>
+                <v-btn color="indigo-darken-3" text="Read More" @click="isshow = !isshow"></v-btn>
 
-                    <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
 
-                    <v-btn
-                      :icon="isshow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                      @click="isshow = !isshow"
-                    ></v-btn>
-                  </v-card-actions>
+                <v-btn :icon="isshow ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="isshow = !isshow"></v-btn>
+              </v-card-actions>
 
-                  <v-expand-transition>
-                    <div v-show="isshow">
-                      <v-divider></v-divider>
+              <v-expand-transition>
+                <div v-show="isshow">
+                  <v-divider></v-divider>
 
-                      <v-card-text class="justified-text">
-                        As the system analyst, I gather the needs of our users and turn them into
-                        clear, workable plans for the team. I make sure EduMatch is not just
-                        well-built, but also useful and aligned with what tutors and learners
-                        actually need. I love connecting ideas and making sure everything fits
-                        together.
-                      </v-card-text>
-                    </div>
-                  </v-expand-transition>
-                </v-card>
-              </v-col>
-              <v-col cols="12" sm="4">
-                <v-card class="mx-auto" max-width="400">
-                  <v-img
-                    height="197px"
-                    src="/public/kai.jpg"
-                    alt="Leanheit May Miñoza"
-                    cover
-                  ></v-img>
+                  <v-card-text class="justified-text">
+                    As the system analyst, I gather the needs of our users and turn them into
+                    clear, workable plans for the team. I make sure EduMatch is not just
+                    well-built, but also useful and aligned with what tutors and learners
+                    actually need. I love connecting ideas and making sure everything fits
+                    together.
+                  </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card>
+          </v-col>
+          
+          <v-col cols="12" sm="4">
+            <v-card class="mx-auto" max-width="400">
+              <v-img height="197px" src="/public/kai.jpg" alt="Leanheit May Miñoza" cover></v-img>
 
-                  <v-card-title>
-                    <b>Leanheit May Miñoza</b>
-                  </v-card-title>
+              <v-card-title>
+                <b>Leanheit May Miñoza</b>
+              </v-card-title>
 
-                  <v-card-subtitle> Frontend Developer </v-card-subtitle>
+              <v-card-subtitle> Frontend Developer </v-card-subtitle>
 
-                  <v-card-actions>
-                    <v-btn
-                      color="indigo-darken-3"
-                      text="Read More"
-                      @click="showis = !showis"
-                    ></v-btn>
+              <v-card-actions>
+                <v-btn color="indigo-darken-3" text="Read More" @click="showis = !showis"></v-btn>
 
-                    <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
 
-                    <v-btn
-                      :icon="showis ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                      @click="showis = !showis"
-                    ></v-btn>
-                  </v-card-actions>
+                <v-btn :icon="showis ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="showis = !showis"></v-btn>
+              </v-card-actions>
 
-                  <v-expand-transition>
-                    <div v-show="showis">
-                      <v-divider></v-divider>
+              <v-expand-transition>
+                <div v-show="showis">
+                  <v-divider></v-divider>
 
-                      <v-card-text class="justified-text">
-                        I help build the user interface of EduMatch, ensuring it’s both functional
-                        and visually appealing. I focus on how each element looks and works together
-                        to create a smooth experience. This allows learners and tutors to focus on
-                        what truly matters—learning and teaching.
-                      </v-card-text>
-                    </div>
-                  </v-expand-transition>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-sheet>
- 
+                  <v-card-text class="justified-text">
+                    I help build the user interface of EduMatch, ensuring it’s both functional
+                    and visually appealing. I focus on how each element looks and works together
+                    to create a smooth experience. This allows learners and tutors to focus on
+                    what truly matters—learning and teaching.
+                  </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-sheet>
+
     </v-main>
 
-    <v-footer
-      :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'"
-      :class="theme === 'light' ? 'text-black' : 'text-white'"
-    >
-      <v-container fluid >
+    <v-footer :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'"
+      :class="theme === 'light' ? 'text-black' : 'text-white'">
+      <v-container fluid>
         <v-row align="center" justify="space-between">
           <!-- Left side: Logo and Tagline -->
           <v-col cols="12" md="4" class="d-flex flex-column align-center">
@@ -510,14 +425,14 @@ const steps = [
                   Miñoza
                 </div>
                 <div class="d-flex align-center mb-1 text-caption">
-                  <v-icon color="blue" size="18" class="me-2">mdi-instagram</v-icon> lnheitmy
+                  <v-icon color="blue" size="18" class="me-2">mdi-instagram</v-icon> @lnheitmy
                 </div>
                 <div class="d-flex align-center mb-1 text-caption">
-                  <v-icon color="blue" size="18" class="me-2">mdi-twitter</v-icon> lenit
+                  <v-icon color="blue" size="18" class="me-2">mdi-twitter</v-icon> @lenit
                 </div>
                 <div class="d-flex align-center mb-1 text-caption">
                   <v-icon color="blue" size="18" class="me-2">mdi-gmail</v-icon>
-                  leanheitmay@gmail.com
+                  leanheitmayminoza@gmail.com
                 </div>
                 <div class="d-flex align-center text-caption">
                   <v-icon color="blue" size="18" class="me-2">mdi-linkedin</v-icon> Leanheit May
@@ -552,9 +467,7 @@ const steps = [
         <!-- Divider & Copyright -->
         <v-divider class="my-6"></v-divider>
         <v-row justify="center">
-          <span class="text-caption text-grey-darken-1"
-            >© 2025 EduMatch — All Rights Reserved.</span
-          >
+          <span class="text-caption text-grey-darken-1">© 2025 EduMatch — All Rights Reserved.</span>
         </v-row>
       </v-container>
     </v-footer>
@@ -565,9 +478,11 @@ const steps = [
 .text-white {
   color: white !important;
 }
+
 .mt-n10 {
   margin-top: -80px;
 }
+
 .hero-section {
   position: relative;
 }
@@ -618,10 +533,12 @@ const steps = [
 .edu {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .team {
   font-weight: bolder;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .icon-wrapper {
   width: 60px;
   height: 60px;
@@ -633,21 +550,25 @@ const steps = [
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-top: -40px;
 }
+
 .mission-card,
 .vision-card {
   position: relative;
   padding-top: 60px !important;
   margin-top: 40px;
 }
+
 .justified-text {
   text-align: justify;
 }
+
 .hover-card {
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
 }
+
 .hover-card:hover {
   transform: translateY(-8px) scale(1.03);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
