@@ -2,15 +2,15 @@
 import AppLayout from '@/components/layout/AppLayout.vue'
 import RegistrationForm from '@/components/auth/RegistrationForm.vue'
 import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+const { ismobile } = useDisplay()
 </script>
 
 
 <template>
-  
+
   <AppLayout>
     <template #content>
-      
+
       <v-row :color="theme === 'light' ? 'blue-lighten-5' : 'blue-lighten-5'" :class="theme === 'light' ? 'text-black' : 'text-white'">
         <v-col cols="12" md="6" class="mx-auto">
           <v-card elevation="10" class="mx-auto" color="blue-lighten-5">

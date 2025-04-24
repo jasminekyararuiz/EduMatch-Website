@@ -14,6 +14,10 @@ const applySubjectFilter = () => {
   triggerSubjectSearch.value = !triggerSubjectSearch.value
 }
 
+// free‑text “others” inputs
+const subjectOther = ref('')
+const timeOther = ref('')
+
 
 const filters = ref({
   gender: { male: false, female: false },
@@ -28,7 +32,7 @@ const filters = ref({
   },
   time: { one: false, two: false, three: false, four: false, five: false },
   mode: { f2f: false, online: false },
-  area: '', // NEW: Area filter
+  area: '',
 })
 
 const allTutors = [
@@ -146,6 +150,10 @@ const filteredTutors = computed(() => {
       !Object.values(filters.value.subjects).includes(true) ||
       filters.value.subjects[tutor.major.toLowerCase()]
 
+    const subjectOtherFilter =
+      subjectOther.value.trim() === '' ||
+      tutor.major.toLowerCase().includes(subjectOther.value.toLowerCase())
+
 
     const timeFilter =
       !Object.values(filters.value.time).includes(true) ||
@@ -154,6 +162,11 @@ const filteredTutors = computed(() => {
       (filters.value.time.three && tutor.time === '3 hours') ||
       (filters.value.time.four && tutor.time === '4 hours') ||
       (filters.value.time.five && tutor.time === '5 hours')
+
+
+    const timeOtherFilter =
+      timeOther.value.trim() === '' ||
+      tutor.time.toLowerCase().includes(timeOther.value.toLowerCase())
 
     const modeFilter =
       (!filters.value.mode.f2f && !filters.value.mode.online) ||
@@ -164,7 +177,7 @@ const filteredTutors = computed(() => {
       filters.value.area.trim() === '' ||
       tutor.area.toLowerCase().includes(filters.value.area.toLowerCase())
 
-    return genderFilter && subjectFilter && timeFilter && modeFilter && areaFilter
+    return genderFilter && subjectFilter && timeFilter && modeFilter && areaFilter && subjectOtherFilter && timeOtherFilter
   })
 })
 
@@ -181,6 +194,7 @@ const sortedTutors = computed(() => {
 <template>
   <v-responsive>
     <v-app :theme="theme">
+
       <!-- NAVBAR -->
       <v-app-bar class="px-3" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-2'">
         <v-row align="center" no-gutters class="w-100">
@@ -203,9 +217,9 @@ const sortedTutors = computed(() => {
 
       <!-- MAIN -->
       <v-main>
-
         <v-container fluid class="mt-0 pt-0 py-10 gradient-card">
           <div style="display: flex; align-items: flex-start; gap: 16px; height: calc(100vh - 100px);">
+
             <!-- FILTER SIDEBAR -->
             <v-col cols="12" md="3">
               <v-card class="pa-4 mt-3 filter-sidebar" elevation="2">
@@ -213,6 +227,8 @@ const sortedTutors = computed(() => {
                 <v-divider class="my-4" />
                 <v-expansion-panels variant="accordion">
                   <v-expansion-panel>
+
+                    <!-- Gender -->
                     <v-expansion-panel-title>Gender</v-expansion-panel-title>
                     <v-expansion-panel-text>
                       <v-checkbox label="Male" v-model="filters.gender.male" dense />
@@ -220,6 +236,8 @@ const sortedTutors = computed(() => {
                     </v-expansion-panel-text>
                   </v-expansion-panel>
                   <v-expansion-panel>
+
+                    <!-- Subjects -->
                     <v-expansion-panel-title>Subject of Interest</v-expansion-panel-title>
                     <v-expansion-panel-text>
                       <v-checkbox label="English" v-model="filters.subjects.english" dense />
@@ -229,13 +247,16 @@ const sortedTutors = computed(() => {
                       <v-checkbox label="Abstract" v-model="filters.subjects.abstract" dense />
                       <v-checkbox label="Physics" v-model="filters.subjects.physics" dense />
                       <v-checkbox label="Programming" v-model="filters.subjects.programming" dense />
-                      <!-- 🆕 ADD THIS BUTTON BELOW -->
+                      <v-text-field v-model="subjectOther" dense hide-details placeholder="Others"
+                        prepend-inner-icon="mdi-magnify" class="mt-2" />
                       <v-btn block color="primary" class="mt-3" @click="applySubjectFilter">
                         Search Subjects
                         <v-icon end>mdi-magnify</v-icon>
                       </v-btn>
                     </v-expansion-panel-text>
                   </v-expansion-panel>
+
+                  <!-- Time -->
                   <v-expansion-panel>
                     <v-expansion-panel-title>Preferred Time</v-expansion-panel-title>
                     <v-expansion-panel-text>
@@ -244,8 +265,12 @@ const sortedTutors = computed(() => {
                       <v-checkbox label="3 hours" v-model="filters.time.three" dense />
                       <v-checkbox label="4 hours" v-model="filters.time.four" dense />
                       <v-checkbox label="5 hours" v-model="filters.time.five" dense />
+                      <v-text-field v-model="timeOther" dense hide-details placeholder="Others"
+                        prepend-inner-icon="mdi-timer" class="mt-2" />
                     </v-expansion-panel-text>
                   </v-expansion-panel>
+
+                  <!-- Learning Mode -->
                   <v-expansion-panel>
                     <v-expansion-panel-title>Learning Mode</v-expansion-panel-title>
                     <v-expansion-panel-text>
