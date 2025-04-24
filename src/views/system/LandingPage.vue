@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import { useDisplay } from 'vuetify'
+const { mobile } = useDisplay()
 const theme = ref('light')
 function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
@@ -63,7 +65,7 @@ const steps = [
           <v-btn variant="text" class="text-body-2 ml-4">How it works</v-btn>
           <v-btn variant="text" class="text-body-2 ml-4">About Us</v-btn>
 
-          <RouterLink to="/">
+          <RouterLink to="/login">
             <v-btn
               rounded="xl"
               variant="elevated"

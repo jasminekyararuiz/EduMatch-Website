@@ -39,7 +39,7 @@ const isDark = computed(() => theme.global.name.value === 'dark')
 
               <h5 class="text-center">
                 Don't have account?
-                <RouterLink class="text-primary" to="/registration">Click here to register</RouterLink>
+                <RouterLink class="text-primary" to="/signup">Click here to Sign Up</RouterLink>
               </h5>
              </v-card-text>
           </v-card>

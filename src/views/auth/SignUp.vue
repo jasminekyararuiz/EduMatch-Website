@@ -49,10 +49,10 @@ const signInWithTelegram = () => {
             </v-col>
 
            <v-app>
-    <v-main class="bg-cover " :style="{ backgroundImage: 'url(/ccis.jpg)' }">
-      <v-container class="mx-auto d-flex align-center justify-center fill-height">
+             <v-main class="bg-cover " :style="{ backgroundImage: 'url(/ccis.jpg)' }">
+         <v-container class="mx-auto d-flex align-center justify-center fill-height">
 
-       <v-card>
+         <v-card>
           <v-card-title>
             <v-col >
                 <div class="left-content">
@@ -95,7 +95,7 @@ const signInWithTelegram = () => {
               required
             ></v-text-field>
 
-<<<<<<< HEAD
+
             <v-text-field
               v-model="password"
               label="Password"
@@ -103,10 +103,6 @@ const signInWithTelegram = () => {
               prepend-inner-icon="mdi-lock"
               required
             ></v-text-field>
-=======
-                <v-btn class="bg-primary" rounded="xl" type="submit" block><b>Sign Up</b></v-btn>
-              </v-form>
->>>>>>> 6ead8cf71b88bf36b5b05ed5ccef4f5de930bcd1
 
             <v-text-field
               v-model="confirmPassword"
@@ -142,19 +138,21 @@ const signInWithTelegram = () => {
               Already have an account?
               <RouterLink class="text-primary" to="/login">Login</RouterLink>
             </div>
-          </v-form>
+            <v-form></v-form>
+
+
               </v-col>
 
           </v-card-title>
 
        </v-card>
-
-
-
-
       </v-container>
     </v-main>
     </v-app>
+      </v-row>
+
+
+
       </template>
       </AppLayout>
 </template>

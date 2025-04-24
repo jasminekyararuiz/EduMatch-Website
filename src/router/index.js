@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/auth/LoginView.vue'
-import RegistrationView from '@/views/auth/RegistrationView.vue'
+import RegistrationView from '@/views/auth/SignUp.vue'
 import LandingPage from '@/views/system/LandingPage.vue'
 import HowItWorks from '@/views/system/HowItWorks.vue'
 import TutorApplication from '@/views/system/TutorApplication.vue'
@@ -11,15 +11,12 @@ const router = createRouter({
   routes: [
 
     {
-<<<<<<< HEAD
-      path: '/',
-      name: 'home',
-      component:LandingPage,
-=======
+
+
       path: '/login',
       name: 'login',
       component: LoginView,
->>>>>>> 6ead8cf71b88bf36b5b05ed5ccef4f5de930bcd1
+
     },
     {
       path: '/signup',
@@ -27,17 +24,6 @@ const router = createRouter({
       component: RegistrationView,
     },
     {
-<<<<<<< HEAD
-      path: '/login',
-      name: 'login',
-      component: LoginView,
-    },
-    {
-         path: '/howitworks',
-         name: 'howitworks',
-       component: HowItWorks
-    },
-=======
       path: '/',
       name: 'landingpage',
       component: LandingPage,
@@ -59,7 +45,7 @@ const router = createRouter({
       name: 'findtutor',
       component: FindTutorView
     },
->>>>>>> 6ead8cf71b88bf36b5b05ed5ccef4f5de930bcd1
+
   ],
 })
 
