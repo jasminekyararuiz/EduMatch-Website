@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import FooterLayout from '@/components/layout/FooterLayout.vue'
 import { useDisplay } from 'vuetify'
 const { mobile } = useDisplay()
 const theme = ref('light')

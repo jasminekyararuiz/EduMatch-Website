@@ -26,13 +26,13 @@ const isDark = computed(() => theme.global.name.value === 'dark')
             </v-card-title>
 
             <v-card-text :class="isDark ? 'bg-grey-darken-4 text-white' : 'bg-surface-light text-black'">
-              <LoginForm />
+              <LoginForm> </LoginForm>
 
               <v-divider class="my-3" />
 
               <h5 class="text-center">
                 Don't have account?
-                <RouterLink class="text-primary" to="/registration">Click here to register</RouterLink>
+                <RouterLink class="text-primary" to="/signup">Click here to register</RouterLink>
               </h5>
             </v-card-text>
           </v-card>

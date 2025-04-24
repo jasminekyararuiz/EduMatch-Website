@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
+import RegistrationForm from '@/components/auth/RegistrationForm.vue'
 import { useDisplay } from 'vuetify'
 
 const { mobile } = useDisplay()
@@ -19,35 +20,7 @@ const { mobile } = useDisplay()
             </v-card-title>
 
             <v-card-text class="bg-surface-light pt-4">
-              <v-form fast-fail @submit.prevent>
-                <v-row>
-                  <v-col>
-                    <v-text-field label="First Name" variant="outlined"></v-text-field>
-                  </v-col>
-                  <v-col>
-                    <v-text-field label="Last Name" variant="outlined"></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-text-field label="Email" variant="outlined"></v-text-field>
-                <v-text-field label="Password" type="password" variant="outlined"></v-text-field>
-
-                <v-text-field
-                  label="Re-enter Password"
-                  class="text-end"
-                  type="password"
-                  variant="outlined"
-                >
-                </v-text-field>
-
-                <v-select
-                  clearable
-                  label="Role"
-                  :items="['Learner', 'Tutor']"
-                  variant="outlined"
-                ></v-select>
-
-                <v-btn class="bg-primary" rounded="xl" type="submit" block><b>Sign Up</b></v-btn>
-              </v-form>
+           <RegistrationForm> </RegistrationForm>
 
               <v-divider class="my-3"></v-divider>
               <h5 class="text-center">
