@@ -1,6 +1,13 @@
 <script setup>
-import { requiredValidator, emailValidator, passwordValidator, confirmedValidator } from '@/utils/validators'
+import {
+  requiredValidator,
+  emailValidator,
+  passwordValidator,
+  confirmedValidator,
+} from '@/utils/validators'
 import { ref } from 'vue'
+import AlertNotification from '@/components/common/AlertNotification.vue'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
 
 const formDataDefault = {
   firstname: '',
@@ -12,12 +19,41 @@ const formDataDefault = {
 }
 
 const formData = ref({ ...formDataDefault })
+const formAction = ref({ ...formActionDefault })
+
 const isPasswordVisible = ref(false)
 const isPasswordConfirmVisible = ref(false)
 const refVForm = ref()
 
-const onSubmit = () => {
-  alert(formData.value.password)
+const onSubmit = async () => {
+  formAction.value = { ...formActionDefault }
+  formAction.value.formProcess = true
+
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+    role: formData.value.role,
+    options: {
+      data: {
+        firstname: formData.value.firstname,
+        lastname: formData.value.lastname,
+        role: formData.value.role,
+      },
+    },
+  })
+
+  if (error) {
+    console.log(error)
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
+    console.log(data)
+    formAction.value.formSuccessMessage = 'Successfully Registered Account'
+    //add here more action
+    refVForm.value?.reset()
+  }
+
+  formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
@@ -25,12 +61,16 @@ const onFormSubmit = () => {
     if (valid) onSubmit()
   })
 }
-const roleValidator = value => !!value || 'Please select a role'
-
+const roleValidator = (value) => !!value || 'Please select a role'
 </script>
 
 <template>
-  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
+  <AlertNotification
+    :form-success-message="formAction.formSuccessMessage"
+    :form-error-message="formAction.ErrorMessage"
+  ></AlertNotification>
+
+  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
     <v-row>
       <v-col>
         <v-text-field
@@ -82,15 +122,22 @@ const roleValidator = value => !!value || 'Please select a role'
     />
 
     <v-select
-  v-model="formData.role"
-  label="Role"
-  :items="['Learner', 'Tutor']"
-  variant="outlined"
-  :rules="[roleValidator]"
-  clearable
-/>
+      v-model="formData.role"
+      label="Role"
+      :items="['Learner', 'Tutor']"
+      variant="outlined"
+      :rules="[roleValidator]"
+      clearable
+    />
 
-
-    <v-btn class="bg-primary" rounded="xl" type="submit" block><b>Sign Up</b></v-btn>
+    <v-btn
+      class="bg-primary"
+      rounded="xl"
+      type="submit"
+      block
+      :disabled="formAction.formProcess"
+      :loading="formAction.formProcess"
+      ><b>Sign Up</b></v-btn
+    >
   </v-form>
 </template>
