@@ -137,15 +137,15 @@ const sortedTutors = computed(() => {
   <v-responsive>
     <v-app :theme="theme">
       <!-- NAVBAR -->
-      <v-app-bar class="px-3" :color="theme === 'light' ? 'blue-lighten-3' : 'grey-darken-2'">
+      <v-app-bar class="px-3" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-2'">
         <v-row align="center" no-gutters class="w-100">
           <v-col cols="8" class="d-flex align-center">
             <v-img src="/public/Edumatch_logo.png" max-width="60" class="mr-2" />
             <span class="text-h6 font-weight-bold">
-              <b>Edu</b><span class="text-primary"><b>Match</b></span>
+              <b>Edu</b><span class="text-cyan-darken-1"><b>Match</b></span>
             </span>
           </v-col>
-          <v-col cols="4" class="d-flex justify-end align-center">
+          <v-col cols="4" class="d-flex justify-end align-center" >
             <v-text-field dense hide-details rounded="xl" variant="solo" density="compact" placeholder="Search"
               prepend-inner-icon="mdi-magnify" style="max-width: 220px;" />
             <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
@@ -158,7 +158,8 @@ const sortedTutors = computed(() => {
 
       <!-- MAIN -->
       <v-main>
-          <v-container fluid class="mt-0 pt-0 gradient-card">
+        
+          <v-container fluid class="mt-0 pt-0 py-10 gradient-card">
             <div style="display: flex; align-items: flex-start; gap: 16px; height: calc(100vh - 100px);">
               <!-- FILTER SIDEBAR -->
               <v-col cols="12" md="3">
@@ -212,14 +213,14 @@ const sortedTutors = computed(() => {
               </v-col>
 
               <!-- TUTOR RESULTS WRAPPED INSIDE A CARD -->
-              <v-col cols="12" md="9" style="overflow-y: auto; max-height: calc(100vh - 100px);">
+              <v-col cols="12" md="9" style="overflow-y: auto; max-height: calc(100vh - 20px);">
                 <!-- Outer card wrapper with bg -->
                 <v-card class="pa-4 mt-3" elevation="2" rounded="lg" style="background-color: #f5f5f5;">
 
                   <!-- Toggle button card with bg -->
-                  <v-card class="mb-4 pa-3" elevation="1" rounded="lg" style="background-color: #ffffff;">
-                    <v-btn-toggle v-model="activeTab" rounded group>
-                      <v-btn value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
+                  <v-card class="mb-4 " elevation="1" rounded="lg" style="background-color: #ffffff;" >
+                    <v-btn-toggle v-model="activeTab" rounded group >
+                      <v-btn  value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
                       <v-btn value="recent" :class="{ 'active-tab': activeTab === 'recent' }">Most Recent</v-btn>
                       <v-btn value="popular" :class="{ 'active-tab': activeTab === 'popular' }">Popular Tutor</v-btn>
                     </v-btn-toggle>
@@ -254,9 +255,109 @@ const sortedTutors = computed(() => {
           </v-container>
       </v-main>
 
-      <v-footer :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-2'" border app>
-        <span class="mx-auto">2025 - EduMatch</span>
-      </v-footer>
+
+      <v-footer
+      :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'"
+      :class="theme === 'light' ? 'text-black' : 'text-white'"
+    >
+      <v-container fluid>
+        <v-row align="center" justify="space-between">
+          <!-- Left side: Logo and Tagline -->
+          <v-col cols="12" md="4" class="d-flex flex-column align-center">
+            <v-img class="mx-auto mb-2 mt-5 px-5" src="/public/Edumatch_logo.png" width="30%">
+            </v-img>
+            <span class="text-h3 font-weight-bold footer">
+              <span class="text-blue-lighten-2"><b>Edu</b></span>
+              <span class="text-blue-darken-4"><b>Match</b></span>
+            </span>
+            <p class="text-subtitle-2 text-grey-darken-1"><i>Turn Knowledge Into Opportunity</i></p>
+          </v-col>
+
+          <!-- Right side: Social Media -->
+          <v-col cols="12" md="8">
+            <div class="text-center mb-4">
+              <h4 class="text-subtitle-1 font-weight-bold">CONNECT MORE WITH US</h4>
+            </div>
+            <v-row dense>
+              <!-- Jasmine -->
+              <v-col cols="12" sm="4" class="mb-4">
+                <h5 class="text-body-2 font-weight-medium mb-2"><b>Jasmine Kyara Ruiz</b></h5>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-facebook</v-icon> Jasmine Kyara
+                  Ruiz
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-instagram</v-icon> @offline_kyr
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-twitter</v-icon> @jazzzzmine24
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-gmail</v-icon>
+                  jasminekyararuiz24@gmail.com
+                </div>
+                <div class="d-flex align-center text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-linkedin</v-icon> Jasmine Kyara
+                  Ruiz
+                </div>
+              </v-col>
+
+              <!-- Leanheit -->
+              <v-col cols="12" sm="4" class="mb-4">
+                <h5 class="text-body-2 font-weight-medium mb-2"><b>Leanheit May Miñoza</b></h5>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-facebook</v-icon> Leanheit May
+                  Miñoza
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-instagram</v-icon> lnheitmy
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-twitter</v-icon> lenit
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-gmail</v-icon>
+                  leanheitmay@gmail.com
+                </div>
+                <div class="d-flex align-center text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-linkedin</v-icon> Leanheit May
+                  Miñoza
+                </div>
+              </v-col>
+
+              <!-- Cristina -->
+              <v-col cols="12" sm="4" class="mb-4">
+                <h5 class="text-body-2 font-weight-medium mb-2"><b>Cristina Berwan</b></h5>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-facebook</v-icon> Cristina Berwan
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-instagram</v-icon> @shas.shee
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-twitter</v-icon> @cristinaberwan
+                </div>
+                <div class="d-flex align-center mb-1 text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-gmail</v-icon>
+                  cristinaberwan@gmail.com
+                </div>
+                <div class="d-flex align-center text-caption">
+                  <v-icon color="blue" size="18" class="me-2">mdi-linkedin</v-icon> Cristina Berwan
+                </div>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+
+        <!-- Divider & Copyright -->
+        <v-divider class="my-6"></v-divider>
+        <v-row justify="center">
+          <span class="text-caption text-grey-darken-1"
+            >© 2025 EduMatch — All Rights Reserved.</span
+          >
+        </v-row>
+      </v-container>
+    </v-footer>
     </v-app>
   </v-responsive>
 </template>
@@ -280,7 +381,8 @@ const sortedTutors = computed(() => {
 }
 
 .gradient-card {
-  background: linear-gradient(135deg, #0129879d, #dfe7fd, #5B74B4);
+  background: linear-gradient(135deg, #ffffff, #dfe7fd, #fff7f7);
   color: white;
+  height: 900px;
 }
 </style>
