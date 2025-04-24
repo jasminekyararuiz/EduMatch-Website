@@ -102,12 +102,7 @@ const retakePhoto = () => {
         <v-row align="center" no-gutters class="w-100">
           <!-- Logo and Brand -->
           <v-col cols="8" class="d-flex align-center">
-            <v-img
-              src="/public/Edumatch_logo.png"
-              alt="EduMatch Logo"
-              max-width="60"
-              class="mr-2"
-            ></v-img>
+            <v-img src="/public/Edumatch_logo.png" alt="EduMatch Logo" max-width="60" class="mr-2"></v-img>
             <span class="text-h6 font-weight-bold">
               <b>Edu</b><span class="text-primary"><b>Match</b></span>
             </span>
@@ -117,41 +112,30 @@ const retakePhoto = () => {
 
           <!-- Auth Buttons and Theme Toggle -->
           <v-col cols="4" class="d-flex justify-end align-center">
-            <v-text-field
-              dense
-              hide-details
-              rounded="xl"
-              variant="solo"
-              density="compact"
-              placeholder="Search"
-              prepend-inner-icon="mdi-magnify"
-              style="max-width: 220px"
-            />
+            <v-text-field dense hide-details rounded="xl" variant="solo" density="compact" placeholder="Search"
+              prepend-inner-icon="mdi-magnify" style="max-width: 220px" />
 
             <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
             <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
-            <v-btn
-              :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-              variant="solo"
-              slim
-              @click="onClick"
-            ></v-btn>
+            <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" variant="solo" slim
+              @click="onClick"></v-btn>
             <v-avatar size="30"><v-img src="/public/tutor.jpg" /></v-avatar>
           </v-col>
         </v-row>
       </v-app-bar>
 
       <!-- BODY -->
-      <v-container fluid class="mt-4 px-5 gradient-card pa-4" >
+      <v-container fluid class="mt-4 px-5 gradient-card pa-4">
         <v-row>
           <!-- SIDEBAR -->
           <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
             <v-avatar size="180" class="mt-6">
               <v-img src="/public/tutor.jpg" />
             </v-avatar>
-            <v-btn class="text-caption text-grey-darken-1 mt-1"  size="small" rounded="xl" density="compact"> <b>edit</b></v-btn>
+            <v-btn class="text-caption text-grey-darken-1 mt-1" size="small" rounded="xl" density="compact">
+              <b>edit</b></v-btn>
 
-            <v-card class="mt-4 px-4 py-3 text-center filter-sidebar" theme="dark" >
+            <v-card class="mt-4 px-4 py-3 text-center filter-sidebar" theme="dark">
               <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
               <v-row justify="center" class="gap-2 mb-3">
                 <v-icon small>mdi-facebook</v-icon>
@@ -174,43 +158,25 @@ const retakePhoto = () => {
               <v-row>
                 <!-- Left side of the form -->
                 <v-col cols="12" md="6">
-                  <v-text-field required label="First Name" variant="outlined"  dense />
+                  <v-text-field required label="First Name" variant="outlined" dense />
                   <v-text-field label="Last Name" variant="outlined" dense />
                   <v-select label="Gender" :items="['Male', 'Female']" variant="outlined" dense />
                   <v-text-field label="Subject to Teach" variant="outlined" dense />
 
                   <v-row>
-                    <v-col
-                      ><v-select label="Month" :items="months" variant="outlined" dense
-                    /></v-col>
+                    <v-col><v-select label="Month" :items="months" variant="outlined" dense /></v-col>
                     <v-col><v-select label="Day" :items="days" variant="outlined" dense /></v-col>
                     <v-col><v-select label="Year" :items="years" variant="outlined" dense /></v-col>
                   </v-row>
 
                   <v-row>
-                    <v-col
-                      ><v-text-field label="hours" type="number" variant="outlined" dense
-                    /></v-col>
-                    <v-col
-                      ><v-text-field label="minutes" type="number" variant="outlined" dense
-                    /></v-col>
-                    <v-col
-                      ><v-text-field label="seconds" type="number" variant="outlined" dense
-                    /></v-col>
+                    <v-col><v-text-field label="hours" type="number" variant="outlined" dense /></v-col>
+                    <v-col><v-text-field label="minutes" type="number" variant="outlined" dense /></v-col>
+                    <v-col><v-text-field label="seconds" type="number" variant="outlined" dense /></v-col>
                   </v-row>
 
-                  <v-select
-                    label="Time of Day"
-                    :items="['Morning', 'Afternoon', 'Evening']"
-                    variant="outlined"
-                    dense
-                  />
-                  <v-select
-                    label="Teaching Mode"
-                    :items="['Online', 'Face-to-face']"
-                    variant="outlined"
-                    dense
-                  />
+                  <v-select label="Time of Day" :items="['Morning', 'Afternoon', 'Evening']" variant="outlined" dense />
+                  <v-select label="Teaching Mode" :items="['Online', 'Face-to-face']" variant="outlined" dense />
 
                   <v-row>
                     <v-col>
@@ -224,134 +190,95 @@ const retakePhoto = () => {
                     </v-col>
                   </v-row>
                   <v-row>
-  <v-col cols="6">
-    <v-text-field
-      label="Peso"
-      type="number"
-      variant="outlined"
-      dense
-     prepend-inner-icon="mdi-currency-php"
-    />
-  </v-col>
+                    <v-col cols="6">
+                      <v-text-field label="Peso" type="number" variant="outlined" dense
+                        prepend-inner-icon="mdi-currency-php" />
+                    </v-col>
 
-  <v-col cols="6">
-    <v-text-field
-      label="Centavo"
-      type="number"
-      variant="outlined"
-      dense
-    />
-  </v-col>
-</v-row>
+                    <v-col cols="6">
+                      <v-text-field label="Centavo" type="number" variant="outlined" dense />
+                    </v-col>
+                  </v-row>
 
                 </v-col>
 
                 <!-- Right side of the form -->
                 <v-col cols="12" md="6">
                   <v-card color="indigo-lighten-5" class="pa-4">
-                    <v-textarea
-                      label="About Me"
-                      variant="solo"
-                      rows="3"
-                      auto-grow
-                      hide-details
-                      class="bg-transparent"
-                    />
+                    <v-textarea label="About Me" variant="solo" rows="3" auto-grow hide-details
+                      class="bg-transparent" />
                   </v-card>
 
-<!-- Verifying Identity -->
-<v-card class="pa-3 mt-4" color="indigo-lighten-5">
-  <div class="text-subtitle-2 font-weight-bold">Verifying Identity</div>
-  
-  <v-row class="mt-2" dense>
-    <!-- Upload Document -->
-    <v-col cols="12">
-      <v-card class="pa-3 text-center" outlined>
-        <v-icon color="blue" size="28">mdi-card-account-details</v-icon>
-        <p class="text-caption mt-2 mb-3">
-          Upload a clear photo of your valid government-issued ID
-        </p>
-        <input
-          type="file"
-          ref="fileInput"
-          accept="image/*,.pdf"
-          style="display: none"
-          @change="handleFileUpload"
-        />
-        <v-btn block text small color="primary" density="comfortable" @click="triggerFileInput">
-          + Add document
-        </v-btn>
-      </v-card>
-    </v-col>
+                  <!-- Verifying Identity -->
+                  <v-card class="pa-3 mt-4" color="indigo-lighten-5">
+                    <div class="text-subtitle-2 font-weight-bold">Verifying Identity</div>
 
-    <!-- Take Real-Time Selfie -->
-    <v-col cols="12">
-      <v-card class="pa-3 text-center" outlined>
-        <v-icon color="blue" size="28">mdi-camera</v-icon>
-        <p class="text-caption mt-2 mb-3">
-          Take a real-time selfie with your valid government-issued ID to verify your identity
-        </p>
+                    <v-row class="mt-2" dense>
+                      <!-- Upload Document -->
+                      <v-col cols="12">
+                        <v-card class="pa-3 text-center" outlined>
+                          <v-icon color="blue" size="28">mdi-card-account-details</v-icon>
+                          <p class="text-caption mt-2 mb-3">
+                            Upload a clear photo of your valid government-issued ID
+                          </p>
+                          <input type="file" ref="fileInput" accept="image/*,.pdf" style="display: none"
+                            @change="handleFileUpload" />
+                          <v-btn block text small color="primary" density="comfortable" @click="triggerFileInput">
+                            + Add document
+                          </v-btn>
+                        </v-card>
+                      </v-col>
 
-        <!-- Video Preview -->
-        <video
-          v-if="!photo"
-          ref="video"
-          autoplay
-          playsinline
-          muted
-          class="selfie-video mb-3"
-        ></video>
+                      <!-- Take Real-Time Selfie -->
+                      <v-col cols="12">
+                        <v-card class="pa-3 text-center" outlined>
+                          <v-icon color="blue" size="28">mdi-camera</v-icon>
+                          <p class="text-caption mt-2 mb-3">
+                            Take a real-time selfie with your valid government-issued ID to verify your identity
+                          </p>
 
-        <!-- Hidden canvas -->
-        <canvas ref="canvas" class="d-none" />
+                          <!-- Video Preview -->
+                          <video v-if="!photo" ref="video" autoplay playsinline muted class="selfie-video mb-3"></video>
 
-        <!-- Buttons -->
-        <div v-if="!photo">
-          <v-row justify="center" no-gutters>
-            <v-col cols="6" class="pr-1">
-              <v-btn block text size="small" color="primary" density="comfortable" rounded="xl" @click="startCamera">
-                <v-icon color="white" size="15">mdi-camera-enhance</v-icon> Start
-              </v-btn>
-            </v-col>
-            <v-col cols="6" class="pl-1">
-              <v-btn
-                block
-                text
-                size="small"
-                color="success"
-                density="comfortable"
-                rounded="xl"
-                @click="takePhoto"
-                :disabled="!isCameraActive"
-              >
-                <v-icon color="white" size="15">mdi-camera-iris</v-icon> Take
-              </v-btn>
-            </v-col>
-          </v-row>
-        </div>
+                          <!-- Hidden canvas -->
+                          <canvas ref="canvas" class="d-none" />
 
-        <!-- Photo Preview -->
-        <div v-if="photo" class="mt-3">
-          <h4 class=" font-weight-small">preview</h4>
-          <img :src="photo" alt="Captured Photo" class="selfie-preview mt-1 mb-2" />
-          <v-btn text small color="blue" density="comfortable" rounded="xl" @click="retakePhoto">
-            <v-icon color="white" size="15">mdi-camera-retake</v-icon> Retake
-          </v-btn>
-        </div>
-      </v-card>
-    </v-col>
-  </v-row>
-</v-card>
+                          <!-- Buttons -->
+                          <div v-if="!photo">
+                            <v-row justify="center" no-gutters>
+                              <v-col cols="6" class="pr-1">
+                                <v-btn block text size="small" color="primary" density="comfortable" rounded="xl"
+                                  @click="startCamera">
+                                  <v-icon color="white" size="15">mdi-camera-enhance</v-icon> Start
+                                </v-btn>
+                              </v-col>
+                              <v-col cols="6" class="pl-1">
+                                <v-btn block text size="small" color="success" density="comfortable" rounded="xl"
+                                  @click="takePhoto" :disabled="!isCameraActive">
+                                  <v-icon color="white" size="15">mdi-camera-iris</v-icon> Take
+                                </v-btn>
+                              </v-col>
+                            </v-row>
+                          </div>
+
+                          <!-- Photo Preview -->
+                          <div v-if="photo" class="mt-3">
+                            <h4 class=" font-weight-small">preview</h4>
+                            <img :src="photo" alt="Captured Photo" class="selfie-preview mt-1 mb-2" />
+                            <v-btn text small color="blue" density="comfortable" rounded="xl" @click="retakePhoto">
+                              <v-icon color="white" size="15">mdi-camera-retake</v-icon> Retake
+                            </v-btn>
+                          </div>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-card>
 
                   <!-- Portfolio Upload -->
                   <v-card class="pa-3 mt-4" color="indigo-lighten-5">
                     <div class="text-subtitle-2 font-weight-bold">Portfolio</div>
-                    <v-file-input
-                      label="Upload Portfolio"
-                      show-size
-                      variant="solo-inverted"
-                      prepend-icon="mdi-upload"
-                    />
+                    <v-file-input label="Upload Portfolio" show-size variant="solo-inverted"
+                      prepend-icon="mdi-upload" />
                     <p class="text-caption mt-1">
                       Supports: pdf, jpg, docx, pptx<br />
                       Maximum file size: 20 mb
@@ -373,6 +300,7 @@ const retakePhoto = () => {
 .v-application {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .selfie-video {
   width: 100%;
   max-height: 300px;
@@ -388,18 +316,18 @@ const retakePhoto = () => {
   border: 2px solid #ccc;
   max-height: 300px;
 }
+
 .gradient-card {
   background: linear-gradient(135deg, #0129879d, #dfe7fd, #5B74B4);
   color: white;
   border-radius: 12px;
 }
+
 .filter-sidebar {
   position: sticky;
   background-color: #172e46;
   border-radius: 16px;
   padding: 10px;
-  height:"650px" 
+  height: "650px"
 }
-
-
 </style>

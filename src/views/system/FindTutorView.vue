@@ -89,6 +89,17 @@ const allTutors = [
     addedDate: '2025-04-13',
     area: 'Davao',
   },
+  {
+    name: 'Ares Riego',
+    gender: 'male',
+    major: 'Abstract',
+    time: '4 hours',
+    mode: 'f2f',
+    image: 'public/leejomgsukk.jpg',
+    popularity: 1,
+    addedDate: '2025-04-13',
+    area: 'Cebu',
+  },
 ]
 
 const filteredTutors = computed(() => {
@@ -158,100 +169,100 @@ const sortedTutors = computed(() => {
 
       <!-- MAIN -->
       <v-main>
-          <v-container fluid class="mt-0 pt-0 gradient-card">
-            <div style="display: flex; align-items: flex-start; gap: 16px; height: calc(100vh - 100px);">
-              <!-- FILTER SIDEBAR -->
-              <v-col cols="12" md="3">
-                <v-card class="pa-4 mt-3 filter-sidebar" elevation="2">
-                  <h4 class="mb-4 font-weight-bold">Filter by:</h4>
-                  <v-divider class="my-4" />
-                  <v-expansion-panels variant="accordion">
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>Gender</v-expansion-panel-title>
-                      <v-expansion-panel-text>
-                        <v-checkbox label="Male" v-model="filters.gender.male" dense />
-                        <v-checkbox label="Female" v-model="filters.gender.female" dense />
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>Subject of Interest</v-expansion-panel-title>
-                      <v-expansion-panel-text>
-                        <v-checkbox label="English" v-model="filters.subjects.english" dense />
-                        <v-checkbox label="Mathematics" v-model="filters.subjects.math" dense />
-                        <v-checkbox label="Science" v-model="filters.subjects.science" dense />
-                        <v-checkbox label="Filipino" v-model="filters.subjects.filipino" dense />
-                        <v-checkbox label="Abstract" v-model="filters.subjects.abstract" dense />
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>Preferred Time</v-expansion-panel-title>
-                      <v-expansion-panel-text>
-                        <v-checkbox label="1 hour" v-model="filters.time.one" dense />
-                        <v-checkbox label="2 hours" v-model="filters.time.two" dense />
-                        <v-checkbox label="3 hours" v-model="filters.time.three" dense />
-                        <v-checkbox label="4 hours" v-model="filters.time.four" dense />
-                        <v-checkbox label="5 hours" v-model="filters.time.five" dense />
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>Learning Mode</v-expansion-panel-title>
-                      <v-expansion-panel-text>
-                        <v-checkbox label="Face-to-Face" v-model="filters.mode.f2f" dense />
-                        <v-checkbox label="Online" v-model="filters.mode.online" dense />
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>Area</v-expansion-panel-title>
-                      <v-expansion-panel-text>
-                        <v-text-field v-model="filters.area" label="Enter location" dense hide-details
-                          prepend-inner-icon="mdi-map-marker" />
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
+        <v-container fluid class="mt-0 pt-0 gradient-card">
+          <div style="display: flex; align-items: flex-start; gap: 16px; height: calc(100vh - 100px);">
+            <!-- FILTER SIDEBAR -->
+            <v-col cols="12" md="3">
+              <v-card class="pa-4 mt-3 filter-sidebar" elevation="2">
+                <h4 class="mb-4 font-weight-bold">Filter by:</h4>
+                <v-divider class="my-4" />
+                <v-expansion-panels variant="accordion">
+                  <v-expansion-panel>
+                    <v-expansion-panel-title>Gender</v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                      <v-checkbox label="Male" v-model="filters.gender.male" dense />
+                      <v-checkbox label="Female" v-model="filters.gender.female" dense />
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                  <v-expansion-panel>
+                    <v-expansion-panel-title>Subject of Interest</v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                      <v-checkbox label="English" v-model="filters.subjects.english" dense />
+                      <v-checkbox label="Mathematics" v-model="filters.subjects.math" dense />
+                      <v-checkbox label="Science" v-model="filters.subjects.science" dense />
+                      <v-checkbox label="Filipino" v-model="filters.subjects.filipino" dense />
+                      <v-checkbox label="Abstract" v-model="filters.subjects.abstract" dense />
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                  <v-expansion-panel>
+                    <v-expansion-panel-title>Preferred Time</v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                      <v-checkbox label="1 hour" v-model="filters.time.one" dense />
+                      <v-checkbox label="2 hours" v-model="filters.time.two" dense />
+                      <v-checkbox label="3 hours" v-model="filters.time.three" dense />
+                      <v-checkbox label="4 hours" v-model="filters.time.four" dense />
+                      <v-checkbox label="5 hours" v-model="filters.time.five" dense />
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                  <v-expansion-panel>
+                    <v-expansion-panel-title>Learning Mode</v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                      <v-checkbox label="Face-to-Face" v-model="filters.mode.f2f" dense />
+                      <v-checkbox label="Online" v-model="filters.mode.online" dense />
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                  <v-expansion-panel>
+                    <v-expansion-panel-title>Area</v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                      <v-text-field v-model="filters.area" label="Enter location" dense hide-details
+                        prepend-inner-icon="mdi-map-marker" />
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              </v-card>
+            </v-col>
+
+            <!-- TUTOR RESULTS WRAPPED INSIDE A CARD -->
+            <v-col cols="12" md="9" style="overflow-y: auto; max-height: calc(100vh - 100px);">
+              <!-- Outer card wrapper with bg -->
+              <v-card class="pa-4 mt-3" elevation="2" rounded="lg" style="background-color: #f5f5f5;">
+
+                <!-- Toggle button card with bg -->
+                <v-card class="mb-4 pa-3" elevation="1" rounded="lg" style="background-color: #ffffff;">
+                  <v-btn-toggle v-model="activeTab" rounded group>
+                    <v-btn value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
+                    <v-btn value="recent" :class="{ 'active-tab': activeTab === 'recent' }">Most Recent</v-btn>
+                    <v-btn value="popular" :class="{ 'active-tab': activeTab === 'popular' }">Popular Tutor</v-btn>
+                  </v-btn-toggle>
                 </v-card>
-              </v-col>
 
-              <!-- TUTOR RESULTS WRAPPED INSIDE A CARD -->
-              <v-col cols="12" md="9" style="overflow-y: auto; max-height: calc(100vh - 100px);">
-                <!-- Outer card wrapper with bg -->
-                <v-card class="pa-4 mt-3" elevation="2" rounded="lg" style="background-color: #f5f5f5;">
+                <!-- Tutors List -->
+                <v-row class="pa-2 justify-space-between" style="row-gap: 18px;">
+                  <v-col v-for="(tutor, index) in sortedTutors" :key="index" cols="12" sm="4" md="4" lg="4"
+                    class="d-flex">
+                    <!-- Each tutor card with bg -->
+                    <v-card elevation="3" class="pa-3 w-100" rounded="lg" style="background-color: #CFD8DC;">
+                      <v-img :src="tutor.image" height="130px" class="mb-2" cover />
+                      <h5 class="font-weight-bold mb-2" style="font-size: 14px;">{{ tutor.name }}</h5>
+                      <p class="mb-1" style="font-size: 12px;">Major: {{ tutor.major }}</p>
+                      <p class="mb-1" style="font-size: 12px;">Time: {{ tutor.time }}</p>
+                      <p class="mb-2" style="font-size: 12px;">Location: {{ tutor.area }}</p>
+                      <div class="d-flex justify-center" style="gap: 6px;">
+                        <v-btn color="primary" size="x-small" class="px-2">
+                          Read More <v-icon size="14">mdi-arrow-right-bold</v-icon>
+                        </v-btn>
+                        <v-btn color="deep-purple-accent-4" size="x-small" class="px-2">
+                          Book Tutor <v-icon size="14">mdi-book-plus-multiple-outline</v-icon>
+                        </v-btn>
+                      </div>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
 
-                  <!-- Toggle button card with bg -->
-                  <v-card class="mb-4 pa-3" elevation="1" rounded="lg" style="background-color: #ffffff;">
-                    <v-btn-toggle v-model="activeTab" rounded group>
-                      <v-btn value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
-                      <v-btn value="recent" :class="{ 'active-tab': activeTab === 'recent' }">Most Recent</v-btn>
-                      <v-btn value="popular" :class="{ 'active-tab': activeTab === 'popular' }">Popular Tutor</v-btn>
-                    </v-btn-toggle>
-                  </v-card>
-
-                  <!-- Tutors List -->
-                  <v-row class="pa-2 justify-space-between" style="row-gap: 18px;">
-                    <v-col v-for="(tutor, index) in sortedTutors" :key="index" cols="12" sm="4" md="4" lg="4"
-                      class="d-flex">
-                      <!-- Each tutor card with bg -->
-                      <v-card elevation="3" class="pa-3 w-100" rounded="lg" style="background-color: #CFD8DC;">
-                        <v-img :src="tutor.image" height="130px" class="mb-2" cover />
-                        <h5 class="font-weight-bold mb-2" style="font-size: 14px;">{{ tutor.name }}</h5>
-                        <p class="mb-1" style="font-size: 12px;">Major: {{ tutor.major }}</p>
-                        <p class="mb-1" style="font-size: 12px;">Time: {{ tutor.time }}</p>
-                        <p class="mb-2" style="font-size: 12px;">Location: {{ tutor.area }}</p>
-                        <div class="d-flex justify-center" style="gap: 6px;">
-                          <v-btn color="primary" size="x-small" class="px-2">
-                            Read More <v-icon size="14">mdi-arrow-right-bold</v-icon>
-                          </v-btn>
-                          <v-btn color="deep-purple-accent-4" size="x-small" class="px-2">
-                            Book Tutor <v-icon size="14">mdi-book-plus-multiple-outline</v-icon>
-                          </v-btn>
-                        </div>
-                      </v-card>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-col>
-
-           </div>
-          </v-container>
+          </div>
+        </v-container>
       </v-main>
 
       <v-footer :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-2'" border app>
