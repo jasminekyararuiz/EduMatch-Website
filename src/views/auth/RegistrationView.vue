@@ -6,14 +6,16 @@ const { mobile } = useDisplay()
 </script>
 
 <template>
+  
   <AppLayout>
     <template #content>
-      <v-row class="bg-blue-lighten-5">
+      
+      <v-row :color="theme === 'light' ? 'blue-lighten-5' : 'blue-lighten-5'" :class="theme === 'light' ? 'text-black' : 'text-white'">
         <v-col cols="12" md="6" class="mx-auto">
-          <v-card class="mx-auto">
+          <v-card elevation="10" class="mx-auto" color="blue-lighten-5">
             <v-card-title>
               <v-img class="mx-auto" src="/public/Edumatch_logo.png" width="25%"> </v-img>
-              <h3 class="text-center"><b>EduMatch</b></h3>
+              <h3 class="text-center edu"><b>EduMatch</b></h3>
             </v-card-title>
 
             <v-card-text class="bg-surface-light pt-4">
@@ -44,7 +46,7 @@ const { mobile } = useDisplay()
                   variant="outlined"
                 ></v-select>
 
-                <v-btn class="bg-primary" rounded="xl" type="submit" block>Sign Up</v-btn>
+                <v-btn class="bg-primary" rounded="xl" type="submit" block><b>Sign Up</b></v-btn>
               </v-form>
 
               <v-divider class="my-3"></v-divider>
@@ -58,3 +60,9 @@ const { mobile } = useDisplay()
     </template>
   </AppLayout>
 </template>
+
+<style scoped>
+.edu {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+</style>
