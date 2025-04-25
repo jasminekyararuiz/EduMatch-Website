@@ -5,26 +5,39 @@ const theme = ref('light')
 function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
+import {
+  requiredValidator,
+  integerValidator,
+  betweenValidator,
+} from '@/utils/validators.js'
 
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
+// Sample select data
+const provinces = ['Agusan del Norte', 'Agusan del Sur']
+const municipalities = ['Butuan City', 'Bayugan City']
+const barangays = ['Barangay 1', 'Barangay 2']
+const months = ['January', 'February', 'March']
 const days = Array.from({ length: 31 }, (_, i) => i + 1)
-const years = Array.from({ length: 11 }, (_, i) => 2025 + i)
-const provinces = ['Province A', 'Province B']
-const municipalities = ['Municipality A', 'Municipality B']
-const barangays = ['Barangay A', 'Barangay B']
+const years = Array.from({ length: 70 }, (_, i) => new Date().getFullYear() - i)
+
+const form = ref({
+  name: '',
+  gender: '',
+  subjects: [],
+  birthMonth: '',
+  birthDay: '',
+  birthYear: '',
+  timeFrom: '',
+  timeTo: '',
+  teachingMode: '',
+  province: '',
+  municipality: '',
+  barangay: '',
+  peso: '',
+  centavos: '',
+})
+
+const isFormValid = ref(false)
+const formRef = ref(null)
 
 const fileInput = ref(null)
 const video = ref(null)
@@ -33,6 +46,17 @@ const photo = ref(null)
 const isCameraActive = ref(false)
 let stream = null
 
+
+function submitForm() {
+  formRef.value?.validate().then(success => {
+    if (success) {
+      // all fields are valid, proceed with form submission
+      console.log('Form data:', form)
+    } else {
+      console.warn('Form is invalid')
+    }
+  })
+}
 const triggerFileInput = () => {
   fileInput.value.click()
 }
@@ -164,55 +188,106 @@ const retakePhoto = () => {
           <!-- FORM SECTION -->
           <v-col cols="12" md="9">
             <v-card class="pa-6 mt-10" elevation="2">
+              <v-form ref="formRefclea" v-model="isFormValid">
               <v-row>
                 <!-- Left side of the form -->
                 <v-col cols="12" md="6">
-                  <v-text-field required label="First Name" variant="outlined" dense />
-                  <v-text-field label="Last Name" variant="outlined" dense />
-                  <v-select label="Gender" :items="['Male', 'Female']" variant="outlined" dense />
-                  <v-text-field label="Subject to Teach" variant="outlined" dense />
+    <v-text-field
+      v-model="form.name"
+      label="Full Name"
+      :rules="[requiredValidator]"
+    />
 
-                  <v-row>
-                    <v-col><v-select label="Month" :items="months" variant="outlined" dense /></v-col>
-                    <v-col><v-select label="Day" :items="days" variant="outlined" dense /></v-col>
-                    <v-col><v-select label="Year" :items="years" variant="outlined" dense /></v-col>
-                  </v-row>
+    <v-select
+      v-model="form.gender"
+      :items="['Male', 'Female', 'Other']"
+      label="Gender"
+      :rules="[requiredValidator]"
+    />
 
-                  <v-row>
-                    <v-col><v-text-field label="hours" type="number" variant="outlined" dense /></v-col>
-                    <v-col><v-text-field label="minutes" type="number" variant="outlined" dense /></v-col>
-                    <v-col><v-text-field label="seconds" type="number" variant="outlined" dense /></v-col>
-                  </v-row>
+    <v-select
+      v-model="form.subjects"
+      :items="['Math', 'Science', 'English', 'Filipino', 'History']"
+      label="Subjects"
+      multiple
+      :rules="[requiredValidator]"
+    />
 
-                  <v-select label="Time of Day" :items="['Morning', 'Afternoon', 'Evening']" variant="outlined" dense />
-                  <v-select label="Teaching Mode" :items="['Online', 'Face-to-face']" variant="outlined" dense />
+    <div class="flex gap-2">
+      <v-select
+        v-model="form.birthMonth"
+        :items="months"
+        label="Month"
+        :rules="[requiredValidator]"
+      />
+      <v-select
+        v-model="form.birthDay"
+        :items="days"
+        label="Day"
+        :rules="[requiredValidator]"
+      />
+      <v-select
+        v-model="form.birthYear"
+        :items="years"
+        label="Year"
+        :rules="[requiredValidator]"
+      />
+    </div>
 
-                  <v-row>
-                    <v-col>
-                      <v-text-field label="Province" variant="outlined" dense />
-                    </v-col>
-                    <v-col>
-                      <v-text-field label="Municipality" variant="outlined" dense />
-                    </v-col>
-                    <v-col>
-                      <v-text-field label="Barangay" variant="outlined" dense />
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="6">
-                      <v-text-field
-                        label="Peso"
-                        type="number"
-                        variant="outlined"
-                        dense
-                        prepend-inner-icon="mdi-currency-php"
-                      />
-                    </v-col>
+    <v-text-field
+      v-model="form.timeFrom"
+      label="Available From"
+      type="time"
+      :rules="[requiredValidator]"
+    />
+    <v-text-field
+      v-model="form.timeTo"
+      label="Available To"
+      type="time"
+      :rules="[requiredValidator]"
+    />
 
-                    <v-col cols="6">
-                      <v-text-field label="Centavo" type="number" variant="outlined" dense />
-                    </v-col>
-                  </v-row>
+    <v-select
+      v-model="form.teachingMode"
+      :items="['Online', 'Face-to-Face', 'Both']"
+      label="Teaching Mode"
+      :rules="[requiredValidator]"
+    />
+
+    <v-select
+      v-model="form.province"
+      :items="provinces"
+      label="Province"
+      :rules="[requiredValidator]"
+    />
+    <v-select
+      v-model="form.municipality"
+      :items="municipalities"
+      label="Municipality"
+      :rules="[requiredValidator]"
+    />
+    <v-select
+      v-model="form.barangay"
+      :items="barangays"
+      label="Barangay"
+      :rules="[requiredValidator]"
+    />
+
+    <div class="flex gap-2">
+      <v-text-field
+        v-model="form.peso"
+        label="₱"
+        type="number"
+        :rules="[requiredValidator, integerValidator, val => betweenValidator(val, 50, 1000)]"
+      />
+      <v-text-field
+        v-model="form.centavos"
+        label="Centavos"
+        type="number"
+        :rules="[requiredValidator, integerValidator, val => betweenValidator(val, 0, 99)]"
+      />
+    </div>
+
                 </v-col>
 
                 <!-- Right side of the form -->
@@ -350,9 +425,10 @@ const retakePhoto = () => {
                     </p>
                   </v-card>
 
-                  <v-btn block rounded class="mt-4" color="indigo-darken-3" dark>SUBMIT</v-btn>
+                  <v-btn  block rounded class="mt-4" color="indigo-darken-3" @click="submitForm" :disabled="!isFormValid">Submit</v-btn>
                 </v-col>
               </v-row>
+  </v-form>
             </v-card>
           </v-col>
         </v-row>
