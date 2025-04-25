@@ -15,17 +15,17 @@ import {
 const provinces = ['Agusan del Norte', 'Agusan del Sur']
 const municipalities = ['Butuan City', 'Bayugan City']
 const barangays = ['Barangay 1', 'Barangay 2']
-const months = ['January', 'February', 'March']
+const months = ['January', 'February', 'March', 'April','May','June','July','August','September','October','November','December']
 const days = Array.from({ length: 31 }, (_, i) => i + 1)
-const years = Array.from({ length: 70 }, (_, i) => new Date().getFullYear() - i)
+const years = Array.from({ length: 6 }, (_, i) => new Date().getFullYear() + i)
 
 const form = ref({
   name: '',
   gender: '',
-  subjects: [],
-  birthMonth: '',
-  birthDay: '',
-  birthYear: '',
+  subjects: '',
+  month: '',
+  day: '',
+  year: '',
   timeFrom: '',
   timeTo: '',
   teachingMode: '',
@@ -168,7 +168,7 @@ const retakePhoto = () => {
               <b>edit</b></v-btn
             >
 
-            <v-card class="mt-4 px-4 py-3 text-center "  :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+            <v-card class="mt-4 px-4 py-3 text-center " rounded="lg" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
               <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
               <v-row justify="center" class="gap-2 mb-3">
                 <v-icon small>mdi-facebook</v-icon>
@@ -176,10 +176,8 @@ const retakePhoto = () => {
                 <v-icon small>mdi-linkedin</v-icon>
                 <v-icon small>mdi-twitter</v-icon>
               </v-row>
-              <v-divider class="my-3"></v-divider>
-              <v-btn block text prepend-icon="mdi-account">MY INFORMATION</v-btn>
-              <v-btn block text prepend-icon="mdi-view-dashboard">DASHBOARD</v-btn>
-              <v-btn block text color="blue-lighten-3" prepend-icon="mdi-file-document">
+              <v-divider class="my-2"></v-divider>
+              <v-btn block text prepend-icon="mdi-file-document">
                 SUBMIT APPLICATION
               </v-btn>
             </v-card>
@@ -200,52 +198,56 @@ const retakePhoto = () => {
 
     <v-select
       v-model="form.gender"
-      :items="['Male', 'Female', 'Other']"
+      :items="['Male', 'Female']"
       label="Gender"
       :rules="[requiredValidator]"
     />
 
-    <v-select
+    <v-text-field
       v-model="form.subjects"
-      :items="['Math', 'Science', 'English', 'Filipino', 'History']"
-      label="Subjects"
-      multiple
+      label="Major"
       :rules="[requiredValidator]"
     />
 
     <div class="flex gap-2">
       <v-select
-        v-model="form.birthMonth"
+        v-model="form.month"
         :items="months"
         label="Month"
         :rules="[requiredValidator]"
       />
       <v-select
-        v-model="form.birthDay"
+        v-model="form.day"
         :items="days"
         label="Day"
         :rules="[requiredValidator]"
       />
       <v-select
-        v-model="form.birthYear"
+        v-model="form.year"
         :items="years"
         label="Year"
         :rules="[requiredValidator]"
       />
     </div>
-
+    <v-row>
+  <v-col cols="6">
     <v-text-field
       v-model="form.timeFrom"
       label="Available From"
       type="time"
       :rules="[requiredValidator]"
     />
+  </v-col>
+
+  <v-col cols="6">
     <v-text-field
       v-model="form.timeTo"
       label="Available To"
       type="time"
       :rules="[requiredValidator]"
     />
+  </v-col>
+</v-row>
 
     <v-select
       v-model="form.teachingMode"
@@ -273,20 +275,21 @@ const retakePhoto = () => {
       :rules="[requiredValidator]"
     />
 
-    <div class="flex gap-2">
-      <v-text-field
-        v-model="form.peso"
-        label="₱"
-        type="number"
-        :rules="[requiredValidator, integerValidator, val => betweenValidator(val, 50, 1000)]"
-      />
-      <v-text-field
-        v-model="form.centavos"
-        label="Centavos"
-        type="number"
-        :rules="[requiredValidator, integerValidator, val => betweenValidator(val, 0, 99)]"
-      />
-    </div>
+    <v-text-field
+  v-model="form.fullRate"
+  label="Rate"
+  type="number"
+  step="0.01"
+  min="50"
+  max="1000"
+  prefix="₱"
+  hide-spin-buttons
+  :rules="[
+    requiredValidator,
+    val => !isNaN(val) || 'Must be a number',
+    val => (val >= 50 && val <= 2000) || 'Must be between ₱50.00 and ₱2000.00'
+  ]"
+/>
 
                 </v-col>
 
