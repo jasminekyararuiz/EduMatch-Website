@@ -1,23 +1,22 @@
 <script setup>
 import { ref } from 'vue'
+import { provinceOptions, municipalityData } from '@/data/CaragaData';
 const theme = ref('light')
 
 function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
-import {
-  requiredValidator,
-  integerValidator,
-  betweenValidator,
-} from '@/utils/validators.js'
+import { requiredValidator } from '@/utils/validators.js'
 
-// Sample select data
-const provinces = ['Agusan del Norte', 'Agusan del Sur']
-const municipalities = ['Butuan City', 'Bayugan City']
-const barangays = ['Barangay 1', 'Barangay 2']
 const months = ['January', 'February', 'March', 'April','May','June','July','August','September','October','November','December']
 const days = Array.from({ length: 31 }, (_, i) => i + 1)
 const years = Array.from({ length: 6 }, (_, i) => new Date().getFullYear() + i)
+const municipalityOptions = ref([]);
+
+const updateMunicipalities = (selectedProvince) => {
+  municipalityOptions.value = municipalityData[selectedProvince] || [];
+  form.municipality = ''; // Reset selected municipality
+};
 
 const form = ref({
   name: '',
@@ -31,7 +30,6 @@ const form = ref({
   teachingMode: '',
   province: '',
   municipality: '',
-  barangay: '',
   peso: '',
   centavos: '',
 })
@@ -186,7 +184,7 @@ const retakePhoto = () => {
           <!-- FORM SECTION -->
           <v-col cols="12" md="9">
             <v-card class="pa-6 mt-10" elevation="2">
-              <v-form ref="formRefclea" v-model="isFormValid">
+              <v-form ref="formRef" v-model="isFormValid">
               <v-row>
                 <!-- Left side of the form -->
                 <v-col cols="12" md="6">
@@ -255,25 +253,21 @@ const retakePhoto = () => {
       label="Teaching Mode"
       :rules="[requiredValidator]"
     />
-
     <v-select
       v-model="form.province"
-      :items="provinces"
+      :items="provinceOptions"
       label="Province"
       :rules="[requiredValidator]"
+      @update:modelValue="updateMunicipalities"
     />
+
     <v-select
       v-model="form.municipality"
-      :items="municipalities"
-      label="Municipality"
+      :items="municipalityOptions"
+      label="Municipality/City"
       :rules="[requiredValidator]"
     />
-    <v-select
-      v-model="form.barangay"
-      :items="barangays"
-      label="Barangay"
-      :rules="[requiredValidator]"
-    />
+
 
     <v-text-field
   v-model="form.fullRate"
