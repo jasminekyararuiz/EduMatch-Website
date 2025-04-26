@@ -37,13 +37,35 @@ const form = ref({
 const isFormValid = ref(false)
 const formRef = ref(null)
 
-const fileInput = ref(null)
+
 const video = ref(null)
 const canvas = ref(null)
 const photo = ref(null)
 const isCameraActive = ref(false)
 let stream = null
 
+const fileInput = ref(null);
+const uploadedFile = ref(null);
+const previewUrl = ref('');
+
+const triggerFileInput = () => {
+  fileInput.value.click();
+};
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    uploadedFile.value = file;
+    console.log('Uploaded document:', file);
+
+    // Create a preview if it's an image
+    if (file.type.startsWith('image/')) {
+      previewUrl.value = URL.createObjectURL(file);
+    } else {
+      previewUrl.value = '';
+    }
+  }
+}
 
 function submitForm() {
   formRef.value?.validate().then(success => {
@@ -54,16 +76,6 @@ function submitForm() {
       console.warn('Form is invalid')
     }
   })
-}
-const triggerFileInput = () => {
-  fileInput.value.click()
-}
-
-const handleFileUpload = (event) => {
-  const file = event.target.files[0]
-  if (file) {
-    console.log('Uploaded document:', file)
-  }
 }
 
 const startCamera = async () => {
@@ -308,28 +320,41 @@ const retakePhoto = () => {
                       <!-- Upload Document -->
                       <v-col cols="12">
                         <v-card class="pa-3 text-center" outlined>
-                          <v-icon color="blue" size="28">mdi-card-account-details</v-icon>
-                          <p class="text-caption mt-2 mb-3">
-                            Upload a clear photo of your valid government-issued ID
-                          </p>
-                          <input
-                            type="file"
-                            ref="fileInput"
-                            accept="image/*,.pdf"
-                            style="display: none"
-                            @change="handleFileUpload"
-                          />
-                          <v-btn
-                            block
-                            text
-                            small
-                            color="primary"
-                            density="comfortable"
-                            @click="triggerFileInput"
-                          >
-                            + Add document
-                          </v-btn>
-                        </v-card>
+    <v-icon color="blue" size="28">mdi-card-account-details</v-icon>
+    <p class="text-caption mt-2 mb-3">
+      Upload a clear photo of your valid government-issued ID
+    </p>
+
+    <input
+      type="file"
+      ref="fileInput"
+      accept="image/*,.pdf"
+      style="display: none"
+      @change="handleFileUpload"
+    />
+<!-- Show image preview if available -->
+<div v-if="previewUrl" class="mt-4">
+      <img :src="previewUrl" alt="Preview" style="max-width: 100%; height:250px; margin-top: 10px;" />
+    </div>
+
+
+    <!-- Show file name if not image -->
+    <div v-else-if="uploadedFile" class="mt-4">
+      <p><b>Uploaded File:</b>: {{ uploadedFile.name }}</p> 
+    </div>
+    <v-btn
+      block
+      text
+      small
+      color="primary"
+      density="comfortable"
+      @click="triggerFileInput"
+    >
+      + Add document
+    </v-btn>
+
+    
+  </v-card>
                       </v-col>
 
                       <!-- Take Real-Time Selfie -->
@@ -415,10 +440,10 @@ const retakePhoto = () => {
                   <v-card class="pa-3 mt-4"  :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'">
                     <div class="text-subtitle-2 font-weight-bold">Portfolio</div>
                     <v-file-input label="Upload Portfolio" show-size variant="solo-inverted"
-                      prepend-icon="mdi-upload" />
+                      prepend-icon="mdi-upload"
+                      accept=".jpg,.pdf,.docx,.pptx" />
                     <p class="text-caption mt-1">
                       Supports: pdf, jpg, docx, pptx<br />
-                      Maximum file size: 20 mb
                     </p>
                   </v-card>
 
