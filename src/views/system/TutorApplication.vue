@@ -1,12 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 import { provinceOptions, municipalityData } from '@/data/CaragaData';
+import { requiredValidator } from '@/utils/validators.js'
+import { supabase } from '@/utils/supabase';
+
 const theme = ref('light')
 
 function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
-import { requiredValidator } from '@/utils/validators.js'
+
 
 const months = ['January', 'February', 'March', 'April','May','June','July','August','September','October','November','December']
 const days = Array.from({ length: 31 }, (_, i) => i + 1)
@@ -18,6 +21,7 @@ const updateMunicipalities = (selectedProvince) => {
   form.municipality = ''; // Reset selected municipality
 };
 
+// Form State
 const form = ref({
   name: '',
   gender: '',
@@ -30,13 +34,19 @@ const form = ref({
   teachingMode: '',
   province: '',
   municipality: '',
-  peso: '',
-  centavos: '',
+  fullRate: '',
+  aboutMe: '',
+  idPhotoFile: null,      // File upload: ID photo
+  selfiePhotoFile: null,  // File upload: Selfie photo
+  portfolioUrl: ''
 })
 
 const isFormValid = ref(false)
 const formRef = ref(null)
 
+const fileInput = ref(null)
+const previewUrl = ref(null)
+const uploadedFile = ref(null)
 
 const video = ref(null)
 const canvas = ref(null)
@@ -44,38 +54,154 @@ const photo = ref(null)
 const isCameraActive = ref(false)
 let stream = null
 
-const fileInput = ref(null);
-const uploadedFile = ref(null);
-const previewUrl = ref('');
 
-const triggerFileInput = () => {
-  fileInput.value.click();
-};
+// Upload a single file to Supabase Storage
+const uploadFile = async (file, folder) => {
+  if (!file) return null
 
-const handleFileUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    uploadedFile.value = file;
-    console.log('Uploaded document:', file);
+  const filename = `${folder}/${Date.now()}_${file.name}`
 
-    // Create a preview if it's an image
-    if (file.type.startsWith('image/')) {
-      previewUrl.value = URL.createObjectURL(file);
-    } else {
-      previewUrl.value = '';
+  const { error } = await supabase.storage
+    .from('tutor-uploads')
+    .upload(filename, file)
+
+  if (error) {
+    console.error('Upload error:', error.message)
+    return null
+  }
+
+  const { publicUrl } = supabase
+    .storage
+    .from('tutor-uploads')
+    .getPublicUrl(filename).data
+
+  return publicUrl
+}
+
+// Submit Form Data
+const submitForm = async () => {
+  const validation = await formRef.value?.validate?.()
+  if (!validation?.valid) {
+    console.warn('Form validation failed')
+    return
+  }
+
+  try {
+    // Upload images
+    const idPhotoUrl = await uploadFile(form.value.idPhotoFile, 'id-photos')
+    const selfiePhotoUrl = await uploadFile(form.value.selfiePhotoFile, 'selfie-photos')
+
+    if (!idPhotoUrl || !selfiePhotoUrl) {
+      alert('Failed to upload required images.')
+      return
     }
+
+    // Insert into database
+    const { error } = await supabase
+      .from('tutors')
+      .insert([{
+        name: form.value.name,
+        gender: form.value.gender,
+        subjects: form.value.subjects,
+        birthMonth: form.value.month,
+        birthDay: form.value.day,
+        birthYear: form.value.year,
+        timeFrom: form.value.timeFrom,
+        timeTo: form.value.timeTo,
+        teachingMode: form.value.teachingMode,
+        province: form.value.province,
+        municipality: form.value.municipality,
+        fullRate: form.value.fullRate,
+        aboutMe: form.value.aboutMe,
+        portfolioUrl: form.value.portfolioUrl || null,
+        idPhotoUrl,
+        selfiePhotoUrl
+      }])
+
+    if (error) {
+      console.error('Database insert error:', error.message)
+      alert('Submission failed. Please try again.')
+      return
+    }
+
+    alert('Application submitted successfully! You may now view your profile in Find Tutor.')
+    resetForm()
+
+  } catch (err) {
+    console.error('Submission error:', err)
+    alert('An unexpected error occurred.')
   }
 }
 
-function submitForm() {
-  formRef.value?.validate().then(success => {
-    if (success) {
-      // all fields are valid, proceed with form submission
-      console.log('Form data:', form)
-    } else {
-      console.warn('Form is invalid')
+// Reset form after successful submission
+const resetForm = () => {
+  form.value = {
+    name: '',
+    gender: '',
+    subjects: '',
+    month: '',
+    day: '',
+    year: '',
+    timeFrom: '',
+    timeTo: '',
+    teachingMode: '',
+    province: '',
+    municipality: '',
+    fullRate: '',
+    aboutMe: '',
+    idPhotoFile: null,
+    selfiePhotoFile: null,
+    portfolioUrl: ''
+  }
+  formRef.value?.reset?.()
+}
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024
+
+// Allowed types
+const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']
+
+// Open hidden file input
+const triggerFileInput = () => {
+  if (fileInput.value) {
+    fileInput.value.click()
+  }
+}
+
+// Handle file selection
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  // Check file type
+  if (!allowedTypes.includes(file.type)) {
+    alert('Only JPG, PNG images or PDF files are allowed.')
+    event.target.value = null // Clear input
+    return
+  }
+
+  // Check file size
+  if (file.size > MAX_FILE_SIZE) {
+    alert('File size should not exceed 5MB.')
+    event.target.value = null // Clear input
+    return
+  }
+
+  // Save file to form
+  form.value.idPhotoFile = file
+  form.value.selfiePhotoFile = file 
+  uploadedFile.value = file
+
+  // Preview if image
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      previewUrl.value = e.target.result
     }
-  })
+    reader.readAsDataURL(file)
+  } else {
+    previewUrl.value = null
+  }
 }
 
 const startCamera = async () => {
