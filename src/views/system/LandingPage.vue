@@ -338,7 +338,7 @@ const steps = [
 
           <v-col cols="12" sm="4">
             <v-card class="mx-auto" max-width="400">
-              <v-img height="197px" src="/public/kai.jpg" alt="Leanheit May Miñoza" cover></v-img>
+              <v-img height="197px" src="public/lenittt.png" alt="Leanheit May Miñoza" cover></v-img>
 
               <v-card-title>
                 <b>Leanheit May Miñoza</b>
@@ -360,9 +360,10 @@ const steps = [
 
                   <v-card-text class="justified-text">
                     I help build the user interface of EduMatch, ensuring it’s both functional
-                    and visually appealing. I focus on how each element looks and works together
-                    to create a smooth experience. This allows learners and tutors to focus on
-                    what truly matters—learning and teaching.
+                    and visually appealing. I focus on how each element looks and works together to create a smooth
+                    experience. I also prioritize optimizing performance and responsiveness, making sure users have a
+                    seamless experience across devices. This allows learners and tutors to focus on what truly
+                    matters—learning and teaching.
                   </v-card-text>
                 </div>
               </v-expand-transition>
