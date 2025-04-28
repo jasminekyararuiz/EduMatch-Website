@@ -335,7 +335,7 @@ const steps = [
               </v-expand-transition>
             </v-card>
           </v-col>
-          
+
           <v-col cols="12" sm="4">
             <v-card class="mx-auto" max-width="400">
               <v-img height="197px" src="/public/kai.jpg" alt="Leanheit May Miñoza" cover></v-img>
