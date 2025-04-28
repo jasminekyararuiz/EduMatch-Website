@@ -15,9 +15,9 @@ const formData = ref({
 })
 
 const onLogin = () => {
-alert (formData.value.password) 
+alert (formData.value.password)
 
-} 
+}
 
 const onFormSubmit = () => {
   refVForm.value?.validate().then(({ valid }) => {
@@ -28,7 +28,7 @@ const onFormSubmit = () => {
 </script>
 
 <template>
-  <v-form ref="refVForm" @submit.preven="onFormSubmit">
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <v-text-field
       v-model="formData.email"
       prepend-inner-icon="mdi-email"
