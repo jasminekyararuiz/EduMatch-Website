@@ -9,16 +9,31 @@ const triggerSubjectSearch = ref(false)
 const infoDialogTutor = ref(null)
 const bookDialogTutor = ref(null)
 
+// Dialog states
+const bookDialogOpen = ref(false);
+const successDialog = ref(false);
+
+// Close booking dialog
+function closeBookDialog() {
+  bookDialogTutor.value = false;
+}
+
+// Confirm booking and open success dialog
+function confirmBooking() {
+  bookDialogTutor.value = false;
+  successDialog.value = true;
+}
+
+// Close success dialog
+function closeSuccessDialog() {
+  successDialog.value = false;
+}
+
 function openInfoDialog(tutor) { infoDialogTutor.value = tutor }
 function closeInfoDialog() { infoDialogTutor.value = null }
 
 function openBookDialog(tutor) { bookDialogTutor.value = tutor }
-function closeBookDialog() { bookDialogTutor.value = null }
 
-function confirmBooking() {
-  alert(`Booked ${bookDialogTutor.value.name}!`)
-  closeBookDialog()
-}
 
 // “Others” free‑text inputs
 const subjectOther = ref('')
@@ -261,7 +276,7 @@ const toggleTheme = () => {
           <!-- INFO DIALOG -->
           <v-dialog v-model="infoDialogTutor" max-width="450px" class="pa-0">
             <v-card v-if="infoDialogTutor" color="#CFD8DC" elevation="3" rounded="lg" class="d-flex flex-column"
-              style="max-height: 90vh; width:450px;" >
+              style="max-height: 90vh; width:450px;">
               <v-card-text class="pt-6">
                 <!-- Image full‑width -->
                 <v-img :src="infoDialogTutor.image" height="250px" cover />
@@ -297,20 +312,49 @@ const toggleTheme = () => {
           </v-dialog>
 
           <!-- BOOKING DIALOG -->
-          <v-dialog v-model="bookDialogTutor" max-width="450px">
+          <v-dialog v-model="bookDialogTutor" max-width="400px">
             <v-card v-if="bookDialogTutor">
-              <v-card-title class="headline">Book {{ bookDialogTutor.name }}</v-card-title>
-              <v-card-text>
-                <p>Are you sure you want to book <strong>{{ bookDialogTutor.name }}</strong>?</p>
-                <p><em>{{ bookDialogTutor.major }}, {{ bookDialogTutor.time }}, {{ bookDialogTutor.area }}</em></p>
+              <v-card-title class="headline"></v-card-title>
+
+              <v-card-text class="text-center">
+                <p id="confirm">Are you sure you want to book <strong>{{ bookDialogTutor.name }}</strong>?</p>
               </v-card-text>
-              <v-card-actions>
-                <v-btn text @click="closeBookDialog">Cancel</v-btn>
-                <v-spacer />
-                <v-btn color="primary" @click="confirmBooking">Confirm Booking</v-btn>
+
+              <v-card-actions class="justify-center">
+                <v-btn color="red darken-1" dark class="px-6 py-3" @click="closeBookDialog">
+                  Cancel
+                </v-btn>
+
+                <v-btn color="blue darken-1" dark class="ml-4 px-6 py-3" @click="confirmBooking">
+                  Confirm Booking
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+          <!-- SUCCESS DIALOG -->
+          <v-dialog v-model="successDialog" max-width="360px">
+            <v-card class="pa-5 text-center" elevation="10">
+              <v-card-text>
+                <v-icon color="blue-darken-2" size="60">mdi-check-circle</v-icon>
+
+                <h3 class="mt-3 mb-6" style="color: black;">BOOKING SUCCESSFUL</h3>
+
+                <p class="mb-2">
+                  Your learning journey starts now.<br>
+                  Thank you for choosing <br>Edumatch.<br>
+                </p>
+              </v-card-text>
+
+              <v-card-actions class="justify-center">
+                <v-btn color="blue darken-1" dark @click="closeSuccessDialog">
+                  Continue
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+
 
           <!-- Right side: Social Media -->
           <v-col cols="12" md="8">
@@ -436,7 +480,7 @@ const toggleTheme = () => {
 }
 
 .custom-button {
-  font-size: 13px;  
-  padding: 12px 18px;  
+  font-size: 13px;
+  padding: 12px 18px;
 }
 </style>
