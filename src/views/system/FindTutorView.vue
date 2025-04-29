@@ -274,7 +274,7 @@ const toggleTheme = () => {
           </v-col>
 
           <!-- INFO DIALOG -->
-          <v-dialog v-model="infoDialogTutor" max-width="450px" class="pa-0">
+          <v-dialog v-model="infoDialogTutor" max-width="400px" class="pa-0">
             <v-card v-if="infoDialogTutor" color="#CFD8DC" elevation="3" rounded="lg" class="d-flex flex-column"
               style="max-height: 90vh; width:450px;">
               <v-card-text class="pt-6">
@@ -283,7 +283,7 @@ const toggleTheme = () => {
 
                 <!-- Name underneath, centered -->
                 <div class="text-center mt-4">
-                  <h3 id="namepop" class="font-weight-bold mb-2">{{ infoDialogTutor.name }}</h3>
+                  <h3 class="font-weight-bold mb-2">{{ infoDialogTutor.name }}</h3>
                 </div>
 
                 <!-- Details -->
@@ -300,14 +300,14 @@ const toggleTheme = () => {
                 </div>
               </v-card-text>
 
-              <div class="d-flex justify-center">
-                <v-btn color="deep-purple-accent-4" class="custom-button" @click="closeInfoDialog">
+              <!-- Close Button inside Card Actions -->
+              <v-card-actions class="justify-center pb-4">
+                <v-btn color="red darken-1" class="ma-2" @click="closeInfoDialog">
                   Close
                 </v-btn>
-              </div>
-
-              <v-card-actions>
               </v-card-actions>
+
+
             </v-card>
           </v-dialog>
 
@@ -332,27 +332,53 @@ const toggleTheme = () => {
             </v-card>
           </v-dialog>
 
+
           <!-- SUCCESS DIALOG -->
           <v-dialog v-model="successDialog" max-width="360px">
-            <v-card class="pa-5 text-center" elevation="10">
-              <v-card-text>
-                <v-icon color="blue-darken-2" size="60">mdi-check-circle</v-icon>
+            <v-card elevation="10" class="overflow-hidden" style="border-radius: 20px; position: relative;">
+              <!-- Top white section -->
+              <div class="text-center pt-6 pb-10" style="background-color: #ECEFF1; position: relative;">
+                <h2 style="color: #37474F ;">Success!</h2>
 
-                <h3 class="mt-3 mb-6" style="color: black;">BOOKING SUCCESSFUL</h3>
+                <!-- Floating Circle with Icon -->
+                <div style="
+          background-color: #FAFAFA;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%) translateY(50%);
+          bottom: 0;
+          z-index: 10;
+        ">
+                  <v-icon color="#1A237E" size="50">mdi-check</v-icon>
+                </div>
+              </div>
 
-                <p class="mb-2">
+              <!-- Blue middle section -->
+              <div class="text-center pt-13 pb-10 middle" style="background-color:#1A237E;">
+                <p class="mb-5 mt-3" style="color: whitesmoke; font-size: 15px;">
                   Your learning journey starts now.<br>
-                  Thank you for choosing <br>Edumatch.<br>
+                  Thank you for choosing <strong>EduMatch</strong>.
                 </p>
-              </v-card-text>
+              </div>
 
-              <v-card-actions class="justify-center">
-                <v-btn color="blue darken-1" dark @click="closeSuccessDialog">
-                  Continue
+              <!-- Button section -->
+              <v-card-actions class="justify-center" style="background-color: #ECEFF1;">
+                <v-btn color="red darken-1" variant="text" class="mt-2 mb-4" @click="closeSuccessDialog"
+                  style="font-weight: bold;">
+                  CONTINUE
+                  <v-icon end>mdi-arrow-right</v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
+
 
 
 
@@ -482,5 +508,9 @@ const toggleTheme = () => {
 .custom-button {
   font-size: 13px;
   padding: 12px 18px;
+}
+
+#middle {
+  color: #37474F;
 }
 </style>
