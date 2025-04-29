@@ -162,7 +162,9 @@ const uploadFile = async (file, folder) => {
     .getPublicUrl(filename);
 
   return publicUrl;
+  
 };
+
 
 // Submit form
 const submitForm = async () => {
@@ -270,19 +272,23 @@ const resetForm = () => {
   formRef.value?.reset?.();
 };
 
-const avatarUrl = ref('/public/tutor.jpg')
+const avatarUrl = ref('/public/adelle.jpg')
 const fileInputRef = ref(null)
 
 const openFileDialog = () => {
   fileInputRef.value.click()
 }
 
-const onFileChange = (event) => {
+const onFileChange = async (event) => {
   const file = event.target.files[0]
-  if (file) {
-    avatarUrl.value = URL.createObjectURL(file)
+  if (!file) return
+
+  const uploadedUrl = await uploadFile(file, 'avatars')
+  if (uploadedUrl) {
+    avatarUrl.value = uploadedUrl
   }
 }
+
 // Optional test function
 const testUpload = async () => {
   const testFile = new File(['Test content'], 'test.txt', { type: 'text/plain' });
