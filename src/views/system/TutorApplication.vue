@@ -1,27 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 import { provinceOptions, municipalityData } from '@/data/CaragaData';
-import { requiredValidator } from '@/utils/validators.js'
+import { requiredValidator } from '@/utils/validators.js';
 import { supabase } from '@/utils/supabase';
 
-const theme = ref('light')
-
+// Theme toggle
+const theme = ref('light');
 function onClick() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
 }
 
-
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-const days = Array.from({ length: 31 }, (_, i) => i + 1)
-const years = Array.from({ length: 6 }, (_, i) => new Date().getFullYear() + i)
-const municipalityOptions = ref([]);
-
-const updateMunicipalities = (selectedProvince) => {
-  municipalityOptions.value = municipalityData[selectedProvince] || [];
-  form.value.municipality = ''; // Reset selected municipality
-};
-
-// Form State
+// Form data
 const form = ref({
   name: '',
   gender: '',
@@ -36,104 +25,226 @@ const form = ref({
   municipality: '',
   fullRate: '',
   aboutMe: '',
-  idPhotoFile: null,      // File upload: ID photo
-  selfiePhotoFile: null,  // File upload: Selfie photo
-  portfolioUrl: ''
-})
+  idPhotoFile: null,
+  selfiePhotoFile: null,
+  portfolioFile: null,
+});
+const isFormValid = ref(false);
+const formRef = ref(null);
 
-const isFormValid = ref(false)
-const formRef = ref(null)
+// Dropdowns
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const days = Array.from({ length: 31 }, (_, i) => i + 1);
+const years = Array.from({ length: 6 }, (_, i) => new Date().getFullYear() + i);
+const municipalityOptions = ref([]);
 
-const fileInput = ref(null)
-const previewUrl = ref(null)
-const uploadedFile = ref(null)
+const updateMunicipalities = (selectedProvince) => {
+  municipalityOptions.value = municipalityData[selectedProvince] || [];
+  form.value.municipality = '';
+};
 
-const video = ref(null)
-const canvas = ref(null)
-const photo = ref(null)
-const isCameraActive = ref(false)
-let stream = null
+// File input and preview
+const fileInput = ref(null);
+const previewUrl = ref(null);
+const uploadedFile = ref(null);
 
+// Camera
+const video = ref(null);
+const canvas = ref(null);
+const photo = ref(null);
+const isCameraActive = ref(false);
+let stream = null;
 
-// Upload a single file to Supabase Storage
-const uploadFile = async (file, folder) => {
-  if (!file) return null
+const triggerFileInput = () => {
+  if (fileInput.value) fileInput.value.click();
+};
 
-  const filename = `${folder}/${Date.now()}_${file.name}`
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-  const { error } = await supabase.storage
-    .from('tutor-uploads')
-    .upload(filename, file)
+  const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+  const maxSize = 5 * 1024 * 1024;
 
-  if (error) {
-    console.error('Upload error:', error.message)
-    return null
+  if (!allowedTypes.includes(file.type)) {
+    alert('Only JPG, PNG, or PDF allowed.');
+    event.target.value = null;
+    return;
   }
 
-  const { publicUrl } = supabase
-    .storage
-    .from('tutor-uploads')
-    .getPublicUrl(filename).data
+  if (file.size > maxSize) {
+    alert('Max file size is 5MB.');
+    event.target.value = null;
+    return;
+  }
 
-  return publicUrl
-}
+  form.value.idPhotoFile = file;
+  uploadedFile.value = file;
 
-// Submit Form Data
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewUrl.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    previewUrl.value = null;
+  }
+};
+
+// Camera functions
+const startCamera = async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    if (video.value) {
+      video.value.srcObject = stream;
+      video.value.play();
+      isCameraActive.value = true;
+    }
+  } catch (err) {
+    console.error('Camera error:', err);
+  }
+};
+
+const stopCamera = () => {
+  if (stream) {
+    stream.getTracks().forEach((track) => track.stop());
+    isCameraActive.value = false;
+    stream = null;
+  }
+};
+
+const takePhoto = () => {
+  if (!video.value || !canvas.value) return;
+  const width = video.value.videoWidth;
+  const height = video.value.videoHeight;
+  canvas.value.width = width;
+  canvas.value.height = height;
+
+  const context = canvas.value.getContext('2d');
+  context.translate(width, 0);
+  context.scale(-1, 1);
+  context.drawImage(video.value, 0, 0, width, height);
+
+  photo.value = canvas.value.toDataURL('image/png');
+  stopCamera();
+};
+
+const retakePhoto = () => {
+  photo.value = null;
+  startCamera();
+};
+
+// Upload file to Supabase
+const uploadFile = async (file, folder) => {
+  if (!file) return null;
+
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
+    console.error('Auth error:', authError?.message);
+    return null;
+  }
+
+  const bucket = 'tutor-uploads';
+  const filename = `${folder}/${user.id}_${Date.now()}_${file.name}`;
+
+  const { error } = await supabase.storage
+    .from(bucket)
+    .upload(filename, file);
+
+  if (error) {
+    console.error('Upload failed:', error.message);
+    return null;
+  }
+
+  const { data: { publicUrl } } = supabase.storage
+    .from(bucket)
+    .getPublicUrl(filename);
+
+  return publicUrl;
+};
+
+// Submit form
 const submitForm = async () => {
-  const validation = await formRef.value?.validate?.()
+  const validation = await formRef.value?.validate?.();
   if (!validation?.valid) {
-    console.warn('Form validation failed')
-    return
+    console.warn('Invalid form');
+    return;
   }
 
   try {
-    // Upload images
-    const idPhotoUrl = await uploadFile(form.value.idPhotoFile, 'id-photos')
-    const selfiePhotoUrl = await uploadFile(form.value.selfiePhotoFile, 'selfie-photos')
+    // Get currently authenticated user (for user_id column or RLS)
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      console.error('User not authenticated');
+      alert('You must be logged in to submit.');
+      return;
+    }
+
+    // Upload files
+    const idPhotoUrl = await uploadFile(form.value.idPhotoFile, 'id-photos');
+    const selfiePhotoUrl = await uploadFile(dataUrlToFile(photo.value, 'selfie.png'), 'selfie-photos');
+    const portfolioUrl = await uploadFile(form.value.portfolioFile, 'portfolios');
 
     if (!idPhotoUrl || !selfiePhotoUrl) {
-      alert('Failed to upload required images.')
-      return
+      alert('Missing required images.');
+      return;
     }
 
-    // Insert into database
-    const { error } = await supabase
-      .from('tutors')
-      .insert([{
-        name: form.value.name,
-        gender: form.value.gender,
-        subjects: form.value.subjects,
-        birthMonth: form.value.month,
-        birthDay: form.value.day,
-        birthYear: form.value.year,
-        timeFrom: form.value.timeFrom,
-        timeTo: form.value.timeTo,
-        teachingMode: form.value.teachingMode,
-        province: form.value.province,
-        municipality: form.value.municipality,
-        fullRate: form.value.fullRate,
-        aboutMe: form.value.aboutMe,
-        portfolioUrl: form.value.portfolioUrl || null,
-        idPhotoUrl,
-        selfiePhotoUrl
-      }])
+    // Prepare data for insertion
+    const formDataToInsert = {
+      name: form.value.name,
+      gender: form.value.gender,
+      subjects: Array.isArray(form.value.subjects)
+        ? form.value.subjects
+        : [form.value.subjects], // ✅ FIX: Ensure array
+      month: form.value.month,
+      day: parseInt(form.value.day),
+      year: parseInt(form.value.year),
+      time_from: form.value.timeFrom,
+      time_to: form.value.timeTo,
+      teaching_mode: form.value.teachingMode,
+      province: form.value.province,
+      municipality: form.value.municipality,
+      full_rate: parseFloat(form.value.fullRate),
+      about_me: form.value.aboutMe?.trim() ?? '',
+      id_photo_url: idPhotoUrl,
+      selfie_photo_url: selfiePhotoUrl,
+      portfolio_url: portfolioUrl,
+      created_at: new Date().toISOString(), // optional if DB handles it
+      // user_id: user.id // 👈 Add this only if your table has this column
+    };
+
+    const { error } = await supabase.from('tutors').insert([formDataToInsert]);
 
     if (error) {
-      console.error('Database insert error:', error.message)
-      alert('Submission failed. Please try again.')
-      return
+      console.error('Insert error:', error.message);
+      alert('Submission failed.');
+      return;
     }
 
-    alert('Application submitted successfully! You may now view your profile in Find Tutor.')
-    resetForm()
-
+    alert('Submitted successfully!');
+    resetForm();
   } catch (err) {
-    console.error('Submission error:', err)
-    alert('An unexpected error occurred.')
+    console.error('Submit error:', err);
+    alert('Unexpected error occurred.');
   }
-}
+};
 
-// Reset form after successful submission
+
+// Convert dataURL to File
+const dataUrlToFile = (dataUrl, filename) => {
+  if (!dataUrl) return null;
+  const arr = dataUrl.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) u8arr[n] = bstr.charCodeAt(n);
+  return new File([u8arr], filename, { type: mime });
+};
+
+// Reset
 const resetForm = () => {
   form.value = {
     name: '',
@@ -151,106 +262,24 @@ const resetForm = () => {
     aboutMe: '',
     idPhotoFile: null,
     selfiePhotoFile: null,
-    portfolioUrl: ''
-  }
-  formRef.value?.reset?.()
-}
+    portfolioFile: null,
+  };
+  photo.value = null;
+  previewUrl.value = null;
+  uploadedFile.value = null;
+  formRef.value?.reset?.();
+};
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024
+// Optional test function
+const testUpload = async () => {
+  const testFile = new File(['Test content'], 'test.txt', { type: 'text/plain' });
+  const url = await uploadFile(testFile, 'test-folder');
+  console.log('Test upload URL:', url);
+};
 
-// Allowed types
-const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']
-
-// Open hidden file input
-const triggerFileInput = () => {
-  if (fileInput.value) {
-    fileInput.value.click()
-  }
-}
-
-// Handle file selection
-const handleFileUpload = (event) => {
-  const file = event.target.files[0]
-  if (!file) return
-
-  // Check file type
-  if (!allowedTypes.includes(file.type)) {
-    alert('Only JPG, PNG images or PDF files are allowed.')
-    event.target.value = null // Clear input
-    return
-  }
-
-  // Check file size
-  if (file.size > MAX_FILE_SIZE) {
-    alert('File size should not exceed 5MB.')
-    event.target.value = null // Clear input
-    return
-  }
-
-  // Save file to form
-  form.value.idPhotoFile = file
-  form.value.selfiePhotoFile = file
-  uploadedFile.value = file
-
-  // Preview if image
-  if (file.type.startsWith('image/')) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      previewUrl.value = e.target.result
-    }
-    reader.readAsDataURL(file)
-  } else {
-    previewUrl.value = null
-  }
-}
-
-const startCamera = async () => {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true })
-    if (video.value) {
-      video.value.srcObject = stream
-      video.value.play()
-      isCameraActive.value = true
-    }
-  } catch (err) {
-    console.error('Camera access denied or not available:', err)
-  }
-}
-
-const stopCamera = () => {
-  if (stream) {
-    stream.getTracks().forEach((track) => track.stop())
-    stream = null
-    isCameraActive.value = false
-  }
-}
-const takePhoto = () => {
-  if (!video.value || !canvas.value) return
-
-  const context = canvas.value.getContext('2d')
-  const width = video.value.videoWidth
-  const height = video.value.videoHeight
-
-  canvas.value.width = width
-  canvas.value.height = height
-
-  // Flip horizontally (mirror effect)
-  context.translate(width, 0)
-  context.scale(-1, 1)
-
-  context.drawImage(video.value, 0, 0, width, height)
-
-  // Capture photo
-  photo.value = canvas.value.toDataURL('image/png')
-
-  stopCamera()
-}
-
-const retakePhoto = () => {
-  photo.value = null
-  startCamera()
-}
+// testUpload(); // Uncomment to test
 </script>
+
 
 <template>
   <v-app :theme="theme">
@@ -354,7 +383,14 @@ const retakePhoto = () => {
                   <!-- Right side of the form -->
                   <v-col cols="12" md="6">
                     <v-card :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'" class="pa-4">
-                      <v-textarea label="About Me" variant="solo" rows="3" auto-grow hide-details
+                      <v-textarea 
+                      v-model="form.aboutMe" 
+                      label="About Me" 
+                      variant="solo" 
+                      rows="3" 
+                      :rules="[requiredValidator]"
+                      auto-grow 
+                      hide-details
                         class="bg-transparent" />
                     </v-card>
 
@@ -443,7 +479,8 @@ const retakePhoto = () => {
                     <v-card class="pa-3 mt-4" :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'">
                       <div class="text-subtitle-2 font-weight-bold">Portfolio</div>
                       <v-file-input label="Upload Portfolio" show-size variant="solo-inverted" prepend-icon="mdi-upload"
-                        accept=".jpg,.pdf,.docx,.pptx" />
+                        accept=".jpg,.pdf,.docx,.pptx" 
+                        @change="(e) => form.portfolioFile = e.target.files[0]"/>
                       <p class="text-caption mt-1">
                         Supports: pdf, jpg, docx, pptx<br />
                       </p>
