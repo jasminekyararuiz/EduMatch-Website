@@ -270,6 +270,19 @@ const resetForm = () => {
   formRef.value?.reset?.();
 };
 
+const avatarUrl = ref('/public/tutor.jpg')
+const fileInputRef = ref(null)
+
+const openFileDialog = () => {
+  fileInputRef.value.click()
+}
+
+const onFileChange = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    avatarUrl.value = URL.createObjectURL(file)
+  }
+}
 // Optional test function
 const testUpload = async () => {
   const testFile = new File(['Test content'], 'test.txt', { type: 'text/plain' });
@@ -300,7 +313,7 @@ const testUpload = async () => {
             <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
             <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
             <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
-            <v-avatar size="30"><v-img src="public/heeseung.jpg" /></v-avatar>
+            <v-avatar size="30"><v-img :src="avatarUrl" /></v-avatar>
           </v-col>
         </v-row>
       </v-app-bar>
@@ -310,10 +323,27 @@ const testUpload = async () => {
           <!-- SIDEBAR -->
           <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
             <v-avatar size="180" class="mt-6 border border-5">
-              <v-img src="/public/tutor.jpg" />
-            </v-avatar>
-            <v-btn class="text-caption text-grey-darken-1 mt-1" size="small" rounded="xl" density="compact">
-              <b>edit</b></v-btn>
+      <v-img :src="avatarUrl" />
+    </v-avatar>
+
+    <v-btn
+      class="text-caption text-grey-darken-1 mt-1"
+      size="small"
+      rounded="xl"
+      density="compact"
+      @click="openFileDialog"
+    >
+      <b>edit</b>
+    </v-btn>
+
+    <!-- Hidden file input -->
+    <input
+      type="file"
+      accept="image/*"
+      ref="fileInputRef"
+      class="d-none"
+      @change="onFileChange"
+    />
 
             <v-card class="mt-4 px-4 py-3 text-center " rounded="lg"
               :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
