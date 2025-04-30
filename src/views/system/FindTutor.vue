@@ -1,15 +1,43 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { supabase } from '@/utils/supabase'
+
+// Theme toggle
 const theme = ref('light')
 const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
+
+// Dialog & tab control
 const activeTab = ref('best')
 const infoDialogTutor = ref(null)
 const bookDialogTutor = ref(null)
+const successDialog = ref(false)
+
+// State
 const tutors = ref([])
-const loading = ref(false) // ✅ You forgot to declare this
+const loading = ref(false)
+
+// Filters
+const filters = ref({
+  gender: { male: false, female: false },
+  subjects: [],
+  dates: [],
+  mode: [],
+  location: '',
+  rate: null
+})
+
+// Format function for Preferred Date
+const formatDate = (month, day, year) => {
+  if (!month || !day || !year) return 'N/A'
+  const date = new Date(`${month} ${day}, ${year}`)
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 // Fetch tutors from Supabase
 const fetchTutors = async () => {
@@ -19,37 +47,69 @@ const fetchTutors = async () => {
     .select('*')
     .order('created_at', { ascending: false })
 
-  console.log('Fetched data:', data)
-  console.log('Fetch error:', error)
-
   if (error) {
     console.error('Error fetching tutors:', error.message)
   } else {
-    tutors.value = data
+    tutors.value = data.map(tutor => ({
+      ...tutor,
+      formattedPreferredDate: formatDate(tutor.month, tutor.day, tutor.year)
+    }))
   }
 
   loading.value = false
 }
 
+// Unique filter data
+const uniqueSubjects = computed(() => {
+  const allSubjects = tutors.value.flatMap(t => t.subjects || [])
+  return [...new Set(allSubjects)]
+})
 
-// Computed property for sorted tutors based on active tab
+const uniqueDates = computed(() => {
+  return [...new Set(tutors.value.map(t => t.formattedPreferredDate))]
+})
+
+const uniqueModes = computed(() => {
+  return [...new Set(tutors.value.map(t => t.teaching_mode))]
+})
+
+const maxRate = computed(() => {
+  return Math.max(...tutors.value.map(t => Number(t.full_rate) || 0))
+})
+
+// Filtered tutors
 const sortedTutors = computed(() => {
-  if (!tutors.value || tutors.value.length === 0) return []
+  return tutors.value.filter(tutor => {
+    const genderMatch =
+      (!filters.value.gender.male && !filters.value.gender.female) ||
+      (filters.value.gender.male && tutor.gender === 'Male') ||
+      (filters.value.gender.female && tutor.gender === 'Female')
 
-  if (activeTab.value === 'recent') {
-    return [...tutors.value].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-  } else if (activeTab.value === 'popular') {
-    return [...tutors.value].sort((a, b) => (b.rating || 0) - (a.rating || 0))
-  }
+    const subjectMatch =
+      filters.value.subjects.length === 0 ||
+      filters.value.subjects.some(subject => tutor.subjects?.includes(subject))
 
-  // Default: Best Match (just return as-is for now)
-  return tutors.value
+    const dateMatch =
+      filters.value.dates.length === 0 ||
+      filters.value.dates.includes(tutor.formattedPreferredDate)
+
+    const modeMatch =
+      filters.value.mode.length === 0 ||
+      filters.value.mode.includes(tutor.teaching_mode)
+
+    const locationMatch =
+      !filters.value.location ||
+      `${tutor.province}, ${tutor.municipality}`.toLowerCase().includes(filters.value.location.toLowerCase())
+
+    const rateMatch =
+      !filters.value.rate ||
+      Number(tutor.full_rate) <= filters.value.rate
+
+    return genderMatch && subjectMatch && dateMatch && modeMatch && locationMatch && rateMatch
+  })
 })
 
-onMounted(() => {
-  fetchTutors()
-})
-
+// Dialog controls
 const openInfoDialog = (tutor) => {
   infoDialogTutor.value = tutor
 }
@@ -65,17 +125,18 @@ const openBookDialog = (tutor) => {
 const closeBookDialog = () => {
   bookDialogTutor.value = null
 }
-// Confirm booking handler
+
 const confirmBooking = () => {
-  // You can later insert a booking record into Supabase here
   closeBookDialog()
   successDialog.value = true
 }
-const successDialog = ref(false)
+
 const closeSuccessDialog = () => {
   successDialog.value = false
 }
 
+// Load tutors on mount
+onMounted(fetchTutors)
 </script>
 
 
@@ -103,16 +164,110 @@ const closeSuccessDialog = () => {
       <v-main>
         <v-container fluid class="mt-0 pt-0 py-10 ">
           <div class="d-flex" style="gap:16px; height:calc(100vh - 100px);">
-            <!-- FILTER SIDEBAR -->
-            <v-col cols="12" md="3">
-              <v-card 
-              :color="theme === 'light' ? '#172e46' : 'grey-darken-4'"
-              elevation="2" class="pa-4 mt-3" rounded="xl">
-                <h4 class="mb-4 font-weight-bold">Filter by:</h4>
-                <v-divider class="my-4" />
-                <!-- You can add filter components here -->
-              </v-card>
-            </v-col>
+            <v-col cols="12" md="3" class="filter-sidebar">
+  <v-card
+    :color="theme === 'light' ? '#172e46' : 'grey-darken-4'"
+    elevation="2"
+    class="pa-4 mt-3"
+    rounded="xl"
+  >
+    <h4 class="mb-4 font-weight-bold">Filter by:</h4>
+    <v-divider class="my-4" />
+    <v-expansion-panels multiple>
+
+      <!-- Gender Filter -->
+      <v-expansion-panel>
+        <v-expansion-panel-title>Gender</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-checkbox label="Male" v-model="filters.gender.male" dense hide-details />
+          <v-checkbox label="Female" v-model="filters.gender.female" dense hide-details />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+
+      <!-- Subject Filter with Search -->
+      <v-expansion-panel>
+        <v-expansion-panel-title>Subjects</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-autocomplete
+            v-model="filters.subjects"
+            :items="uniqueSubjects"
+            label="Select subjects"
+            chips
+            multiple
+            clearable
+            dense
+            hide-details
+          />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+
+      <!-- Preferred Date Filter -->
+      <v-expansion-panel>
+        <v-expansion-panel-title>Preferred Date</v-expansion-panel-title>
+        <v-expansion-panel-text>
+            <v-autocomplete
+  v-model="filters.dates"
+  :items="uniqueDates"
+  label="Select preferred dates"
+  chips
+  multiple
+  clearable
+  dense
+  hide-details
+/>
+
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+
+      <!-- Learning Mode Filter -->
+      <v-expansion-panel>
+        <v-expansion-panel-title>Learning Mode</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-checkbox
+            v-for="mode in uniqueModes"
+            :key="mode"
+            :label="mode"
+            :value="mode"
+            v-model="filters.mode"
+            dense
+            hide-details
+          />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+
+      <!-- Location Filter -->
+      <v-expansion-panel>
+        <v-expansion-panel-title>Location</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-text-field
+            v-model="filters.location"
+            label="Enter location"
+            dense
+            prepend-inner-icon="mdi-map-marker"
+            hide-details
+          />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+
+      <!-- Rate Filter -->
+      <v-expansion-panel>
+        <v-expansion-panel-title>Rate</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-slider
+            v-model="filters.rate"
+            :max="maxRate"
+            :step="10"
+            label="Max Hourly Rate"
+            thumb-label="always"
+            dense
+            hide-details
+          />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+
+    </v-expansion-panels>
+  </v-card>
+</v-col>
   
             <!-- TUTOR LIST -->
             <v-col cols="12" md="9" class="overflow-y-auto" style="max-height:calc(100vh - 20px);">
@@ -234,8 +389,9 @@ const closeSuccessDialog = () => {
                 <p><strong>Gender:</strong> {{ infoDialogTutor.gender }}</p>
                 <p><strong>Subjects:</strong> {{ infoDialogTutor.subjects }}</p>
                 <p><strong>Time:</strong> {{ infoDialogTutor.time_from }} - {{ infoDialogTutor.time_to }}</p>
-                <p><strong>Mode:</strong> {{ infoDialogTutor.teaching_mode }}</p>
-                <p><strong>Rate:</strong> ₱{{ infoDialogTutor.full_rate }}</p>
+                <p><strong>Teaching Mode:</strong> {{ infoDialogTutor.teaching_mode }}</p>
+                <p><strong>Preferred Date:</strong> {{ infoDialogTutor.formattedPreferredDate }}</p>
+                <p><strong>Hourly Rate:</strong> ₱{{ infoDialogTutor.full_rate }}</p>
                 <p><strong>Location:</strong> {{ infoDialogTutor.municipality }}, {{ infoDialogTutor.province }}</p>
                 <p><strong>About:</strong> {{ infoDialogTutor.about_me }}</p>
                 <p v-if="infoDialogTutor.portfolio_url">
