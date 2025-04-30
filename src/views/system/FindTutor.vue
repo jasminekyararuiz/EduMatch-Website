@@ -1,7 +1,10 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { supabase } from '@/utils/supabase'
-
+const theme = ref('light')
+const toggleTheme = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light'
+}
 const activeTab = ref('best')
 const infoDialogTutor = ref(null)
 const bookDialogTutor = ref(null)
@@ -77,13 +80,34 @@ const closeSuccessDialog = () => {
 
 
 <template>
-    <v-app>
+     <v-app :theme="theme">
+    <!-- NAVBAR -->
+    <v-app-bar :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-2'" class="px-3">
+      <v-row align="center" no-gutters class="w-100">
+        <v-col cols="8" class="d-flex align-center">
+          <v-img src="/public/Edumatch_logo.png" max-width="60" class="mr-2" />
+          <span class="text-h6 font-weight-bold">
+            <b>Edu</b><span class="text-cyan-darken-1"><b>Match</b></span>
+          </span>
+        </v-col>
+        <v-col cols="4" class="d-flex justify-end align-center">
+          <v-text-field dense hide-details rounded="xl" variant="solo" density="compact" placeholder="Search"
+            prepend-inner-icon="mdi-magnify" style="max-width:220px;" />
+          <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
+          <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
+          <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="toggleTheme" />
+          <v-avatar size="30"><v-img src="public/hee.jpg" /></v-avatar>
+        </v-col>
+      </v-row>
+    </v-app-bar>
       <v-main>
-        <v-container fluid class="mt-0 pt-0 py-10 gradient-card">
+        <v-container fluid class="mt-0 pt-0 py-10 ">
           <div class="d-flex" style="gap:16px; height:calc(100vh - 100px);">
             <!-- FILTER SIDEBAR -->
             <v-col cols="12" md="3">
-              <v-card elevation="2" class="pa-4 mt-3 filter-sidebar">
+              <v-card 
+              :color="theme === 'light' ? '#172e46' : 'grey-darken-2'"
+              elevation="2" class="pa-4 mt-3 filter-sidebar">
                 <h4 class="mb-4 font-weight-bold">Filter by:</h4>
                 <v-divider class="my-4" />
                 <!-- You can add filter components here -->
@@ -92,9 +116,12 @@ const closeSuccessDialog = () => {
   
             <!-- TUTOR LIST -->
             <v-col cols="12" md="9" class="overflow-y-auto" style="max-height:calc(100vh - 20px);">
-              <v-card elevation="2" class="pa-4 mt-3" rounded="lg" color="#f5f5f5">
+              <v-card
+              :color="theme === 'light' ? 'grey-lighten-3' : 'grey-darken-2'"
+               elevation="2" class="pa-4 mt-3" rounded="lg">
                 <!-- TAB TOGGLE -->
-                <v-card elevation="1" class="mb-4" rounded="lg" color="#ffffff">
+                <v-card  
+                elevation="1" class="mb-4" rounded="lg" >
                   <v-btn-toggle v-model="activeTab" rounded group>
                     <v-btn value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
                     <v-btn value="recent" :class="{ 'active-tab': activeTab === 'recent' }">Most Recent</v-btn>
@@ -118,7 +145,9 @@ const closeSuccessDialog = () => {
                     lg="4"
                     class="d-flex"
                   >
-                    <v-card elevation="3" class="pa-3 w-100" rounded="lg" color="#CFD8DC">
+                    <v-card
+                    :color="theme === 'light' ? '#CFD8DC' : 'grey-darken-5'"
+                    elevation="3" class="pa-3 w-100" rounded="lg">
                       <v-img :src="tutor.avatar_url || 'https://via.placeholder.com/400'" height="130px" class="mb-2" cover />
                       <h5 class="font-weight-bold mb-2" style="font-size:14px">{{ tutor.name }}</h5>
                       <p style="font-size:12px" class="mb-1">Major: {{ tutor.subjects }}</p>
@@ -222,6 +251,7 @@ const closeSuccessDialog = () => {
         </v-dialog>
       </v-main>
     </v-app>
+    
   </template>
 
 <style scoped>
@@ -236,7 +266,7 @@ const closeSuccessDialog = () => {
   top: 90px;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
-  background-color: #172e46;
+
   border-radius: 16px;
   padding: 10px;
   color: white;

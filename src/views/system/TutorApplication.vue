@@ -246,7 +246,7 @@ const openFileDialog = () => {
 const onFileChange = async (event) => {
   const file = event.target.files[0]
   if (!file) return
-  form.value.avatarFile = file
+form.value.avatarFile = file
   const uploadedUrl = await uploadFile(file, 'avatars')
   if (uploadedUrl) {
     avatarUrl.value = uploadedUrl
