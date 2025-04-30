@@ -199,9 +199,7 @@ const submitForm = async () => {
     const formDataToInsert = {
       name: form.value.name,
       gender: form.value.gender,
-      subjects: Array.isArray(form.value.subjects)
-        ? form.value.subjects
-        : [form.value.subjects], // ✅ FIX: Ensure array
+      subjects: form.value.subjects,
       month: form.value.month,
       day: parseInt(form.value.day),
       year: parseInt(form.value.year),
@@ -385,6 +383,7 @@ const testUpload = async () => {
                       :rules="[requiredValidator]" />
 
                     <v-text-field v-model="form.subjects" label="Major" :rules="[requiredValidator]" />
+                   
 
                     <div class="flex gap-2">
                       <v-select v-model="form.month" :items="months" label="Month" :rules="[requiredValidator]" />

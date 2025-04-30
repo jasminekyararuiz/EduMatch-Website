@@ -8,6 +8,26 @@ const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
 
+// Utility to check if a date is today
+const isToday = (dateString) => {
+  const inputDate = new Date(dateString)
+  const today = new Date()
+  return (
+    inputDate.getDate() === today.getDate() &&
+    inputDate.getMonth() === today.getMonth() &&
+    inputDate.getFullYear() === today.getFullYear()
+  )
+}
+
+// This determines what tutors to display based on activeTab
+const displayedTutors = computed(() => {
+  if (activeTab.value === 'recent') {
+    return sortedTutors.value.filter(tutor => isToday(tutor.created_at))
+  }
+  return sortedTutors.value // Best Match = filtered tutors
+})
+
+
 // Dialog & tab control
 const activeTab = ref('best')
 const infoDialogTutor = ref(null)
@@ -279,8 +299,7 @@ onMounted(fetchTutors)
                 elevation="1" class="mb-4" rounded="lg" >
                   <v-btn-toggle v-model="activeTab" rounded group>
                     <v-btn value="best" :class="{ 'active-tab': activeTab === 'best' }">Best Match</v-btn>
-                    <v-btn value="recent" :class="{ 'active-tab': activeTab === 'recent' }">Most Recent</v-btn>
-                    <v-btn value="popular" :class="{ 'active-tab': activeTab === 'popular' }">Popular Tutor</v-btn>
+                    <v-btn  value="recent" :class="{ 'active-tab': activeTab === 'recent' }">Most Recent</v-btn>
                   </v-btn-toggle>
                 </v-card>
   
