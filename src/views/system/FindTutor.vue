@@ -58,7 +58,14 @@ const formatDate = (month, day, year) => {
     day: 'numeric',
   })
 }
-
+// Format function for time
+const formatTime12Hour = (time) => {
+  const [hour, minute] = time.split(':')
+  const h = parseInt(hour)
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  const displayHour = h % 12 || 12
+  return `${displayHour}:${minute} ${ampm}`
+}
 // Fetch tutors from Supabase
 const fetchTutors = async () => {
   loading.value = true
@@ -325,7 +332,7 @@ onMounted(fetchTutors)
                       <v-img :src="tutor.avatar_url || 'https://via.placeholder.com/400'" height="130px" class="mb-2" cover />
                       <h5 class="font-weight-bold mb-2" style="font-size:14px">{{ tutor.name }}</h5>
                       <p style="font-size:12px" class="mb-1">Major: {{ tutor.subjects }}</p>
-                      <p style="font-size:12px" class="mb-1">Time: {{ tutor.time_from }} - {{ tutor.time_to }}</p>
+                      <p style="font-size:12px" class="mb-1">Time: {{ formatTime12Hour(tutor.time_from) }} - {{ formatTime12Hour(tutor.time_to) }}</p>
                       <p style="font-size:12px" class="mb-2">Location: {{ tutor.municipality }}, {{ tutor.province }}</p>
                       <div class="d-flex justify-center" style="gap:6px">
                         <v-btn color="primary" size="x-small" @click="openInfoDialog(tutor)">
@@ -407,7 +414,10 @@ onMounted(fetchTutors)
               <div id="def" style="padding: 0 16px;">
                 <p><strong>Gender:</strong> {{ infoDialogTutor.gender }}</p>
                 <p><strong>Subjects:</strong> {{ infoDialogTutor.subjects }}</p>
-                <p><strong>Time:</strong> {{ infoDialogTutor.time_from }} - {{ infoDialogTutor.time_to }}</p>
+                <p><strong>Time:</strong> 
+    {{ formatTime12Hour(infoDialogTutor.time_from) }} - 
+    {{ formatTime12Hour(infoDialogTutor.time_to) }}
+  </p>
                 <p><strong>Teaching Mode:</strong> {{ infoDialogTutor.teaching_mode }}</p>
                 <p><strong>Preferred Date:</strong> {{ infoDialogTutor.formattedPreferredDate }}</p>
                 <p><strong>Hourly Rate:</strong> ₱{{ infoDialogTutor.full_rate }}</p>
