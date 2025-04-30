@@ -22,10 +22,17 @@ const isToday = (dateString) => {
 // This determines what tutors to display based on activeTab
 const displayedTutors = computed(() => {
   if (activeTab.value === 'recent') {
-    return sortedTutors.value.filter(tutor => isToday(tutor.created_at))
+    return sortedTutors.value.filter(tutor => isToday(tutor.created_at));
   }
-  return sortedTutors.value // Best Match = filtered tutors
-})
+
+  // Sort alphabetically by name (A-Z)
+  return [...sortedTutors.value].sort((a, b) => {
+    const nameA = a.name?.toLowerCase() || '';
+    const nameB = b.name?.toLowerCase() || '';
+    return nameA.localeCompare(nameB);
+  });
+});
+
 
 
 // Dialog & tab control
@@ -318,7 +325,7 @@ onMounted(fetchTutors)
                 <!-- TUTOR CARDS -->
                 <v-row v-else class="pa-2" style="row-gap:18px;">
                   <v-col
-                    v-for="(tutor, i) in sortedTutors"
+                    v-for="(tutor, i) in displayedTutors"
                     :key="i"
                     cols="12"
                     sm="4"
@@ -414,10 +421,7 @@ onMounted(fetchTutors)
               <div id="def" style="padding: 0 16px;">
                 <p><strong>Gender:</strong> {{ infoDialogTutor.gender }}</p>
                 <p><strong>Subjects:</strong> {{ infoDialogTutor.subjects }}</p>
-                <p><strong>Time:</strong> 
-    {{ formatTime12Hour(infoDialogTutor.time_from) }} - 
-    {{ formatTime12Hour(infoDialogTutor.time_to) }}
-  </p>
+                <p><strong>Time:</strong> {{ infoDialogTutor.time_from }} - {{ infoDialogTutor.time_to }}</p>
                 <p><strong>Teaching Mode:</strong> {{ infoDialogTutor.teaching_mode }}</p>
                 <p><strong>Preferred Date:</strong> {{ infoDialogTutor.formattedPreferredDate }}</p>
                 <p><strong>Hourly Rate:</strong> ₱{{ infoDialogTutor.full_rate }}</p>
