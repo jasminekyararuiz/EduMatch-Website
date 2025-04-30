@@ -28,6 +28,7 @@ const form = ref({
   idPhotoFile: null,
   selfiePhotoFile: null,
   portfolioFile: null,
+  avatarUrl: null,
 });
 const isFormValid = ref(false);
 const formRef = ref(null);
@@ -187,6 +188,7 @@ const submitForm = async () => {
     const idPhotoUrl = await uploadFile(form.value.idPhotoFile, 'id-photos');
     const selfiePhotoUrl = await uploadFile(dataUrlToFile(photo.value, 'selfie.png'), 'selfie-photos');
     const portfolioUrl = await uploadFile(form.value.portfolioFile, 'portfolios');
+    const avatarUrl = await uploadFile(form.value.avatarFile, 'avatars');
 
     if (!idPhotoUrl || !selfiePhotoUrl) {
       alert('Missing required images.');
@@ -213,6 +215,7 @@ const submitForm = async () => {
       id_photo_url: idPhotoUrl,
       selfie_photo_url: selfiePhotoUrl,
       portfolio_url: portfolioUrl,
+      avatar_url: avatarUrl,
       created_at: new Date().toISOString(), // optional if DB handles it
       // user_id: user.id // 👈 Add this only if your table has this column
     };
@@ -233,6 +236,22 @@ const submitForm = async () => {
   }
 };
 
+const avatarUrl = ref('/public/adelle.jpg')
+const fileInputRef = ref(null)
+
+const openFileDialog = () => {
+  fileInputRef.value.click()
+}
+
+const onFileChange = async (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  form.value.avatarFile = file
+  const uploadedUrl = await uploadFile(file, 'avatars')
+  if (uploadedUrl) {
+    avatarUrl.value = uploadedUrl
+  }
+}
 
 // Convert dataURL to File
 const dataUrlToFile = (dataUrl, filename) => {
@@ -265,6 +284,7 @@ const resetForm = () => {
     idPhotoFile: null,
     selfiePhotoFile: null,
     portfolioFile: null,
+    avatarUrl: null,
   };
   photo.value = null;
   previewUrl.value = null;
@@ -272,22 +292,7 @@ const resetForm = () => {
   formRef.value?.reset?.();
 };
 
-const avatarUrl = ref('/public/adelle.jpg')
-const fileInputRef = ref(null)
 
-const openFileDialog = () => {
-  fileInputRef.value.click()
-}
-
-const onFileChange = async (event) => {
-  const file = event.target.files[0]
-  if (!file) return
-
-  const uploadedUrl = await uploadFile(file, 'avatars')
-  if (uploadedUrl) {
-    avatarUrl.value = uploadedUrl
-  }
-}
 
 // Optional test function
 const testUpload = async () => {

@@ -5,6 +5,7 @@ import LandingPage from '@/views/system/LandingPage.vue'
 import HowItWorks from '@/views/system/HowItWorks.vue'
 import TutorApplication from '@/views/system/TutorApplication.vue'
 import FindTutorView from '@/views/system/FindTutorView.vue'
+import FindTutor from '@/views/system/FindTutor.vue'
 
 
 const router = createRouter({
@@ -41,6 +42,11 @@ const router = createRouter({
       path: '/findtutor',
       name: 'findtutor',
       component: FindTutorView
+    },
+    {
+      path: '/findtutorhere',
+      name: 'find-tutor-here',
+      component: FindTutor
     },
   ],
 })
