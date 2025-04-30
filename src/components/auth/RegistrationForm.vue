@@ -8,6 +8,9 @@ import {
 } from '@/utils/validators'
 import AlertNotification from '@/components/common/AlertNotification.vue'
 import { supabase, formActionDefault } from '@/utils/supabase.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const formDataDefault = {
   firstname: '',
@@ -32,7 +35,6 @@ const onSubmit = async () => {
   const { data, error } = await supabase.auth.signUp({
     email: formData.value.email,
     password: formData.value.password,
-    role: formData.value.role,
     options: {
       data: {
         firstname: formData.value.firstname,
@@ -49,12 +51,21 @@ const onSubmit = async () => {
   } else if (data) {
     console.log(data)
     formAction.value.formSuccessMessage = 'Successfully Registered Account'
-    //add here more action
+
+    // Route based on role
+    const role = formData.value.role?.toLowerCase()
+    if (role === 'learner') {
+      router.replace('/findtutorhere')
+    } else if (role === 'tutor') {
+      router.replace('/tutorapplication')
+    }
+
     refVForm.value?.reset()
   }
 
   formAction.value.formProcess = false
 }
+
 
 const onFormSubmit = () => {
   refVForm.value?.validate().then(({ valid }) => {
