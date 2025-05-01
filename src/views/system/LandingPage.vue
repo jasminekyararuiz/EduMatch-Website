@@ -60,11 +60,11 @@ const steps = [
           <v-btn variant="text" class="text-body-2 ml-4">How it works</v-btn>
           <v-btn variant="text" class="text-body-2 ml-4">About Us</v-btn>
 
-          <RouterLink to="/">
+          <RouterLink to="/login">
             <v-btn rounded="xl" variant="elevated" density="comfortable" color="cyan-darken-3" class="text-white"><b>Log
                 In</b></v-btn>
           </RouterLink>
-          <RouterLink to="/registration">
+          <RouterLink to="/signup">
             <v-btn rounded="xl" variant="elevated" density="comfortable" color="cyan-darken-3"
               class="text-white ml-2"><b>Sign Up</b></v-btn>
           </RouterLink>

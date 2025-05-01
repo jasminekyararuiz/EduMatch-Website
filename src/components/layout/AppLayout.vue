@@ -16,6 +16,8 @@ function onClick() {
           @click="onClick"></v-btn>
       </v-app-bar>
 
+      <ProfileHeader v-if="isLoggedIn"></ProfileHeader>
+
       <v-main>
         <v-container class="py-5 mb-3">
           <slot name="content"> </slot>
