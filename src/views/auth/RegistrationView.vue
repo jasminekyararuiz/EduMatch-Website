@@ -24,7 +24,7 @@ const { ismobile } = useDisplay()
 
               <v-divider class="my-3"></v-divider>
               <h5 class="text-center">
-                Already have an account? <RouterLink class="text-primary" to="/">Login</RouterLink>
+                Already have an account? <RouterLink class="text-primary" to="/login">Login</RouterLink>
               </h5>
             </v-card-text>
           </v-card>
