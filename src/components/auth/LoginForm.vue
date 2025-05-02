@@ -1,68 +1,119 @@
 <script setup>
-import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import AlertNotification from '@/components/common/AlertNotification.vue'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
+import {
+  requiredValidator,
+  emailValidator,
+  passwordValidator,
+} from '@/utils/validators'
 
+const router = useRouter()
 const refVForm = ref()
 const isPasswordVisible = ref(false)
+
 const formDataDefault = {
   email: '',
   password: '',
   role: '',
 }
+const formData = ref({ ...formDataDefault })
+const formAction = ref({ ...formActionDefault })
 
-const formData = ref({
-  ...formDataDefault
-})
+const roleValidator = value => !!value || 'Please select a role'
 
-const onLogin = () => {
-alert (formData.value.password)
+const onSubmit = async () => {
+  formAction.value = { ...formActionDefault, formProcess: true }
 
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: formData.value.email,
+    password: formData.value.password,
+  })
+
+  if (error) {
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+    formAction.value.formProcess = false
+    return
+  }
+
+  // Get role from Supabase metadata
+  const actualRole = data.user?.user_metadata?.role?.toLowerCase()
+  const selectedRole = formData.value.role?.toLowerCase()
+
+  if (actualRole !== selectedRole) {
+    formAction.value.formErrorMessage = `This account is registered as a "${actualRole}". Please select the correct role.`
+    formAction.value.formProcess = false
+    return
+  }
+
+  formAction.value.formSuccessMessage = 'Successfully Logged In'
+
+  if (actualRole === 'learner') {
+    router.replace('/findtutor')
+  } else if (actualRole === 'tutor') {
+    router.replace('/tutorapplication')
+  } else {
+    router.replace('/')
+  }
+
+  refVForm.value?.reset()
+  formAction.value.formProcess = false
 }
+
 
 const onFormSubmit = () => {
   refVForm.value?.validate().then(({ valid }) => {
-    if (valid)
-    onLogin()
+    if (valid) onSubmit()
   })
 }
 </script>
 
 <template>
-  <br>
-  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
+  <AlertNotification
+    :form-success-message="formAction.formSuccessMessage"
+    :form-error-message="formAction.formErrorMessage"
+  />
+
+  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
     <v-text-field
       v-model="formData.email"
-      prepend-inner-icon="mdi-email"
       label="Email"
       variant="outlined"
+      prepend-inner-icon="mdi-email"
       :rules="[requiredValidator, emailValidator]"
-    ></v-text-field>
+    />
 
     <v-text-field
       v-model="formData.password"
-      prepend-inner-icon="mdi-lock"
       label="Password"
       variant="outlined"
       :type="isPasswordVisible ? 'text' : 'password'"
       :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
       @click:append-inner="isPasswordVisible = !isPasswordVisible"
-      :rule="[requireValidator]"
-    ></v-text-field>
+      :rules="[requiredValidator, passwordValidator]"
+    />
 
-    <v-row>
-      <v-col class="text-center">
-        <v-select
-        v-model="formData.role"
-          clearable
-          label="Role"
-          :items="['Learner', 'Tutor']"
-           :rules="[roleValidator]"
-          variant="underlined"
-          width="40%"
-        ></v-select>
-      </v-col>
-    </v-row>
+    <v-select
+      v-model="formData.role"
+      label="Role"
+      :items="['Learner', 'Tutor']"
+      variant="outlined"
+      
+      :rules="[roleValidator]"
+      clearable
+    />
 
-    <v-btn class="bg-primary" rounded="xl" type="submit" block> <b>Log In</b></v-btn>
+    <v-btn
+      class="bg-primary"
+      rounded="xl"
+      type="submit"
+      block
+      :loading="formAction.formProcess"
+      :disabled="formAction.formProcess"
+    >
+      <b>Log In</b>
+    </v-btn>
   </v-form>
 </template>
