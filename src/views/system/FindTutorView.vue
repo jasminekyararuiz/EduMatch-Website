@@ -77,7 +77,7 @@ const formatTime12Hour = (time) => {
 const fetchTutors = async () => {
   loading.value = true
   const { data, error } = await supabase
-    .from('tutors')
+    .from('applications')
     .select('*')
     .order('created_at', { ascending: false })
 
@@ -373,7 +373,7 @@ onMounted(fetchTutors)
             <div id="def" style="padding: 0 16px;">
               <p><strong>Gender:</strong> {{ infoDialogTutor.gender }}</p>
               <p><strong>Subjects:</strong> {{ infoDialogTutor.subjects }}</p>
-              <p><strong>Time:</strong> {{ infoDialogTutor.time_from }} - {{ infoDialogTutor.time_to }}</p>
+              <p><strong>Time:</strong>  {{ formatTime12Hour(infoDialogTutor.time_from) }} - {{ formatTime12Hour(infoDialogTutor.time_to) }}</p>
               <p><strong>Teaching Mode:</strong> {{ infoDialogTutor.teaching_mode }}</p>
               <p><strong>Preferred Date:</strong> {{ infoDialogTutor.formattedPreferredDate }}</p>
               <p><strong>Hourly Rate:</strong> ₱{{ infoDialogTutor.full_rate }}</p>
