@@ -28,6 +28,7 @@ const onFormSubmit = () => {
 </script>
 
 <template>
+  <br>
   <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <v-text-field
       v-model="formData.email"

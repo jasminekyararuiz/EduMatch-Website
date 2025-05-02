@@ -10,9 +10,10 @@ const isDark = computed(() => theme.global.name.value === 'dark')
 </script>
 
 <template>
+  
   <AppLayout>
     <template #content>
-      <v-row :class="isDark ? 'bg-grey-darken-5 text-white' : 'bg-blue-lighten-5 text-black'" class="fill-height">
+      <v-row class="fill-height">
 
         <v-col cols="8" class="text-center d-none d-md-flex rounded-xl">
           <v-img class="mx-auto py-2 mb-3" src="/public/EduMatch-LogIn.jpg" width="10%" />
@@ -40,6 +41,7 @@ const isDark = computed(() => theme.global.name.value === 'dark')
       </v-row>
     </template>
   </AppLayout>
+
 </template>
 
 <style scoped>
