@@ -218,7 +218,7 @@ const submitForm = async () => {
       portfolio_url: portfolioUrl,
       avatar_url: avatarUrl,
       created_at: new Date().toISOString(),
-      user_id: user.id,
+      tutor_id: user.id,
     };
 
     const { error } = await supabase.from('applications').insert([formDataToInsert]);
