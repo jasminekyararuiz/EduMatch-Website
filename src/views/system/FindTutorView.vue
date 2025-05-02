@@ -193,8 +193,6 @@ onMounted(fetchTutors)
           <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
           <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="toggleTheme" />
           <ProfileHeader></ProfileHeader>
-          
-          <v-avatar size="30"><v-img src="public/hee.jpg" /></v-avatar>
         </v-col>
       </v-row>
     </v-app-bar>

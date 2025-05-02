@@ -84,9 +84,10 @@ const onLogout = async () => {
           v-if="userData.avatar_url"
           :image="userData.avatar_url"
           color="orange-darken-3"
-          size="large"
+          size="40"
         />
-        <v-avatar v-else color="cyan-darken-1" size="large">
+        
+        <v-avatar v-else color="cyan-darken-1" size="40">
           <span class="text-h5">{{ getAvatarText(userData.name || userEmail) }}</span>
         </v-avatar>
       </v-btn>
@@ -112,6 +113,7 @@ const onLogout = async () => {
             </template>
           </v-list-item>
         </v-list>
+
 
         <v-divider class="my-3" />
 

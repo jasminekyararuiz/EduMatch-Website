@@ -239,7 +239,7 @@ const submitForm = async () => {
 };
 
 
-const avatarUrl = ref('/public/adelle.jpg')
+const avatarUrl = ref('/public/default-avatar.jpg')
 const fileInputRef = ref(null)
 
 const openFileDialog = () => {
@@ -328,8 +328,6 @@ const testUpload = async () => {
             <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
             <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
             <ProfileHeader></ProfileHeader>
-
-            <v-avatar size="30"><v-img :src="avatarUrl" /></v-avatar>
           </v-col>
         </v-row>
       </v-app-bar>
