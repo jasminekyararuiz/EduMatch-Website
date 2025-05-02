@@ -55,7 +55,7 @@ const onSubmit = async () => {
     // Route based on role
     const role = formData.value.role?.toLowerCase()
     if (role === 'learner') {
-      router.replace('/findtutorhere')
+      router.replace('/findtutor')
     } else if (role === 'tutor') {
       router.replace('/tutorapplication')
     }

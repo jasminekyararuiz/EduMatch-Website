@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { provinceOptions, municipalityData } from '@/data/CaragaData';
 import { requiredValidator } from '@/utils/validators.js';
 import { supabase } from '@/utils/supabase';
+import ProfileHeader from '@/components/layout/ProfileHeader.vue';
 
 // Theme toggle
 const theme = ref('light');
@@ -326,6 +327,8 @@ const testUpload = async () => {
             <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
             <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
             <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
+            <ProfileHeader></ProfileHeader>
+
             <v-avatar size="30"><v-img :src="avatarUrl" /></v-avatar>
           </v-col>
         </v-row>
