@@ -75,12 +75,12 @@ const onFormSubmit = () => {
     :form-success-message="formAction.formSuccessMessage"
     :form-error-message="formAction.formErrorMessage"
   />
-
-  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
+<br>
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <v-text-field
       v-model="formData.email"
       label="Email"
-      variant="outlined"
+      variant="solo"
       prepend-inner-icon="mdi-email"
       :rules="[requiredValidator, emailValidator]"
     />
@@ -88,7 +88,7 @@ const onFormSubmit = () => {
     <v-text-field
       v-model="formData.password"
       label="Password"
-      variant="outlined"
+      variant="solo"
       :type="isPasswordVisible ? 'text' : 'password'"
       :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
       @click:append-inner="isPasswordVisible = !isPasswordVisible"
@@ -99,10 +99,10 @@ const onFormSubmit = () => {
       v-model="formData.role"
       label="Role"
       :items="['Learner', 'Tutor']"
-      variant="outlined"
-      
+      variant="plain"
+      density="compact"
+      width="50%"
       :rules="[roleValidator]"
-      clearable
     />
 
     <v-btn

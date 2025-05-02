@@ -138,7 +138,7 @@ const roleValidator = (value) => !!value || 'Please select a role'
       :items="['Learner', 'Tutor']"
       variant="outlined"
       :rules="[roleValidator]"
-      clearable
+      
     />
 
     <v-btn
