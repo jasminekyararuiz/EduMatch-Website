@@ -166,6 +166,9 @@ const uploadFile = async (file, folder) => {
   
 };
 
+const cleanTime = (value) => {
+  return value && value.trim() !== '' ? value : null;
+};
 
 // Submit form
 const submitForm = async () => {
@@ -203,8 +206,8 @@ const submitForm = async () => {
       month: form.value.month,
       day: parseInt(form.value.day),
       year: parseInt(form.value.year),
-      time_from: form.value.timeFrom,
-      time_to: form.value.timeTo,
+      time_from: cleanTime(form.value.timeFrom),
+      time_to: cleanTime(form.value.timeTo),
       teaching_mode: form.value.teachingMode,
       province: form.value.province,
       municipality: form.value.municipality,
@@ -214,11 +217,11 @@ const submitForm = async () => {
       selfie_photo_url: selfiePhotoUrl,
       portfolio_url: portfolioUrl,
       avatar_url: avatarUrl,
-      created_at: new Date().toISOString(), // optional if DB handles it
-      // user_id: user.id // 👈 Add this only if your table has this column
+      created_at: new Date().toISOString(),
+      user_id: user.id,
     };
 
-    const { error } = await supabase.from('tutors').insert([formDataToInsert]);
+    const { error } = await supabase.from('applications').insert([formDataToInsert]);
 
     if (error) {
       console.error('Insert error:', error.message);
@@ -233,6 +236,7 @@ const submitForm = async () => {
     alert('Unexpected error occurred.');
   }
 };
+
 
 const avatarUrl = ref('/public/adelle.jpg')
 const fileInputRef = ref(null)
