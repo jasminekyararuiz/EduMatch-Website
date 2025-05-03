@@ -322,8 +322,6 @@ const testUpload = async () => {
             </span>
           </v-col>
           <v-col cols="4" class="d-flex justify-end align-center">
-            <v-text-field dense hide-details rounded="xl" variant="solo" density="compact" placeholder="Search"
-              prepend-inner-icon="mdi-magnify" style="max-width: 220px" />
             <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
             <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
             <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
