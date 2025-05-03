@@ -85,7 +85,7 @@ onMounted(() => {
       </v-row>
     </v-app-bar>
 
-    <v-dialog v-model="modelValue" fullscreen transition="dialog-bottom-transition">
+    <v-dialog v-model="messageDialog" fullscreen transition="dialog-bottom-transition">
       <v-card class="pa-4" style="background: linear-gradient(to right, #cbd5e1, #94a3b8);">
         <!-- Header Search Bar -->
         <v-row class="align-center mb-4">

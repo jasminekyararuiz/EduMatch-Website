@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { supabase } from '@/utils/supabase'
 import MessagesView from '@/components/layout/MessagesView.vue'
 
+const showMessages = ref(false)
 
 // Theme toggle
 const theme = ref('light')
@@ -191,7 +192,7 @@ onMounted(fetchTutors)
         <v-col cols="4" class="d-flex justify-end align-center">
           <v-text-field dense hide-details rounded="xl" variant="solo" density="compact" placeholder="Search"
             prepend-inner-icon="mdi-magnify" style="max-width:220px;" />
-          <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
+          <v-btn icon @click="showMessages = true"><v-icon>mdi-chat</v-icon></v-btn>
           <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
           <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="toggleTheme" />
           <v-avatar size="30"><v-img src="public/hee.jpg" /></v-avatar>
@@ -401,6 +402,11 @@ onMounted(fetchTutors)
       </v-dialog>
     </v-main>
 
+    <!-- MESSAGES VIEW -->
+    <MessagesView v-model="showMessages" />
+
+
+    <!-- FOOTER -->
     <v-footer :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'"
       :class="theme === 'light' ? 'text-black' : 'text-white'">
       <v-container fluid>
