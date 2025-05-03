@@ -86,7 +86,7 @@ const onLogout = async () => {
           color="orange-darken-3"
           size="40"
         />
-        
+
         <v-avatar v-else color="cyan-darken-1" size="40">
           <span class="text-h5">{{ getAvatarText(userData.name || userEmail) }}</span>
         </v-avatar>
