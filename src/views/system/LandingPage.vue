@@ -304,7 +304,7 @@ const steps = [
           </v-col>
           <v-col cols="12" sm="4">
             <v-card class="mx-auto" max-width="400">
-              <v-img height="197px" src="/public/kathryn.jpg" alt="Cristina Berwan" cover></v-img>
+              <v-img height="197px" src="/public/cristina.jpg" alt="Cristina Berwan" cover></v-img>
 
               <v-card-title>
                 <b>Cristina Berwan</b>
