@@ -6,7 +6,7 @@ import HowItWorks from '@/views/system/HowItWorks.vue'
 import TutorApplication from '@/views/system/TutorApplication.vue'
 import FindTutorView from '@/views/system/FindTutorView.vue'
 import FindTutor from '@/views/system/FindTutor.vue'
-
+import ForbiddenView from '@/views/errors/ForbiddenView.vue'
 
 
 const router = createRouter({
@@ -48,6 +48,11 @@ const router = createRouter({
       path: '/findtutorhere',
       name: 'find-tutor-here',
       component: FindTutor
+    },
+    {
+      path: '/forbidden',
+      name: 'forbidden',
+      component: ForbiddenView
     },
 
   ],
