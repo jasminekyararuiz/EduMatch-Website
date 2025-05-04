@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { supabase } from '@/utils/supabase'
-import MessagesView from '@/components/layout/MessagesView.vue'
+
 
 const showMessages = ref(false)
 
