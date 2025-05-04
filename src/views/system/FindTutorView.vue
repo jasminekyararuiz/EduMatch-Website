@@ -187,8 +187,6 @@ onMounted(fetchTutors)
           </span>
         </v-col>
         <v-col cols="4" class="d-flex justify-end align-center">
-          <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
-          <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
           <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="toggleTheme" />
           <ProfileHeader></ProfileHeader>
         </v-col>
@@ -372,7 +370,8 @@ onMounted(fetchTutors)
             <div id="def" style="padding: 0 16px;">
               <p><strong>Gender:</strong> {{ infoDialogTutor.gender }}</p>
               <p><strong>Subjects:</strong> {{ infoDialogTutor.subjects }}</p>
-              <p><strong>Time:</strong>  {{ formatTime12Hour(infoDialogTutor.time_from) }} - {{ formatTime12Hour(infoDialogTutor.time_to) }}</p>
+              <p><strong>Time:</strong> {{ formatTime12Hour(infoDialogTutor.time_from) }} - {{
+                formatTime12Hour(infoDialogTutor.time_to) }}</p>
               <p><strong>Teaching Mode:</strong> {{ infoDialogTutor.teaching_mode }}</p>
               <p><strong>Preferred Date:</strong> {{ infoDialogTutor.formattedPreferredDate }}</p>
               <p><strong>Hourly Rate:</strong> ₱{{ infoDialogTutor.full_rate }}</p>

@@ -164,7 +164,7 @@ const uploadFile = async (file, folder) => {
     .getPublicUrl(filename);
 
   return publicUrl;
-  
+
 };
 
 const cleanTime = (value) => {
@@ -322,8 +322,6 @@ const testUpload = async () => {
             </span>
           </v-col>
           <v-col cols="4" class="d-flex justify-end align-center">
-            <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
-            <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
             <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
             <ProfileHeader></ProfileHeader>
           </v-col>
@@ -386,7 +384,7 @@ const testUpload = async () => {
                       :rules="[requiredValidator]" />
 
                     <v-text-field v-model="form.subjects" label="Major" :rules="[requiredValidator]" />
-                   
+
 
                     <div class="flex gap-2">
                       <v-select v-model="form.month" :items="months" label="Month" :rules="[requiredValidator]" />
@@ -426,13 +424,13 @@ const testUpload = async () => {
                   <!-- Right side of the form -->
                   <v-col cols="12" md="6">
                     <v-card :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'" class="pa-4">
-                      <v-textarea 
-                      v-model="form.aboutMe" 
-                      label="About Me" 
-                      variant="solo" 
-                      rows="3" 
+                      <v-textarea
+                      v-model="form.aboutMe"
+                      label="About Me"
+                      variant="solo"
+                      rows="3"
                       :rules="[requiredValidator]"
-                      auto-grow 
+                      auto-grow
                       hide-details
                         class="bg-transparent" />
                     </v-card>
@@ -522,7 +520,7 @@ const testUpload = async () => {
                     <v-card class="pa-3 mt-4" :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'">
                       <div class="text-subtitle-2 font-weight-bold">Portfolio</div>
                       <v-file-input label="Upload Portfolio" show-size variant="solo-inverted" prepend-icon="mdi-upload"
-                        accept=".jpg,.pdf,.docx,.pptx" 
+                        accept=".jpg,.pdf,.docx,.pptx"
                         @change="(e) => form.portfolioFile = e.target.files[0]"/>
                       <p class="text-caption mt-1">
                         Supports: pdf, jpg, docx, pptx<br />
