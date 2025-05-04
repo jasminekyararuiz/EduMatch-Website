@@ -8,6 +8,7 @@ import FindTutorView from '@/views/system/FindTutorView.vue'
 import FindTutor from '@/views/system/FindTutor.vue'
 import ForbiddenView from '@/views/errors/ForbiddenView.vue'
 import NotFoundView from '@/views/errors/NotFoundView.vue'
+import { useAuthUserStore } from '@/stores/authUser'
 
 
 const router = createRouter({
@@ -38,12 +39,14 @@ const router = createRouter({
 
       path: '/tutorapplication',
       name: 'tutor-application',
-      component: TutorApplication
+      component: TutorApplication,
+      meta: { requiresAuth: true },
     },
     {
       path: '/findtutor',
       name: 'findtutor',
-      component: FindTutorView
+      component: FindTutorView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/findtutorhere',
@@ -61,8 +64,42 @@ const router = createRouter({
       component: NotFoundView
     },
 
-
   ],
 })
+
+router.beforeEach(async (to) => {
+  const authStore = useAuthUserStore()
+  const isLoggedIn = authStore.isAuthenticated
+  const userRole = authStore.user?.role  // Get role from the store
+
+  // Block login/signup if user is logged in
+  if (isLoggedIn && (to.name === 'login' || to.name === 'signup')) {
+    // Redirect users based on their role
+    if (userRole === 'learner') {
+      return { name: 'findtutor' }
+    } else if (userRole === 'tutor') {
+      return { name: 'tutor-application' }
+    }
+    return { name: 'landingpage' }  // Fallback route
+  }
+
+  // Check if route exists
+  if (!to.name) {
+    return { name: 'notfound' }
+  }
+
+
+  // Redirect to login if trying to access protected routes without being logged in
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    return { name: 'login' }
+  }
+
+  // Prevent users from searching or manually navigating to login/signup if they are logged in
+  if (isLoggedIn && (to.name === 'login' || to.name === 'signup')) {
+    return { name: 'landingpage' } // or redirect to another route based on role
+  }
+
+})
+
 
 export default router

@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useDisplay } from 'vuetify'
 import AppLayout from '@/components/layout/AppLayout.vue'
-import { useAuthUserStore } from '@/stores/AuthUser'
+import { useAuthUserStore } from '@/stores/authUser'
 
 
 // Utilize pre-defined vue functions
@@ -25,9 +25,7 @@ onMounted(async () => {
 
 <template>
   <AppLayout :is-with-app-bar-nav-icon="isLoggedIn" @is-drawer-visible="isDrawerVisible = !isDrawerVisible">
-    <template #navigation v-if="isLoggedIn">
-      <SideNavigation :is-drawer-visible="isDrawerVisible"></SideNavigation>
-    </template>
+
 
     <template #content>
       <v-container>
