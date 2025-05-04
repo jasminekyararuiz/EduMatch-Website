@@ -7,6 +7,7 @@ import TutorApplication from '@/views/system/TutorApplication.vue'
 import FindTutorView from '@/views/system/FindTutorView.vue'
 import FindTutor from '@/views/system/FindTutor.vue'
 import ForbiddenView from '@/views/errors/ForbiddenView.vue'
+import NotFoundView from '@/views/errors/NotFoundView.vue'
 
 
 const router = createRouter({
@@ -54,6 +55,12 @@ const router = createRouter({
       name: 'forbidden',
       component: ForbiddenView
     },
+    {
+      path: '/notfound',
+      name: 'notfound',
+      component: NotFoundView
+    },
+
 
   ],
 })
