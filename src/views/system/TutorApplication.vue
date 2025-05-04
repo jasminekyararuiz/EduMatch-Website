@@ -322,8 +322,7 @@ const testUpload = async () => {
             </span>
           </v-col>
           <v-col cols="4" class="d-flex justify-end align-center">
-            <v-btn icon><v-icon>mdi-chat</v-icon></v-btn>
-            <v-btn icon><v-icon>mdi-bell</v-icon></v-btn>
+
             <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
             <ProfileHeader></ProfileHeader>
           </v-col>
