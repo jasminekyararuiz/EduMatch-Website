@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from 'vue'
-import { requiredValidator, emailValidator, passwordValidator, confirmedValidator } from '@/utils/validators'
+import {
+  requiredValidator,
+  emailValidator,
+  passwordValidator,
+  confirmedValidator,
+} from '@/utils/validators'
 import AlertNotification from '@/components/common/AlertNotification.vue'
 import { supabase, formActionDefault } from '@/utils/supabase.js'
 import { useRouter } from 'vue-router'
@@ -45,11 +50,7 @@ const onSubmit = async () => {
     formAction.value.formErrorMessage = error.message
     formAction.value.formStatus = error.status
   } else if (data) {
-    // Update user store to mark them as authenticated
-    const authStore = useAuthUserStore()
-    authStore.setUser(data.user)  // Store user data
-    authStore.setAuthenticated(true)  // Mark user as authenticated
-
+    console.log(data)
     formAction.value.formSuccessMessage = 'Successfully Registered Account'
 
     // Route based on role
@@ -60,25 +61,24 @@ const onSubmit = async () => {
       router.replace('/tutorapplication')
     }
 
-    // Reset form after submission
     refVForm.value?.reset()
   }
 
   formAction.value.formProcess = false
 }
 
+
 const onFormSubmit = () => {
   refVForm.value?.validate().then(({ valid }) => {
     if (valid) onSubmit()
   })
 }
-
 const roleValidator = (value) => !!value || 'Please select a role'
 </script>
 
 <template>
   <AlertNotification :form-success-message="formAction.formSuccessMessage"
-    :form-error-message="formAction.formErrorMessage"></AlertNotification>
+    :form-error-message="formAction.ErrorMessage"></AlertNotification>
 
   <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
     <v-row>
@@ -100,8 +100,10 @@ const roleValidator = (value) => !!value || 'Please select a role'
     <v-text-field v-model="formData.password_confirmation" label="Password Confirmation"
       :type="isPasswordConfirmVisible ? 'text' : 'password'" variant="outlined"
       :append-inner-icon="isPasswordConfirmVisible ? 'mdi-eye-off' : 'mdi-eye'"
-      @click:append-inner="isPasswordConfirmVisible = !isPasswordConfirmVisible"
-      :rules="[requiredValidator, confirmedValidator(formData.password_confirmation, formData.password)]" />
+      @click:append-inner="isPasswordConfirmVisible = !isPasswordConfirmVisible" :rules="[
+        requiredValidator,
+        confirmedValidator(formData.password_confirmation, formData.password),
+      ]" />
 
     <v-select v-model="formData.role" label="Role" :items="['Learner', 'Tutor']" variant="outlined"
       :rules="[roleValidator]" />

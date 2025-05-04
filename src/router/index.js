@@ -70,34 +70,29 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const authStore = useAuthUserStore()
   const isLoggedIn = authStore.isAuthenticated
-  const userRole = authStore.user?.role  // Get role from the store
+  const userRole = authStore.user?.role || authStore.userRole // Adjust based on your store state
 
-  // Block login/signup if user is logged in
-  if (isLoggedIn && (to.name === 'login' || to.name === 'signup')) {
-    // Redirect users based on their role
-    if (userRole === 'learner') {
-      return { name: 'findtutor' }
-    } else if (userRole === 'tutor') {
-      return { name: 'tutor-application' }
-    }
-    return { name: 'landingpage' }  // Fallback route
-  }
 
   // Check if route exists
   if (!to.name) {
     return { name: 'notfound' }
   }
 
-
-  // Redirect to login if trying to access protected routes without being logged in
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    return { name: 'login' }
-  }
-
-  // Prevent users from searching or manually navigating to login/signup if they are logged in
+  // Prevent navigation to login or signup pages if the user is logged in (unless admin)
   if (isLoggedIn && (to.name === 'login' || to.name === 'signup')) {
-    return { name: 'landingpage' } // or redirect to another route based on role
+    if (userRole === 'admin') {
+      return true  // Allow admin to access login or signup (if needed for some reason)
+    }
+    // Redirect non-admin users to the appropriate dashboard or landing page
+    if (userRole === 'learner') {
+      return { name: '/findtutor' }
+    } else if (userRole === 'tutor') {
+      return { name: '/tutor-application' }
+    }
+    return { name: 'landingpage' }
   }
+
+
 
 })
 
