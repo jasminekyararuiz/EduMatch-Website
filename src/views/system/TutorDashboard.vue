@@ -152,6 +152,18 @@ onMounted(async () => {
       </v-card>
     </v-col>
 
+    <!-- Right Column -->
+    <v-col cols="12" md="3" class="pa-6 mt-10">
+      <v-card class="pa-4" elevation="2" rounded="xl" :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-4'">
+        <h4 class="text-subtitle-1 font-weight-bold mb-3">Messages</h4>
+        <v-list density="compact">
+          <v-list-item v-for="(tip, index) in ['message', 'message', 'message']" :key="index">
+            <v-list-item-icon><v-icon small>mdi-lightbulb-on-outline</v-icon></v-list-item-icon>
+            <v-list-item-content>{{ tip }}</v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-col>
 
 
   </v-row>
