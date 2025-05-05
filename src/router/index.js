@@ -8,6 +8,7 @@ import FindTutorView from '@/views/system/FindTutorView.vue'
 import FindTutor from '@/views/system/FindTutor.vue'
 import { useAuthUserStore } from '@/stores/authUser'
 import TutorDashboard from '@/views/system/TutorDashboard.vue'
+import LearnerDashboard from '@/views/system/LearnerDashboard.vue'
 
 
 const router = createRouter({
@@ -56,6 +57,11 @@ const router = createRouter({
       path: '/tutordashboard',
       name: 'tutor-dashboard',
       component: TutorDashboard
+    },
+    {
+      path: '/learnerdashboard',
+      name: 'learner-dashboard',
+      component: LearnerDashboard
     },
 
 
