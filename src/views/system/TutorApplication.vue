@@ -222,7 +222,7 @@ const submitForm = async () => {
       tutor_id: user.id,
     };
 
-    const { error } = await supabase.from('applications').insert([formDataToInsert]);
+    const { error } = await supabase.from('forms').insert([formDataToInsert]);
 
     if (error) {
       console.error('Insert error:', error.message);

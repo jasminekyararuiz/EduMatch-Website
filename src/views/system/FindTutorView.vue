@@ -3,50 +3,38 @@ import { ref, onMounted, computed } from 'vue'
 import { supabase } from '@/utils/supabase'
 import ProfileHeader from '@/components/layout/ProfileHeader.vue'
 
-// Theme toggle
+// === Theme Toggle ===
 const theme = ref('light')
 const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
 
-// Utility to check if a date is today
-const isToday = (dateString) => {
-  const inputDate = new Date(dateString)
-  const today = new Date()
-  return (
-    inputDate.getDate() === today.getDate() &&
-    inputDate.getMonth() === today.getMonth() &&
-    inputDate.getFullYear() === today.getFullYear()
-  )
-}
+// === Auth: Get logged-in user ===
+const user = ref(null)
 
-// This determines what tutors to display based on activeTab
-const displayedTutors = computed(() => {
-  if (activeTab.value === 'recent') {
-    return sortedTutors.value.filter(tutor => isToday(tutor.created_at));
+onMounted(async () => {
+  const { data: { user: currentUser } } = await supabase.auth.getUser()
+  user.value = currentUser
+
+  if (currentUser) {
+    fetchTutors()
+  } else {
+    console.warn('User not logged in. Booking disabled.')
   }
+})
 
-  // Sort alphabetically by name (A-Z)
-  return [...sortedTutors.value].sort((a, b) => {
-    const nameA = a.name?.toLowerCase() || '';
-    const nameB = b.name?.toLowerCase() || '';
-    return nameA.localeCompare(nameB);
-  });
-});
-
-
-
-// Dialog & tab control
+// === Dialog & Tab Control ===
 const activeTab = ref('best')
 const infoDialogTutor = ref(null)
 const bookDialogTutor = ref(null)
 const successDialog = ref(false)
+const bookDialogVisible = ref(false)        // controls dialog visibility
 
-// State
+// === Tutors Data ===
 const tutors = ref([])
 const loading = ref(false)
 
-// Filters
+// === Filters ===
 const filters = ref({
   gender: { male: false, female: false },
   subjects: [],
@@ -56,17 +44,17 @@ const filters = ref({
   rate: null
 })
 
-// Format function for Preferred Date
+// === Utility: Format Date ===
 const formatDate = (month, day, year) => {
   if (!month || !day || !year) return 'N/A'
   const date = new Date(`${month} ${day}, ${year}`)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric',
+    day: 'numeric'
   })
 }
-// Format function for time
+
 const formatTime12Hour = (time) => {
   const [hour, minute] = time.split(':')
   const h = parseInt(hour)
@@ -74,11 +62,12 @@ const formatTime12Hour = (time) => {
   const displayHour = h % 12 || 12
   return `${displayHour}:${minute} ${ampm}`
 }
-// Fetch tutors from Supabase
+
+// === Fetch Tutors ===
 const fetchTutors = async () => {
   loading.value = true
   const { data, error } = await supabase
-    .from('applications')
+    .from('forms')
     .select('*')
     .order('created_at', { ascending: false })
 
@@ -94,7 +83,7 @@ const fetchTutors = async () => {
   loading.value = false
 }
 
-// Unique filter data
+// === Unique Filter Data ===
 const uniqueSubjects = computed(() => {
   const allSubjects = tutors.value.flatMap(t => t.subjects || [])
   return [...new Set(allSubjects)]
@@ -112,7 +101,7 @@ const maxRate = computed(() => {
   return Math.max(...tutors.value.map(t => Number(t.full_rate) || 0))
 })
 
-// Filtered tutors
+// === Sorted & Filtered Tutors ===
 const sortedTutors = computed(() => {
   return tutors.value.filter(tutor => {
     const genderMatch =
@@ -144,7 +133,30 @@ const sortedTutors = computed(() => {
   })
 })
 
-// Dialog controls
+// === Displayed Tutors by Tab ===
+const isToday = (dateString) => {
+  const inputDate = new Date(dateString)
+  const today = new Date()
+  return (
+    inputDate.getDate() === today.getDate() &&
+    inputDate.getMonth() === today.getMonth() &&
+    inputDate.getFullYear() === today.getFullYear()
+  )
+}
+
+const displayedTutors = computed(() => {
+  if (activeTab.value === 'recent') {
+    return sortedTutors.value.filter(tutor => isToday(tutor.created_at))
+  }
+
+  return [...sortedTutors.value].sort((a, b) => {
+    const nameA = a.name?.toLowerCase() || ''
+    const nameB = b.name?.toLowerCase() || ''
+    return nameA.localeCompare(nameB)
+  })
+})
+
+// === Dialog Controls ===
 const openInfoDialog = (tutor) => {
   infoDialogTutor.value = tutor
 }
@@ -155,24 +167,61 @@ const closeInfoDialog = () => {
 
 const openBookDialog = (tutor) => {
   bookDialogTutor.value = tutor
+  bookDialogVisible.value = true
 }
 
 const closeBookDialog = () => {
+  bookDialogVisible.value = false
   bookDialogTutor.value = null
-}
-
-const confirmBooking = () => {
-  closeBookDialog()
-  successDialog.value = true
 }
 
 const closeSuccessDialog = () => {
   successDialog.value = false
 }
 
-// Load tutors on mount
-onMounted(fetchTutors)
+// === Confirm Booking ===
+const confirmBooking = async () => {
+  if (!bookDialogTutor.value || !user.value) return
+
+  const tutor = bookDialogTutor.value
+  const learnerId = user.value.id
+
+  // Use the actual field name where tutor's ID is stored
+  const tutorId = tutor.user_id || tutor.tutor_id
+
+  if (!tutorId) {
+    console.error('Missing tutor ID in form data')
+    return
+  }
+
+  const selectedSubject = Array.isArray(tutor.subjects)
+  ? tutor.subjects[0]
+  : tutor.subjects || 'General'
+  const selectedDate = tutor.formattedPreferredDate || new Date().toISOString().split('T')[0]
+  const selectedTime = tutor.preferred_time || '08:00'
+
+  const { error } = await supabase.from('sessions').insert([
+    {
+      tutor_id: tutorId,
+      learner_id: learnerId,
+      subjects: selectedSubject,
+      session_date: selectedDate,
+      session_time: selectedTime,
+      status: 'successful',
+    },
+  ])
+
+  if (error) {
+    console.error('Booking failed:', error.message)
+    return
+  }
+
+  closeBookDialog()
+  successDialog.value = true
+}
+
 </script>
+
 
 
 <template>
@@ -306,56 +355,55 @@ onMounted(fetchTutors)
         </div>
       </v-container>
 
+ <!-- BOOKING DIALOG -->
+<v-dialog v-model="bookDialogVisible" max-width="400px">
+  <v-card>
+    <v-card-title class="headline text-center">Confirm Booking</v-card-title>
+
+    <v-card-text class="text-center">
+      <p id="confirm">
+        Are you sure you want to book <strong>{{ bookDialogTutor?.name }}</strong>?
+      </p>
+    </v-card-text>
+
+    <v-card-actions class="justify-center">
+      <v-btn color="red darken-1" dark class="px-6 py-3" @click="closeBookDialog">
+        Cancel
+      </v-btn>
+
+      <v-btn color="blue darken-1" dark class="ml-4 px-6 py-3" @click="confirmBooking">
+        Confirm Booking
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
+
+<!-- SUCCESS DIALOG -->
+<v-dialog v-model="successDialog" max-width="360px">
+  <v-card elevation="10" class="overflow-hidden" style="border-radius: 20px; position: relative;">
+    <div class="text-center pt-6 pb-10" style="background-color: #ECEFF1;">
+      <h2 style="color: #37474F;">Success!</h2>
+      <v-icon class="successicon" color="#1A237E" size="50">mdi-check</v-icon>
+    </div>
+
+    <div class="text-center pt-13 pb-10 middle" style="background-color:#1A237E;">
+      <p class="mb-5 mt-3" style="color: whitesmoke; font-size: 15px;">
+        Your learning journey starts now.<br>
+        Thank you for choosing <strong>EduMatch</strong>.
+      </p>
+    </div>
+
+    <v-card-actions class="justify-center" style="background-color: #ECEFF1;">
+      <v-btn color="red darken-1" variant="text" class="mt-2 mb-4" @click="closeSuccessDialog"
+        style="font-weight: bold;">
+        CONTINUE
+        <v-icon end>mdi-arrow-right</v-icon>
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
       <!-- BOOKING DIALOG -->
-      <v-dialog v-model="bookDialogTutor" max-width="400px">
-        <v-card v-if="bookDialogTutor">
-          <v-card-title class="headline"></v-card-title>
 
-          <v-card-text class="text-center">
-            <p id="confirm">Are you sure you want to book <strong>{{ bookDialogTutor.name }}</strong>?</p>
-          </v-card-text>
-
-          <v-card-actions class="justify-center">
-            <v-btn color="red darken-1" dark class="px-6 py-3" @click="closeBookDialog">
-              Cancel
-            </v-btn>
-
-            <v-btn color="blue darken-1" dark class="ml-4 px-6 py-3" @click="confirmBooking">
-              Confirm Booking
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-      <!-- SUCCESS DIALOG -->
-      <v-dialog v-model="successDialog" max-width="360px">
-        <v-card elevation="10" class="overflow-hidden" style="border-radius: 20px; position: relative;">
-          <!-- Top white section -->
-          <div class="text-center pt-6 pb-10" style="background-color: #ECEFF1; position: relative;">
-            <h2 style="color: #37474F;">Success!</h2>
-
-            <!-- Floating Circle with Icon -->
-            <v-icon class="successicon" color="#1A237E" size="50">mdi-check</v-icon>
-          </div>
-
-          <!-- Blue middle section -->
-          <div class="text-center pt-13 pb-10 middle" style="background-color:#1A237E;">
-            <p class="mb-5 mt-3" style="color: whitesmoke; font-size: 15px;">
-              Your learning journey starts now.<br>
-              Thank you for choosing <strong>EduMatch</strong>.
-            </p>
-          </div>
-
-          <!-- Button section -->
-          <v-card-actions class="justify-center" style="background-color: #ECEFF1;">
-            <v-btn color="red darken-1" variant="text" class="mt-2 mb-4" @click="closeSuccessDialog"
-              style="font-weight: bold;">
-              CONTINUE
-              <v-icon end>mdi-arrow-right</v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
 
 
 
