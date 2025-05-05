@@ -197,6 +197,7 @@ const confirmBooking = async () => {
   const selectedSubject = Array.isArray(tutor.subjects)
   ? tutor.subjects[0]
   : tutor.subjects || 'General'
+
   const selectedDate = tutor.formattedPreferredDate || new Date().toISOString().split('T')[0]
   const selectedTime = tutor.preferred_time || '08:00'
 

@@ -81,12 +81,27 @@ onMounted(async () => {
     <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
       <!-- Avatar + Sidebar Content -->
       <v-avatar size="180" class="mt-6 border border-5">
-        <v-img :src="avatarUrl" />
-      </v-avatar>
-      <v-btn class="text-caption text-grey-darken-1 mt-1" size="small" rounded="xl" density="compact" @click="openFileDialog">
-        <b>Edit</b>
-      </v-btn>
-      <input type="file" accept="image/*" ref="fileInputRef" class="d-none" @change="onFileChange" />
+      <v-img :src="avatarUrl" />
+    </v-avatar>
+
+    <v-btn
+      class="text-caption text-grey-darken-1 mt-1"
+      size="small"
+      rounded="xl"
+      density="compact"
+      @click="openFileDialog"
+    >
+      <b>edit</b>
+    </v-btn>
+
+    <!-- Hidden file input -->
+    <input
+      type="file"
+      accept="image/*"
+      ref="fileInputRef"
+      class="d-none"
+      @change="onFileChange"
+    />
 
       <v-card class="mt-4 px-4 py-3 text-center" rounded="lg" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
         <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
