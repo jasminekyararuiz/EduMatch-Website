@@ -203,6 +203,7 @@ const confirmBooking = async () => {
 
   const selectedDate = tutor.formattedPreferredDate || new Date().toISOString().split('T')[0]
   const selectedTime = tutor.preferred_time || '08:00'
+  const selectedMode = tutor.teaching_mode || 'Online'
 
   const { error } = await supabase.from('sessions').insert([
     {
@@ -210,7 +211,7 @@ const confirmBooking = async () => {
       learner_id: learnerId,
       subjects: selectedSubject,
       session_date: selectedDate,
-      session_time: selectedTime,
+      session_mode: selectedMode,
       status: 'successful',
     },
   ])
