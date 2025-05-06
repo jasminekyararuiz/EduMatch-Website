@@ -5,7 +5,6 @@ import LandingPage from '@/views/system/LandingPage.vue'
 import HowItWorks from '@/views/system/HowItWorks.vue'
 import TutorApplication from '@/views/system/TutorApplication.vue'
 import FindTutorView from '@/views/system/FindTutorView.vue'
-import FindTutor from '@/views/system/FindTutor.vue'
 import { useAuthUserStore } from '@/stores/authUser'
 import TutorDashboard from '@/views/system/TutorDashboard.vue'
 import LearnerDashboard from '@/views/system/LearnerDashboard.vue'
@@ -48,11 +47,7 @@ const router = createRouter({
       component: FindTutorView,
       meta: { requiresAuth: true },
     },
-    {
-      path: '/findtutorhere',
-      name: 'find-tutor-here',
-      component: FindTutor
-    },
+    
     {
       path: '/tutordashboard',
       name: 'tutor-dashboard',
