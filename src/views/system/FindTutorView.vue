@@ -54,14 +54,17 @@ const formatDate = (month, day, year) => {
     day: 'numeric'
   })
 }
-
 const formatTime12Hour = (time) => {
-  const [hour, minute] = time.split(':')
-  const h = parseInt(hour)
-  const ampm = h >= 12 ? 'PM' : 'AM'
-  const displayHour = h % 12 || 12
-  return `${displayHour}:${minute} ${ampm}`
-}
+  if (!time || typeof time !== 'string' || !time.includes(':')) return 'N/A';
+
+  const [hour, minute] = time.split(':');
+  const h = parseInt(hour);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const displayHour = h % 12 || 12;
+
+  return `${displayHour}:${minute} ${ampm}`;
+};
+
 
 // === Fetch Tutors ===
 const fetchTutors = async () => {
