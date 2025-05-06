@@ -198,8 +198,8 @@ const confirmBooking = async () => {
   }
 
   const selectedSubject = Array.isArray(tutor.subjects)
-  ? tutor.subjects[0]
-  : tutor.subjects || 'General'
+    ? tutor.subjects[0]
+    : tutor.subjects || 'General'
 
   const selectedDate = tutor.formattedPreferredDate || new Date().toISOString().split('T')[0]
   const selectedTime = tutor.preferred_time || '08:00'
@@ -246,6 +246,7 @@ const confirmBooking = async () => {
         </v-col>
       </v-row>
     </v-app-bar>
+
     <v-main>
       <v-container fluid class="mt-0 pt-0 py-10 ">
         <div class="d-flex" style="gap:16px; height:calc(100vh - 100px);">
@@ -313,7 +314,19 @@ const confirmBooking = async () => {
 
               </v-expansion-panels>
             </v-card>
+            <!-- FIND TUTOR / DASHBOARD CARD -->
+            <v-card class="mt-4 px-4 py-3 text-center" rounded="lg"
+              :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+
+              <v-btn class="text-grey-darken-1 mb-2" rounded="xl" density="compact">
+                <b>FIND TUTOR</b>
+              </v-btn>
+              <RouterLink to="/learnerdashboard" class="text-decoration-none">
+                <h4 class="text-white mt-2">DASHBOARD</h4>
+              </RouterLink>
+            </v-card>
           </v-col>
+
 
           <!-- TUTOR LIST -->
           <v-col cols="12" md="9" class="overflow-y-auto" style="max-height:calc(100vh - 20px);">
@@ -343,7 +356,8 @@ const confirmBooking = async () => {
                     <p style="font-size:12px" class="mb-1">Major: {{ tutor.subjects }}</p>
                     <p style="font-size:12px" class="mb-1">Time: {{ formatTime12Hour(tutor.time_from) }} - {{
                       formatTime12Hour(tutor.time_to) }}</p>
-                    <p style="font-size:12px" class="mb-2">Location: {{ tutor.municipality }}, {{ tutor.province }}</p>
+                    <p style="font-size:12px" class="mb-2">Location: {{ tutor.municipality }}, {{ tutor.province }}
+                    </p>
                     <div class="d-flex justify-center" style="gap:6px">
                       <v-btn color="primary" size="x-small" @click="openInfoDialog(tutor)">
                         Read More <v-icon size="14">mdi-arrow-right-bold</v-icon>
@@ -360,53 +374,53 @@ const confirmBooking = async () => {
         </div>
       </v-container>
 
- <!-- BOOKING DIALOG -->
-<v-dialog v-model="bookDialogVisible" max-width="400px">
-  <v-card>
-    <v-card-title class="headline text-center">Confirm Booking</v-card-title>
+      <!-- BOOKING DIALOG -->
+      <v-dialog v-model="bookDialogVisible" max-width="400px">
+        <v-card>
+          <v-card-title class="headline text-center">Confirm Booking</v-card-title>
 
-    <v-card-text class="text-center">
-      <p id="confirm">
-        Are you sure you want to book <strong>{{ bookDialogTutor?.name }}</strong>?
-      </p>
-    </v-card-text>
+          <v-card-text class="text-center">
+            <p id="confirm">
+              Are you sure you want to book <strong>{{ bookDialogTutor?.name }}</strong>?
+            </p>
+          </v-card-text>
 
-    <v-card-actions class="justify-center">
-      <v-btn color="red darken-1" dark class="px-6 py-3" @click="closeBookDialog">
-        Cancel
-      </v-btn>
+          <v-card-actions class="justify-center">
+            <v-btn color="red darken-1" dark class="px-6 py-3" @click="closeBookDialog">
+              Cancel
+            </v-btn>
 
-      <v-btn color="blue darken-1" dark class="ml-4 px-6 py-3" @click="confirmBooking">
-        Confirm Booking
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
+            <v-btn color="blue darken-1" dark class="ml-4 px-6 py-3" @click="confirmBooking">
+              Confirm Booking
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-<!-- SUCCESS DIALOG -->
-<v-dialog v-model="successDialog" max-width="360px">
-  <v-card elevation="10" class="overflow-hidden" style="border-radius: 20px; position: relative;">
-    <div class="text-center pt-6 pb-10" style="background-color: #ECEFF1;">
-      <h2 style="color: #37474F;">Success!</h2>
-      <v-icon class="successicon" color="#1A237E" size="50">mdi-check</v-icon>
-    </div>
+      <!-- SUCCESS DIALOG -->
+      <v-dialog v-model="successDialog" max-width="360px">
+        <v-card elevation="10" class="overflow-hidden" style="border-radius: 20px; position: relative;">
+          <div class="text-center pt-6 pb-10" style="background-color: #ECEFF1;">
+            <h2 style="color: #37474F;">Success!</h2>
+            <v-icon class="successicon" color="#1A237E" size="50">mdi-check</v-icon>
+          </div>
 
-    <div class="text-center pt-13 pb-10 middle" style="background-color:#1A237E;">
-      <p class="mb-5 mt-3" style="color: whitesmoke; font-size: 15px;">
-        Your learning journey starts now.<br>
-        Thank you for choosing <strong>EduMatch</strong>.
-      </p>
-    </div>
+          <div class="text-center pt-13 pb-10 middle" style="background-color:#1A237E;">
+            <p class="mb-5 mt-3" style="color: whitesmoke; font-size: 15px;">
+              Your learning journey starts now.<br>
+              Thank you for choosing <strong>EduMatch</strong>.
+            </p>
+          </div>
 
-    <v-card-actions class="justify-center" style="background-color: #ECEFF1;">
-      <v-btn color="red darken-1" variant="text" class="mt-2 mb-4" @click="closeSuccessDialog"
-        style="font-weight: bold;">
-        CONTINUE
-        <v-icon end>mdi-arrow-right</v-icon>
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
+          <v-card-actions class="justify-center" style="background-color: #ECEFF1;">
+            <v-btn color="red darken-1" variant="text" class="mt-2 mb-4" @click="closeSuccessDialog"
+              style="font-weight: bold;">
+              CONTINUE
+              <v-icon end>mdi-arrow-right</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <!-- BOOKING DIALOG -->
 
 

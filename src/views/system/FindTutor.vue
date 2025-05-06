@@ -183,27 +183,47 @@ onMounted(fetchTutors)
     <!-- NAVBAR -->
     <v-app-bar :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-4'" class="px-3">
       <v-row align="center" no-gutters class="w-100">
-        <v-col cols="8" class="d-flex align-center">
-          <v-img src="/public/Edumatch_logo.png" max-width="60" class="mr-2" />
-          <span class="text-h6 font-weight-bold">
-            <b>Edu</b><span class="text-cyan-darken-1"><b>Match</b></span>
-          </span>
-        </v-col>
+        <RouterLink>
+          <v-col cols="8" class="d-flex align-center">
+            <v-img src="/public/Edumatch_logo.png" max-width="60" class="mr-2" />
+            <span class="text-h6 font-weight-bold">
+              <b>Edu</b><span class="text-cyan-darken-1"><b>Match</b></span>
+            </span>
+          </v-col>
+        </RouterLink>
+
         <v-col cols="4" class="d-flex justify-end align-center">
           <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="toggleTheme" />
           <v-avatar size="30"><v-img src="public/hee.jpg" /></v-avatar>
         </v-col>
+
       </v-row>
     </v-app-bar>
 
-    <!-- Notifications Dropdown (Conditionally Rendered) -->
-    <v-dialog v-model="notificationsDropdownVisible" max-width="400px">
-      <NotifDropdown :userId="user.id" />
-    </v-dialog>
 
     <v-main>
       <v-container fluid class="mt-0 pt-0 py-10 ">
         <div class="d-flex" style="gap:16px; height:calc(100vh - 100px);">
+          <v-card class="mt-4 px-4 py-3 text-center" rounded="lg"
+            :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+            <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
+            <v-row justify="center" class="gap-2 mb-3">
+              <v-icon small>mdi-facebook</v-icon>
+              <v-icon small>mdi-instagram</v-icon>
+              <v-icon small>mdi-linkedin</v-icon>
+              <v-icon small>mdi-twitter</v-icon>
+            </v-row>
+            <v-divider class="my-2" />
+
+            <v-btn class="text-grey-darken-1" rounded="xl" density="compact">
+              <b>DASHBOARD</b>
+            </v-btn>
+            <RouterLink to="/findtutor" class="text-decoration-none">
+              <h4 class="text-white" block text prepend-icon="mdi-file-document">FIND TUTOR</h4>
+            </RouterLink>
+          </v-card>
+
+
           <v-col cols="12" md="3" class="filter-sidebar">
             <v-card :color="theme === 'light' ? '#172e46' : 'grey-darken-4'" elevation="2" class="pa-4 mt-3"
               rounded="xl">
@@ -269,6 +289,7 @@ onMounted(fetchTutors)
               </v-expansion-panels>
             </v-card>
           </v-col>
+
 
           <!-- TUTOR LIST -->
           <v-col cols="12" md="9" class="overflow-y-auto" style="max-height:calc(100vh - 20px);">

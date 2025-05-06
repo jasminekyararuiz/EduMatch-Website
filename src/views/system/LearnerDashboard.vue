@@ -113,145 +113,128 @@ onMounted(async () => {
       </v-row>
     </v-app-bar>
 
- <!-- Main Content -->
-<v-container fluid class="mt-4 px-5 pa-4" :class="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'">
-  <v-row>
+    <!-- Main Content -->
+    <v-container fluid class="mt-4 px-5 pa-4" :class="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'">
+      <v-row>
 
-    <!-- Left Column -->
-    <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
-      <!-- Avatar + Sidebar Content -->
-      <v-avatar size="180" class="mt-6 border border-5">
-      <v-img :src="avatarUrl" />
-    </v-avatar>
+        <!-- Left Column -->
+        <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
+          <!-- Avatar + Sidebar Content -->
+          <v-avatar size="180" class="mt-6 border border-5">
+            <v-img :src="avatarUrl" />
+          </v-avatar>
 
-    <v-btn
-      class="text-caption text-grey-darken-1 mt-1"
-      size="small"
-      rounded="xl"
-      density="compact"
-      @click="openFileDialog"
-    >
-      <b>edit</b>
-    </v-btn>
+          <v-btn class="text-caption text-grey-darken-1 mt-1" size="small" rounded="xl" density="compact"
+            @click="openFileDialog">
+            <b>edit</b>
+          </v-btn>
 
-    <!-- Hidden file input -->
-    <input
-      type="file"
-      accept="image/*"
-      ref="fileInputRef"
-      class="d-none"
-      @change="onFileChange"
-    />
+          <!-- Hidden file input -->
+          <input type="file" accept="image/*" ref="fileInputRef" class="d-none" @change="onFileChange" />
 
-      <v-card class="mt-4 px-4 py-3 text-center" rounded="lg" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
-        <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
-        <v-row justify="center" class="gap-2 mb-3">
-          <v-icon small>mdi-facebook</v-icon>
-          <v-icon small>mdi-instagram</v-icon>
-          <v-icon small>mdi-linkedin</v-icon>
-          <v-icon small>mdi-twitter</v-icon>
-        </v-row>
-        <v-divider class="my-2" />
-        <v-btn class="text-grey-darken-1" rounded="xl" density="compact">
-          <b>DASHBOARD</b>
-        </v-btn>
-      </v-card>
-    </v-col>
+          <v-card class="mt-4 px-4 py-3 text-center" rounded="lg"
+            :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+            <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
+            <v-row justify="center" class="gap-2 mb-3">
+              <v-icon small>mdi-facebook</v-icon>
+              <v-icon small>mdi-instagram</v-icon>
+              <v-icon small>mdi-linkedin</v-icon>
+              <v-icon small>mdi-twitter</v-icon>
+            </v-row>
+            <v-divider class="my-2" />
 
-    <!-- Middle Column -->
-    <v-col cols="12" md="6" class="pa-6 mt-10">
-      <v-card class="py-10 px-6 rounded-xl" elevation="1" :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-4'">
-        <h2 class="text-h5 font-weight-bold mb-6">Upcoming Sessions</h2>
+            <v-btn class="text-grey-darken-1" rounded="xl" density="compact">
+              <b>DASHBOARD</b>
+            </v-btn>
+            <RouterLink to="/findtutor" class="text-decoration-none">
+              <h4 class="text-white" block text prepend-icon="mdi-file-document">FIND TUTOR</h4>
+            </RouterLink>
+          </v-card>
+        </v-col>
 
-        <!-- Loading Spinner -->
-        <v-progress-circular v-if="loading" indeterminate color="primary" class="my-6" />
+        <!-- Middle Column -->
+        <v-col cols="12" md="6" class="pa-6 mt-10">
+          <v-card class="py-10 px-6 rounded-xl" elevation="1"
+            :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-4'">
+            <h2 class="text-h5 font-weight-bold mb-6">Upcoming Sessions</h2>
 
-        <!-- Error Alert -->
-        <v-alert v-if="fetchError" type="error" variant="outlined" class="mb-6">
-          {{ fetchError }}
-        </v-alert>
+            <!-- Loading Spinner -->
+            <v-progress-circular v-if="loading" indeterminate color="primary" class="my-6" />
 
-        <!-- No Sessions Alert -->
-        <v-alert v-else-if="bookedSessions.length === 0 && !loading" type="info" variant="outlined" class="mb-6">
-          You haven't booked any sessions yet.
-        </v-alert>
+            <!-- Error Alert -->
+            <v-alert v-if="fetchError" type="error" variant="outlined" class="mb-6">
+              {{ fetchError }}
+            </v-alert>
 
-        <!-- Session Cards -->
-        <v-row v-else>
-          <v-col v-for="session in bookedSessions" :key="session.id" cols="12" sm="6">
-            <v-card class="rounded-xl elevation-3 transition-swing" hover @click="loadMessages(session.id)" >
-              <v-card-title class="text-h6 d-flex align-center text-primary">
-                <v-icon start class="me-2">mdi-book-open-variant</v-icon>
-                {{ session.subjects || 'Subject' }}
-              </v-card-title>
+            <!-- No Sessions Alert -->
+            <v-alert v-else-if="bookedSessions.length === 0 && !loading" type="info" variant="outlined" class="mb-6">
+              You haven't booked any sessions yet.
+            </v-alert>
 
-              <v-card-subtitle class="text-body-2 d-flex align-center">
-                <v-icon start class="me-1">mdi-calendar</v-icon>
-                {{ session.session_date || 'No Date' }}
-                <v-icon start class="ms-5 me-1">mdi-pencil-outline</v-icon>
-                {{ session.session_mode || 'Mode N/A' }}
-              </v-card-subtitle>
+            <!-- Session Cards -->
+            <v-row v-else>
+              <v-col v-for="session in bookedSessions" :key="session.id" cols="12" sm="6">
+                <v-card class="rounded-xl elevation-3 transition-swing" hover @click="loadMessages(session.id)">
+                  <v-card-title class="text-h6 d-flex align-center text-primary">
+                    <v-icon start class="me-2">mdi-book-open-variant</v-icon>
+                    {{ session.subjects || 'Subject' }}
+                  </v-card-title>
 
-              <v-card-text class="pt-2">
-                <v-chip :color="session.status === 'pending' ? 'green' : 'grey'" text-color="white" size="small" label>
-                  <v-icon start small>mdi-check-circle</v-icon>
-                  {{ session.status || 'Pending' }}
-                </v-chip>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-col>
+                  <v-card-subtitle class="text-body-2 d-flex align-center">
+                    <v-icon start class="me-1">mdi-calendar</v-icon>
+                    {{ session.session_date || 'No Date' }}
+                    <v-icon start class="ms-5 me-1">mdi-pencil-outline</v-icon>
+                    {{ session.session_mode || 'Mode N/A' }}
+                  </v-card-subtitle>
 
- <!-- Right Column: Chat -->
-<v-col cols="12" md="3" class="d-flex flex-column pa-6 mt-10">
-  <v-card class="d-flex flex-column flex-grow-1" elevation="2">
-    <v-card-title class="text-h6">
-      Chat
-    </v-card-title>
-    <v-divider></v-divider>
+                  <v-card-text class="pt-2">
+                    <v-chip :color="session.status === 'pending' ? 'green' : 'grey'" text-color="white" size="small"
+                      label>
+                      <v-icon start small>mdi-check-circle</v-icon>
+                      {{ session.status || 'Pending' }}
+                    </v-chip>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
 
-    <v-card-text class="flex-grow-1 overflow-y-auto" style="max-height: 400px;">
-  <v-list dense>
-    <v-list-item
-      v-for="msg in messages"
-      :key="msg.id"
-      :class="msg.sender_id === user.id ? 'justify-end' : 'justify-start'"
-    >
-      <v-chip
-        :color="msg.sender_id === user.id ? 'blue lighten-4' : 'green lighten-4'"
-        class="ma-1"
-        label
-      >
-        {{ msg.sender_id === user.id ? 'You' : 'Tutor' }}: {{ msg.message_text }}
-      </v-chip>
-    </v-list-item>
-  </v-list>
-</v-card-text>
+        <!-- Right Column: Chat -->
+        <v-col cols="12" md="3" class="d-flex flex-column pa-6 mt-10">
+          <v-card class="d-flex flex-column flex-grow-1" elevation="2">
+            <v-card-title class="text-h6">
+              Chat
+            </v-card-title>
+            <v-divider></v-divider>
+
+            <v-card-text class="flex-grow-1 overflow-y-auto" style="max-height: 400px;">
+              <v-list dense>
+                <v-list-item v-for="msg in messages" :key="msg.id"
+                  :class="msg.sender_id === user.id ? 'justify-end' : 'justify-start'">
+                  <v-chip :color="msg.sender_id === user.id ? 'blue lighten-4' : 'green lighten-4'" class="ma-1" label>
+                    {{ msg.sender_id === user.id ? 'You' : 'Tutor' }}: {{ msg.message_text }}
+                  </v-chip>
+                </v-list-item>
+              </v-list>
+            </v-card-text>
 
 
-    <!-- Input -->
-    <v-divider></v-divider>
-    <v-card-actions>
-      <v-text-field
-        v-model="newMessage"
-        placeholder="Type a message..."
-        hide-details
-        density="compact"
-        class="flex-grow-1"
-        @keyup.enter="sendMessage"
-      ></v-text-field>
-      <v-btn icon @click="sendMessage" :disabled="!activeSession">
-        <v-icon>mdi-send</v-icon>
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-col>
+            <!-- Input -->
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-text-field v-model="newMessage" placeholder="Type a message..." hide-details density="compact"
+                class="flex-grow-1" @keyup.enter="sendMessage"></v-text-field>
+              <v-btn icon @click="sendMessage" :disabled="!activeSession">
+                <v-icon>mdi-send</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
 
-  </v-row>
-</v-container>
-<v-footer :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'"
+      </v-row>
+    </v-container>
+    <v-footer :color="theme === 'light' ? 'grey-lighten-4' : 'grey-darken-4'"
       :class="theme === 'light' ? 'text-black' : 'text-white'">
       <v-container fluid>
         <v-row align="center" justify="space-between">
@@ -356,6 +339,7 @@ onMounted(async () => {
 .transition-swing {
   transition: transform 0.2s ease;
 }
+
 .transition-swing:hover {
   transform: translateY(-4px);
 }
