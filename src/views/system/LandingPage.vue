@@ -394,7 +394,7 @@ const steps = [
             <v-card class="mx-auto" max-width="400">
               <v-img
                 height="197px"
-                src="/public/lenittt.png"
+                src="/lenittt.png"
                 alt="Leanheit May Miñoza"
                 cover
               ></v-img>
