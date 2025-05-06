@@ -293,7 +293,7 @@ onMounted(async () => {
                 </div>
                 <div class="d-flex align-center mb-1 text-caption">
                   <v-icon color="blue" size="18" class="me-2">mdi-gmail</v-icon>
-                  leanheitmay@gmail.com
+                  leanheitmayminoza@gmail.com
                 </div>
                 <div class="d-flex align-center text-caption">
                   <v-icon color="blue" size="18" class="me-2">mdi-linkedin</v-icon> Leanheit May

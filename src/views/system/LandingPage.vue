@@ -57,8 +57,8 @@ const steps = [
 
         <!-- Auth Buttons and Theme Toggle -->
         <v-col cols="4" class="d-flex justify-end align-center">
-          <v-btn variant="text" class="text-body-2 ml-4">How it works</v-btn>
-          <v-btn variant="text" class="text-body-2 ml-4">About Us</v-btn>
+          <v-btn variant="text" class="text-body-2 ml-4" href="#how-it-works">How it works</v-btn>
+          <v-btn variant="text" class="text-body-2 ml-4" href="#about-us">About Us</v-btn>
 
           <RouterLink to="/login">
             <v-btn rounded="xl" variant="elevated" density="comfortable" color="cyan-darken-3" class="text-white"><b>Log
@@ -138,7 +138,7 @@ const steps = [
             </v-row>
           </v-sheet>
         </v-container>
-        <v-container fluid class="pa-0 mb-5">
+        <v-container id="how-it-works" fluid class="pa-0 mb-5">
           <div :style="{ backgroundColor: theme === 'light' ? '#E3F2FD' : '#1E1E1E' }">
             <v-container class="py-12">
 
@@ -199,7 +199,7 @@ const steps = [
           </div>
         </v-container>
 
-        <v-container fluid class="mt-5">
+        <v-container fluid class="mt-5" id="about-us">
           <!-- WHO WE ARE -->
           <v-parallax :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-2'" elevation="2" height="300px"
             gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)" src="/public/bg_about.jpg"
@@ -512,7 +512,7 @@ const steps = [
 }
 
 .student-img {
-  max-width: 400px;
+  max-width: 450px;
   object-fit: contain;
   position: absolute;
   right: 0;

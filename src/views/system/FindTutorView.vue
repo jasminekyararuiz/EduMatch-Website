@@ -396,31 +396,34 @@ const confirmBooking = async () => {
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-dialog v-model="successDialog" max-width="400px">
+  <v-card elevation="8" class="rounded-xl overflow-hidden">
+    
+    <!-- Header -->
+    <v-sheet class="py-6 text-center" color="grey-lighten-3">
+      <v-icon size="64" color="success">mdi-check-circle</v-icon>
+      <h2 class="mt-3 text-h6 font-weight-bold text-grey-darken-3">Success!</h2>
+    </v-sheet>
 
-      <!-- SUCCESS DIALOG -->
-      <v-dialog v-model="successDialog" max-width="360px">
-        <v-card elevation="10" class="overflow-hidden" style="border-radius: 20px; position: relative;">
-          <div class="text-center pt-6 pb-10" style="background-color: #ECEFF1;">
-            <h2 style="color: #37474F;">Success!</h2>
-            <v-icon class="successicon" color="#1A237E" size="50">mdi-check</v-icon>
-          </div>
+    <!-- Body -->
+    <v-sheet class="py-8 px-4 text-center" color="indigo-darken-4">
+      <p class="text-white text-body-1">
+        Your learning journey starts now.<br />
+        Thank you for choosing <strong>EduMatch</strong>.
+      </p>
+    </v-sheet>
 
-          <div class="text-center pt-13 pb-10 middle" style="background-color:#1A237E;">
-            <p class="mb-5 mt-3" style="color: whitesmoke; font-size: 15px;">
-              Your learning journey starts now.<br>
-              Thank you for choosing <strong>EduMatch</strong>.
-            </p>
-          </div>
+    <!-- Footer -->
+    <v-card-actions class="justify-center py-4" color="grey-lighten-3">
+      <v-btn color="indigo-darken-4" class="text-white font-weight-bold px-6" @click="closeSuccessDialog">
+        CONTINUE
+        <v-icon end>mdi-arrow-right</v-icon>
+      </v-btn>
+    </v-card-actions>
 
-          <v-card-actions class="justify-center" style="background-color: #ECEFF1;">
-            <v-btn color="red darken-1" variant="text" class="mt-2 mb-4" @click="closeSuccessDialog"
-              style="font-weight: bold;">
-              CONTINUE
-              <v-icon end>mdi-arrow-right</v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+  </v-card>
+</v-dialog>
+
       <!-- BOOKING DIALOG -->
 
 
@@ -588,20 +591,5 @@ const confirmBooking = async () => {
   font-size: 14px;
 }
 
-.successicon {
 
-  background-color: #FAFAFA;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%) translateY(50%);
-  bottom: 0;
-  z-index: 10;
-}
 </style>
