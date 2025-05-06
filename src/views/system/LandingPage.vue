@@ -88,7 +88,8 @@ const steps = [
               <v-col cols="12" md="6">
                 <div class="hero-text">
                   <h1 class="text-white font-weight-bold text-h2">
-                    Face-to-face learning<br />with top tutors
+                    Whether you want to learn or teach, it starts here.
+
                   </h1>
                   <p class="text-info mt-2">
                     <i>"Turn Knowledge Into Opportunity"</i>
