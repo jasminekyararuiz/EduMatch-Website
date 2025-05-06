@@ -332,8 +332,10 @@ const testUpload = async () => {
       <v-container fluid class="mt-4 px-5 pa-4" :color="theme === 'light' ? 'indigo-lighten-5' : 'grey-darken-3'">
         <v-row>
           <!-- SIDEBAR -->
-          <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
-            <v-avatar size="180" class="mt-6 border border-5">
+  <!-- Left Column -->
+  <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
+      <!-- Avatar + Sidebar Content -->
+      <v-avatar size="180" class="mt-6 border border-5">
       <v-img :src="avatarUrl" />
     </v-avatar>
 
@@ -356,22 +358,24 @@ const testUpload = async () => {
       @change="onFileChange"
     />
 
-            <v-card class="mt-4 px-4 py-3 text-center " rounded="lg"
-              :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
-              <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
-              <v-row justify="center" class="gap-2 mb-3">
-                <v-icon small>mdi-facebook</v-icon>
-                <v-icon small>mdi-instagram</v-icon>
-                <v-icon small>mdi-linkedin</v-icon>
-                <v-icon small>mdi-twitter</v-icon>
-              </v-row>
-              <v-divider class="my-2"></v-divider>
-              <v-btn block text prepend-icon="mdi-file-document">
-                SUBMIT APPLICATION
-              </v-btn>
-            </v-card>
-          </v-col>
-
+      <v-card class="mt-4 px-4 py-3 text-center" rounded="lg" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+        <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
+        <v-row justify="center" class="gap-2 mb-3">
+          <v-icon small>mdi-facebook</v-icon>
+          <v-icon small>mdi-instagram</v-icon>
+          <v-icon small>mdi-linkedin</v-icon>
+          <v-icon small>mdi-twitter</v-icon>
+        </v-row>
+        <v-divider class="my-2" />
+        <v-btn class="text-grey-darken-1" rounded="xl" density="compact">
+          <b>SUBMIT APPLICATION</b>
+        </v-btn>
+        <RouterLink to="/tutordashboard" class="text-decoration-none">
+          <h4 class="text-white" block text prepend-icon="mdi-file-document">DASHBOARD</h4>
+        </RouterLink>
+       
+      </v-card>
+    </v-col>
           <!-- FORM SECTION -->
           <v-col cols="12" md="9">
             <v-card class="pa-6 mt-10" elevation="2">
