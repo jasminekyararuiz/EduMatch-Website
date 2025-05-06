@@ -27,12 +27,6 @@ const router = createRouter({
       name: 'landingpage',
       component: LandingPage,
     },
-
-    {
-      path: '/howitworks',
-      name: 'how-it-works',
-      component: HowItWorks
-    },
     {
 
       path: '/tutorapplication',

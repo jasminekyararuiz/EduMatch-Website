@@ -46,7 +46,7 @@ const steps = [
       <v-row align="center" no-gutters class="w-100">
         <!-- Logo and Brand -->
         <v-col cols="8" class="d-flex align-center">
-          <v-img src="/Edumatch_logo.png" alt="EduMatch Logo" max-width="60" class="mr-2"></v-img>
+          <v-img src="/public/Edumatch_logo.png" alt="EduMatch Logo" max-width="60" class="mr-2"></v-img>
           <span class="text-h6 font-weight-bold edu">
             <span class="text-blue-lighten-5"><b>Edu</b></span>
             <span class="text-teal-lighten-2"><b>Match</b></span>
