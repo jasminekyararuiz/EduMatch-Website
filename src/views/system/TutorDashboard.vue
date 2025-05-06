@@ -186,8 +186,8 @@ onMounted(async () => {
           <v-card-subtitle class="text-body-2 d-flex align-center">
             <v-icon start class="me-1">mdi-calendar</v-icon>
             {{ session.session_date || 'No Date' }}
-            <v-icon start class="ms-5 me-1">mdi-clock-time-four</v-icon>
-            {{ session.session_time || 'Time N/A' }}
+            <v-icon start class="ms-5 me-1">mdi-pencil-outline</v-icon>
+            {{ session.session_mode || 'Mode N/A' }}
           </v-card-subtitle>
 
           <v-card-text class="pt-2">
@@ -223,7 +223,7 @@ onMounted(async () => {
             class="ma-1"
             label
           >
-            {{ msg.sender_id === user.id ? 'You' : 'Them' }}: {{ msg.message_text }}
+            {{ msg.sender_id === user.id ? 'You' : 'Learner' }}: {{ msg.message_text }}
           </v-chip>
         </v-list-item>
       </v-list>
