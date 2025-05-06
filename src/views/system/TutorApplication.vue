@@ -316,7 +316,7 @@ const testUpload = async () => {
       <v-app-bar class="px-3" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-2'">
         <v-row align="center" no-gutters class="w-100">
           <v-col cols="8" class="d-flex align-center">
-            <v-img src="/public/Edumatch_logo.png" max-width="60" class="mr-2" />
+            <v-img src="/Edumatch_logo.png" max-width="60" class="mr-2" />
             <span class="text-h6 font-weight-bold">
               <b>Edu</b><span class="text-cyan-darken-1"><b>Match</b></span>
             </span>
@@ -549,7 +549,7 @@ const testUpload = async () => {
         <v-row align="center" justify="space-between">
           <!-- Left side: Logo and Tagline -->
           <v-col cols="12" md="4" class="d-flex flex-column align-center">
-            <v-img class="mx-auto mb-2 mt-5 px-5" src="/public/Edumatch_logo.png" width="30%">
+            <v-img class="mx-auto mb-2 mt-5 px-5" src="/Edumatch_logo.png" width="30%">
             </v-img>
             <span class="text-h3 font-weight-bold footer">
               <span class="text-blue-lighten-2"><b>Edu</b></span>

@@ -16,13 +16,13 @@ const isDark = computed(() => theme.global.name.value === 'dark')
       <v-row class="fill-height">
 
         <v-col cols="8" class="text-center d-none d-md-flex rounded-xl">
-          <v-img class="mx-auto py-2 mb-3" src="/public/EduMatch-LogIn.jpg" width="10%" />
+          <v-img class="mx-auto py-2 mb-3" src="/EduMatch-LogIn.jpg" width="10%" />
         </v-col>
 
         <v-col cols="4" class="mx-auto py-5">
           <v-card elevation="10" class="mx-auto" color="blue-lighten-5">
             <v-card-title class="py-4">
-              <v-img class="mx-auto" src="/public/Edumatch_logo.png" width="25%" />
+              <v-img class="mx-auto" src="/Edumatch_logo.png" width="25%" />
               <h3 class="text-center edu"><b>EduMatch</b></h3>
             </v-card-title>
 

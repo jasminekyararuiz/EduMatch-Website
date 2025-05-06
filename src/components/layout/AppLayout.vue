@@ -31,7 +31,7 @@ function onClick() {
           <v-row align="center" justify="space-between">
             <!-- Left side: Logo and Tagline -->
             <v-col cols="12" md="4" class="d-flex flex-column align-center">
-              <v-img class="mx-auto mb-2 mt-5 px-5" src="/public/Edumatch_logo.png" width="30%"> </v-img>
+              <v-img class="mx-auto mb-2 mt-5 px-5" src="/Edumatch_logo.png" width="30%"> </v-img>
               <span class="text-h3 font-weight-bold footer">
                 <span class="text-blue-lighten-2"><b>Edu</b></span>
                 <span class="text-blue-darken-4"><b>Match</b></span>

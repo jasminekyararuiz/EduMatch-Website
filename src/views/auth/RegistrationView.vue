@@ -15,7 +15,7 @@ const { ismobile } = useDisplay()
         <v-col cols="12" md="6" class="mx-auto">
           <v-card elevation="10" class="mx-auto" color="blue-lighten-5">
             <v-card-title>
-              <v-img class="mx-auto" src="/public/Edumatch_logo.png" width="25%"> </v-img>
+              <v-img class="mx-auto" src="/Edumatch_logo.png" width="25%"> </v-img>
               <h3 class="text-center edu"><b>EduMatch</b></h3>
             </v-card-title>
 
