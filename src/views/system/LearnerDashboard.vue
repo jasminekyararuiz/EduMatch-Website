@@ -27,7 +27,45 @@ const user = ref(null)
 const bookedSessions = ref([])
 const loading = ref(true)
 const fetchError = ref(null)
+const activeSession = ref(null)
+const messages = ref([])
+const newMessage = ref('')
 
+// Load messages for a specific session
+const loadMessages = async (sessionId) => {
+  activeSession.value = sessionId
+  const { data, error } = await supabase
+    .from('messages')
+    .select('*')
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: true })
+
+  if (!error) {
+    messages.value = data
+  } else {
+    console.error('Failed to load messages:', error.message)
+  }
+}
+
+// Send a message
+const sendMessage = async () => {
+  if (!newMessage.value.trim() || !activeSession.value) return
+
+  const { error } = await supabase.from('messages').insert([{
+    session_id: activeSession.value,
+    sender_id: user.value.id,
+    message_text: newMessage.value.trim(),
+  }])
+
+  if (!error) {
+    newMessage.value = ''
+    await loadMessages(activeSession.value)
+  } else {
+    console.error('Failed to send message:', error.message)
+  }
+}
+
+// Fetch learner info and their booked sessions
 onMounted(async () => {
   const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser()
 
@@ -53,6 +91,8 @@ onMounted(async () => {
 
   loading.value = false
 })
+
+
 </script>
 
 <template>
@@ -139,7 +179,7 @@ onMounted(async () => {
         <!-- Session Cards -->
         <v-row v-else>
           <v-col v-for="session in bookedSessions" :key="session.id" cols="12" sm="6">
-            <v-card class="rounded-xl elevation-3 transition-swing" hover>
+            <v-card class="rounded-xl elevation-3 transition-swing" hover @click="loadMessages(session.id)" >
               <v-card-title class="text-h6 d-flex align-center text-primary">
                 <v-icon start class="me-2">mdi-book-open-variant</v-icon>
                 {{ session.subjects || 'Subject' }}
@@ -164,18 +204,50 @@ onMounted(async () => {
       </v-card>
     </v-col>
 
-    <!-- Right Column -->
-    <v-col cols="12" md="3" class="pa-6 mt-10">
-      <v-card class="pa-4" elevation="2" rounded="xl" :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-4'">
-        <h4 class="text-subtitle-1 font-weight-bold mb-3">Messages</h4>
-        <v-list density="compact">
-          <v-list-item v-for="(tip, index) in ['message', 'message', 'message']" :key="index">
-            <v-list-item-icon><v-icon small>mdi-lightbulb-on-outline</v-icon></v-list-item-icon>
-            <v-list-item-content>{{ tip }}</v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-col>
+ <!-- Right Column: Chat -->
+<v-col cols="12" md="3" class="d-flex flex-column pa-6 mt-10">
+  <v-card class="d-flex flex-column flex-grow-1" elevation="2">
+    <v-card-title class="text-h6">
+      Chat
+    </v-card-title>
+    <v-divider></v-divider>
+
+    <v-card-text class="flex-grow-1 overflow-y-auto" style="max-height: 400px;">
+  <v-list dense>
+    <v-list-item
+      v-for="msg in messages"
+      :key="msg.id"
+      :class="msg.sender_id === user.id ? 'justify-end' : 'justify-start'"
+    >
+      <v-chip
+        :color="msg.sender_id === user.id ? 'blue lighten-4' : 'green lighten-4'"
+        class="ma-1"
+        label
+      >
+        {{ msg.sender_id === user.id ? 'You' : 'Tutor' }}: {{ msg.message_text }}
+      </v-chip>
+    </v-list-item>
+  </v-list>
+</v-card-text>
+
+
+    <!-- Input -->
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-text-field
+        v-model="newMessage"
+        placeholder="Type a message..."
+        hide-details
+        density="compact"
+        class="flex-grow-1"
+        @keyup.enter="sendMessage"
+      ></v-text-field>
+      <v-btn icon @click="sendMessage" :disabled="!activeSession">
+        <v-icon>mdi-send</v-icon>
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-col>
 
   </v-row>
 </v-container>
