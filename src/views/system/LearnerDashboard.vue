@@ -142,13 +142,17 @@ onMounted(async () => {
               <v-icon small>mdi-twitter</v-icon>
             </v-row>
             <v-divider class="my-2" />
-
-            <v-btn class="text-grey-darken-1" rounded="xl" density="compact">
-              <b>DASHBOARD</b>
-            </v-btn>
             <RouterLink to="/findtutor" class="text-decoration-none">
               <h4 class="text-white" block text prepend-icon="mdi-file-document">FIND TUTOR</h4>
-            </RouterLink>
+          </RouterLink>
+            <v-btn class="text-grey-darken-1" rounded="xl" density="compact">
+              <b>DASHBOARD</b>  
+            </v-btn>
+        
+            
+            
+
+              
           </v-card>
         </v-col>
 
