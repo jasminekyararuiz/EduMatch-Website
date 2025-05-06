@@ -173,7 +173,7 @@ onMounted(async () => {
 
         <!-- No Sessions Alert -->
         <v-alert v-else-if="bookedSessions.length === 0 && !loading" type="info" variant="outlined" class="mb-6">
-          You haven't booked or taught any sessions yet.
+          You haven't booked any sessions yet.
         </v-alert>
 
         <!-- Session Cards -->
