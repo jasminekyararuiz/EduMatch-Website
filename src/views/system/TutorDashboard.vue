@@ -27,6 +27,41 @@ const user = ref(null)
 const bookedSessions = ref([])
 const loading = ref(true)
 const fetchError = ref(null)
+const activeSession = ref(null)
+const messages = ref([])
+const newMessage = ref('')
+
+const loadMessages = async (sessionId) => {
+  activeSession.value = sessionId
+  const { data, error } = await supabase
+    .from('messages')
+    .select('*')
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: true })
+
+  if (!error) {
+    messages.value = data
+  } else {
+    console.error('Failed to load messages:', error.message)
+  }
+}
+
+const sendMessage = async () => {
+  if (!newMessage.value.trim() || !activeSession.value) return
+
+  const { error } = await supabase.from('messages').insert([{
+    session_id: activeSession.value,
+    sender_id: user.value.id,
+    message_text: newMessage.value.trim(),
+  }])
+
+  if (!error) {
+    newMessage.value = ''
+    await loadMessages(activeSession.value)
+  } else {
+    console.error('Failed to send message:', error.message)
+  }
+}
 
 onMounted(async () => {
   const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser()
@@ -121,64 +156,96 @@ onMounted(async () => {
       </v-card>
     </v-col>
 
-    <!-- Middle Column -->
-    <v-col cols="12" md="6" class="pa-6 mt-10">
-      <v-card class="py-10 px-6 rounded-xl" elevation="1" :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-4'">
-        <h2 class="text-h5 font-weight-bold mb-6">Your Booked Sessions</h2>
+ <!-- Middle Column -->
+<v-col cols="12" md="6" class="pa-6 mt-10">
+  <v-card class="py-10 px-6 rounded-xl" elevation="1" :color="theme === 'light' ? 'grey-lighten-5' : 'grey-darken-4'">
+    <h2 class="text-h5 font-weight-bold mb-6">Your Booked Sessions</h2>
 
-        <!-- Loading Spinner -->
-        <v-progress-circular v-if="loading" indeterminate color="primary" class="my-6" />
+    <!-- Loading Spinner -->
+    <v-progress-circular v-if="loading" indeterminate color="primary" class="my-6" />
 
-        <!-- Error Alert -->
-        <v-alert v-if="fetchError" type="error" variant="outlined" class="mb-6">
-          {{ fetchError }}
-        </v-alert>
+    <!-- Error Alert -->
+    <v-alert v-if="fetchError" type="error" variant="outlined" class="mb-6">
+      {{ fetchError }}
+    </v-alert>
 
-        <!-- No Sessions Alert -->
-        <v-alert v-else-if="bookedSessions.length === 0 && !loading" type="info" variant="outlined" class="mb-6">
-          You haven't booked or taught any sessions yet.
-        </v-alert>
+    <!-- No Sessions Alert -->
+    <v-alert v-else-if="bookedSessions.length === 0 && !loading" type="info" variant="outlined" class="mb-6">
+      You haven't booked or taught any sessions yet.
+    </v-alert>
 
-        <!-- Session Cards -->
-        <v-row v-else>
-          <v-col v-for="session in bookedSessions" :key="session.id" cols="12" sm="6">
-            <v-card class="rounded-xl elevation-3 transition-swing" hover>
-              <v-card-title class="text-h6 d-flex align-center text-primary">
-                <v-icon start class="me-2">mdi-book-open-variant</v-icon>
-                {{ session.subjects || 'Subject' }}
-              </v-card-title>
+    <!-- Session Cards -->
+    <v-row v-else>
+      <v-col v-for="session in bookedSessions" :key="session.id" cols="12" sm="6">
+        <v-card class="rounded-xl elevation-3 transition-swing" hover @click="loadMessages(session.id)">
+          <v-card-title class="text-h6 d-flex align-center text-primary">
+            <v-icon start class="me-2">mdi-book-open-variant</v-icon>
+            {{ session.subjects || 'Subject' }}
+          </v-card-title>
 
-              <v-card-subtitle class="text-body-2 d-flex align-center">
-                <v-icon start class="me-1">mdi-calendar</v-icon>
-                {{ session.session_date || 'No Date' }}
-                <v-icon start class="ms-5 me-1">mdi-clock-time-four</v-icon>
-                {{ session.session_time || 'Time N/A' }}
-              </v-card-subtitle>
+          <v-card-subtitle class="text-body-2 d-flex align-center">
+            <v-icon start class="me-1">mdi-calendar</v-icon>
+            {{ session.session_date || 'No Date' }}
+            <v-icon start class="ms-5 me-1">mdi-clock-time-four</v-icon>
+            {{ session.session_time || 'Time N/A' }}
+          </v-card-subtitle>
 
-              <v-card-text class="pt-2">
-                <v-chip :color="session.status === 'pending' ? 'green' : 'grey'" text-color="white" size="small" label>
-                  <v-icon start small>mdi-check-circle</v-icon>
-                  {{ session.status || 'Pending' }}
-                </v-chip>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-col>
+          <v-card-text class="pt-2">
+            <v-chip :color="session.status === 'pending' ? 'green' : 'grey'" text-color="white" size="small" label>
+              <v-icon start small>mdi-check-circle</v-icon>
+              {{ session.status || 'Pending' }}
+            </v-chip>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-card>
+</v-col>
 
-    <!-- Right Column -->
-    <v-col cols="12" md="3" class="pa-6 mt-10">
-      <v-card class="pa-4" elevation="2" rounded="xl" :color="theme === 'light' ? 'blue-lighten-5' : 'grey-darken-4'">
-        <h4 class="text-subtitle-1 font-weight-bold mb-3">Messages</h4>
-        <v-list density="compact">
-          <v-list-item v-for="(tip, index) in ['message', 'message', 'message']" :key="index">
-            <v-list-item-icon><v-icon small>mdi-lightbulb-on-outline</v-icon></v-list-item-icon>
-            <v-list-item-content>{{ tip }}</v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-col>
+<!-- Right Column: Chat -->
+<v-col cols="12" md="3" class="d-flex flex-column pa-6 mt-10">
+  <v-card class="d-flex flex-column flex-grow-1" elevation="2">
+    <v-card-title class="text-h6">
+      Chat
+    </v-card-title>
+    <v-divider></v-divider>
+
+    <!-- Message History -->
+    <v-card-text class="flex-grow-1 overflow-y-auto" style="max-height: 400px;">
+      <v-list dense>
+        <v-list-item
+          v-for="msg in messages"
+          :key="msg.id"
+          :class="msg.sender_id === user.id ? 'justify-end' : 'justify-start'"
+        >
+          <v-chip
+            :color="msg.sender_id === user.id ? 'blue lighten-4' : 'green lighten-4'"
+            class="ma-1"
+            label
+          >
+            {{ msg.sender_id === user.id ? 'You' : 'Them' }}: {{ msg.message_text }}
+          </v-chip>
+        </v-list-item>
+      </v-list>
+    </v-card-text>
+
+    <!-- Input -->
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-text-field
+        v-model="newMessage"
+        placeholder="Type a message..."
+        hide-details
+        density="compact"
+        class="flex-grow-1"
+        @keyup.enter="sendMessage"
+      ></v-text-field>
+      <v-btn icon @click="sendMessage" :disabled="!activeSession">
+        <v-icon>mdi-send</v-icon>
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-col>
 
 
   </v-row>
