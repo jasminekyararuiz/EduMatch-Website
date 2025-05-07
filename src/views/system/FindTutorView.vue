@@ -315,8 +315,9 @@ const confirmBooking = async () => {
               </v-expansion-panels>
             </v-card>
             <!-- FIND TUTOR / DASHBOARD CARD -->
-            <v-card class="mt-4 px-4 py-3 text-center" rounded="lg"
-              :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+            <v-card class="mt-10 px-3 py-5 text-center" rounded="lg"
+            :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+            <div class="text-body-2 font-italic mb-3 text-caption">"I am an Edumatch Learner"</div>
 
               <v-btn class="text-grey-darken-1 mb-2" rounded="xl" density="compact">
                 <b>FIND TUTOR</b>

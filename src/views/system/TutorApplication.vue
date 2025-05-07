@@ -358,14 +358,9 @@ const testUpload = async () => {
       @change="onFileChange"
     />
 
-      <v-card class="mt-4 px-4 py-3 text-center" rounded="lg" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
-        <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
-        <v-row justify="center" class="gap-2 mb-3">
-          <v-icon small>mdi-facebook</v-icon>
-          <v-icon small>mdi-instagram</v-icon>
-          <v-icon small>mdi-linkedin</v-icon>
-          <v-icon small>mdi-twitter</v-icon>
-        </v-row>
+    <v-card class="mt-10 px-3 py-5 text-center" rounded="lg" 
+      :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+        <div class="text-body-2 font-italic mb-3 text-caption">"I am an EduMatch Tutor"</div>
         <v-divider class="my-2" />
         <v-btn class="text-grey-darken-1" rounded="xl" density="compact">
           <b>SUBMIT APPLICATION</b>
