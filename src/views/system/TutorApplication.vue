@@ -239,7 +239,7 @@ const submitForm = async () => {
 };
 
 
-const avatarUrl = ref('/public/default-avatar.jpg')
+const avatarUrl = ref('/default-avatar.jpg')
 const fileInputRef = ref(null)
 
 const openFileDialog = () => {
