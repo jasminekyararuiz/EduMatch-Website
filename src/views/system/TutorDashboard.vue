@@ -9,18 +9,7 @@ function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
 
-// Avatar logic
-const avatarUrl = ref('/public/default-avatar.jpg')
-const fileInputRef = ref(null)
-function openFileDialog() {
-  fileInputRef.value?.click()
-}
-function onFileChange(event) {
-  const file = event.target.files[0]
-  if (file) {
-    avatarUrl.value = URL.createObjectURL(file)
-  }
-}
+
 
 // Reactive refs
 const user = ref(null)
@@ -114,38 +103,10 @@ onMounted(async () => {
 
     <!-- Left Column -->
     <v-col cols="12" md="3" class="d-flex flex-column align-center mt-5">
-      <!-- Avatar + Sidebar Content -->
-      <v-avatar size="180" class="mt-6 border border-5">
-      <v-img :src="avatarUrl" />
-    </v-avatar>
 
-    <v-btn
-      class="text-caption text-grey-darken-1 mt-1"
-      size="small"
-      rounded="xl"
-      density="compact"
-      @click="openFileDialog"
-    >
-      <b>edit</b>
-    </v-btn>
-
-    <!-- Hidden file input -->
-    <input
-      type="file"
-      accept="image/*"
-      ref="fileInputRef"
-      class="d-none"
-      @change="onFileChange"
-    />
-
-      <v-card class="mt-4 px-4 py-3 text-center" rounded="lg" :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
-        <div class="text-body-2 font-italic mb-5">"Learning while earning"</div>
-        <v-row justify="center" class="gap-2 mb-3">
-          <v-icon small>mdi-facebook</v-icon>
-          <v-icon small>mdi-instagram</v-icon>
-          <v-icon small>mdi-linkedin</v-icon>
-          <v-icon small>mdi-twitter</v-icon>
-        </v-row>
+      <v-card class="mt-10 px-3 py-5 text-center" rounded="lg" 
+      :color="theme === 'light' ? 'indigo-darken-4' : 'grey-darken-3'">
+        <div class="text-body-2 font-italic mb-3 text-caption">"I am an EduMatch Tutor"</div>
         <v-divider class="my-2" />
         <RouterLink to="/tutorapplication" class="text-decoration-none">
           <h4 class="text-white" block text prepend-icon="mdi-file-document">SUBMIT APPLICATION</h4>
